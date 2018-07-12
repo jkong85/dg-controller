@@ -21,4 +21,4 @@ spec:
         ports:
         - containerPort: 8889
       nodeSelector:
-        kubernetes.io/hostname: docker-for-desktop
+        kubernetes.io/hostname: NODE

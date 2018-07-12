@@ -21,4 +21,4 @@ spec:
         ports:
         - containerPort: 9006
       nodeSelector:
-        kubernetes.io/hostname: docker-for-desktop
+        kubernetes.io/hostname: NODE

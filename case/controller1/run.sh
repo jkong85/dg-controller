@@ -17,8 +17,11 @@ function checkIP()
 echo ">>>> clean previous running..."
 ./stop.sh
 
+NODE="node1"
+
 echo ">>>> Start the eureka server"
 cp template/eureka.yaml.template eureka.yaml
+sed -i .tmp -e "s/NODE/${NODE}/g" eureka.yaml
 kubectl create -f eureka.yaml
 sleep 120
 
@@ -54,8 +57,10 @@ echo ${EUREKA_SERVER_IP} > eureka_server_ip
 
 echo ">>>> Config the YAML based on template"
 cp template/zuul.yaml.template zuul.yaml
+sed -i .tmp -e "s/NODE/${NODE}/g" zuul.yaml
 sed -i .tmp -e "s/VALUE_EUREKA_SERVER_IP/value: ${EUREKA_SERVER_IP}/g" zuul.yaml
 cp template/test.yaml.template test.yaml
+sed -i .tmp -e "s/NODE/${NODE}/g" test.yaml
 sed -i .tmp -e "s/VALUE_EUREKA_SERVER_IP/value: ${EUREKA_SERVER_IP}/g" test.yaml
 rm *.tmp
 
