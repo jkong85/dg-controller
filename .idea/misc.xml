@@ -8,6 +8,7 @@
         <option value="$PROJECT_DIR$/controller-eureka/pom.xml" />
         <option value="$PROJECT_DIR$/controller-zuul/pom.xml" />
         <option value="$PROJECT_DIR$/controller-test/pom.xml" />
+        <option value="$PROJECT_DIR$/imo-speed/pom.xml" />
       </list>
     </option>
   </component>

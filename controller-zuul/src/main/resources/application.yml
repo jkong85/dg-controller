@@ -8,12 +8,9 @@ zuul:
     test:
       path: /test/**
       serviceId: controller-test
-#    register:
-#      path: /register/**
-#      serviceId: controller-register
-#    operate:
-#      path: /operation/**
-#      serviceId: controller-operate
+    speed:
+      path: /speed/**
+      serviceId: imo-speed
 
 # Increase the Hystrix timeout to 60s (globally)
 hystrix:

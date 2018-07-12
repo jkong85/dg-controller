@@ -10,6 +10,7 @@
         <module name="controller-eureka" />
         <module name="controller-test" />
         <module name="controller-zuul" />
+        <module name="imo-speed" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

@@ -1,5 +1,7 @@
 package com.dg.com.controllertest.controller;
 
+import com.dg.com.controllertest.ControllerTestApplication;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
@@ -16,6 +18,9 @@ import java.util.Set;
 
 @RestController
 public class RegistrationController {
+    @Autowired
+    private ControllerTestApplication testApplication;
+
     private String K8sApiServer = "http://172.17.8.101:8080/";
     private String VERSION = "0.1";
     private String DOCKER_IMAGE_PREFIX = "jkong85/dg-imo-";
@@ -25,8 +30,6 @@ public class RegistrationController {
     private String SPEED_CONTAINER_PORT = "9001";
     private String OIL_CONTAINER_PORT = "9002";
 
-    private static Map<String, String> DGInformation = new HashMap<>();
-    private static Set<Integer> setNodePorts = new HashSet<>();
     @RequestMapping(value = "/registration")
     public String create(@RequestParam String value){
 
@@ -37,20 +40,21 @@ public class RegistrationController {
         CreateTestDeployment(service_label, eureka_ip, node_selector);
         CreateZuulDeployment(service_label, eureka_ip, node_selector);
 
+        // Get the node port form the node po
         Integer nodePort_eureka = getIMONodePort();
         Integer nodePort_zuul = nodePort_eureka+1;
         CreateIMOService(service_label, nodePort_eureka.toString(), nodePort_zuul.toString());
 
         //store the information of the DG
         String service_ip = getServiceIPaddress(service_label);
-        DGInformation.put(service_label, eureka_ip);
+        testApplication.DGInformation.put(service_label, eureka_ip);
 
         return "DG is created successfully!";
         //return "Create Pod: " + value;
     }
 
     private Integer getIMONodePort(){
-        return 30001;
+        return testApplication.nodePortsPool.pop();
     }
     //ServiceName is the Service in K8S domain
     private String getDeploymentIPaddress(String serviceName){
@@ -62,6 +66,17 @@ public class RegistrationController {
 
         return "localhost";
     }
+    private String CreateSpeedDeployment(String service_label, String eureka_ip, String node_selector){
+        String prefix = "speed";
+        String deploy_name =  service_label + "-" + prefix;
+        String container_name = deploy_name;
+        String container_images = DOCKER_IMAGE_PREFIX + prefix + VERSION;
+        String container_port = SPEED_CONTAINER_PORT;
+
+        return CreateDeployment(K8sApiServer, deploy_name, service_label,
+                container_name, container_images, container_port, eureka_ip, node_selector);
+    }
+
     private String CreateTestDeployment(String service_label, String eureka_ip, String node_selector){
         String prefix = "test";
         String deploy_name =  service_label + "-" + prefix;
@@ -180,7 +195,7 @@ public class RegistrationController {
         System.out.println("body : " + body);
         String str = restTemplate.postForObject(urlService, httpEntity, String.class);
         System.out.println(str);
-        System.out.println("end of creating pod!");
+        System.out.println("end of creating service!");
         return str;
     }
 }
