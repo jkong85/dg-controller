@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: controller-kubeclient
+spec:
+  selector:
+    matchLabels:
+      app: controller 
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: controller 
+    spec:
+      containers:
+      - name: controller-kubeclient
+        image: jkong85/dg-controller-kubeclient:0.1
+        env:
+        - name: EUREKA_SERVER_IP
+          VALUE_EUREKA_SERVER_IP
+        ports:
+        - containerPort: 9006
+      nodeSelector:
+        kubernetes.io/hostname: docker-for-desktop

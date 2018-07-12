@@ -1,0 +1,41 @@
+spring:
+  application:
+    name: controller-zuul
+server:
+  port: "8889"
+zuul:
+  routes:
+    test:
+      path: /test/**
+      serviceId: controller-test
+#    register:
+#      path: /register/**
+#      serviceId: controller-register
+#    operate:
+#      path: /operation/**
+#      serviceId: controller-operate
+
+# Increase the Hystrix timeout to 60s (globally)
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 30000
+          strategy: THREAD
+ribbon:
+  ReadTimeout: 20000 # 处理时间
+  ConnectTimeout: 20000 # 连接时间
+  MaxAutoRetries: 0 #最大自动重试次数
+  MaxAutoRetriesNextServer: 1 # 换实例重试次数
+  MaxTotalHttpConnections: 2000 # 最大http连接数，越大越好，但到到达一个临界点之后，就不会提高响应速度了
+  MaxConnectionsPerHost: 1000 # 每个host连接数
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://${EUREKA_SERVER_IP:localhost}:8888/eureka/
+  instance:
+    prefer-ip-address: true
+
+

@@ -1,0 +1,11 @@
+#!/bin/sh
+set -x
+sudo docker rm -f dg-controller-zuul
+sleep 2
+sudo mvn clean install -Pdocker-build-image -DskipTests
+sleep 2
+#sudo docker run  -it --name dg-controller-zuul dg-controller-zuul:latest
+
+#sudo mvn clean install -Pdocker-push-image
+#mvn -Ddocker.username=jkong85 -Ddocker.password=19851208 docker:push
+

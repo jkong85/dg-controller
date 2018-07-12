@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: controller2-eureka
+spec:
+  selector:
+    matchLabels:
+      app: controller2
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: controller2
+    spec:
+      containers:
+      - name: controller-eureka
+        image: jkong85/dg-controller-eureka:0.1
+        ports:
+        - containerPort: 8888 
+      nodeSelector:
+        kubernetes.io/hostname: docker-for-desktop
