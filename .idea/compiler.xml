@@ -8,10 +8,12 @@
         <outputRelativeToContentRoot value="true" />
         <module name="controller" />
         <module name="controller-eureka" />
-        <module name="controller-kubeclient" />
         <module name="controller-test" />
         <module name="controller-zuul" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="controller-kubeclient" target="1.8" />
+    </bytecodeTargetLevel>
   </component>
 </project>

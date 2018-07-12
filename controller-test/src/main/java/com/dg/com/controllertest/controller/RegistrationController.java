@@ -10,14 +10,23 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 @RestController
 public class RegistrationController {
     private String K8sApiServer = "http://172.17.8.101:8080/";
     private String VERSION = "0.1";
+    private String DOCKER_IMAGE_PREFIX = "jkong85/dg-imo-";
+    private String EUREKA_CONTAINER_PORT = "8888";
+    private String ZUUL_CONTAINER_PORT = "8889";
+    private String TEST_CONTAINER_PORT = "9005";
+    private String SPEED_CONTAINER_PORT = "9001";
+    private String OIL_CONTAINER_PORT = "9002";
 
     private static Map<String, String> DGInformation = new HashMap<>();
+    private static Set<Integer> setNodePorts = new HashSet<>();
     @RequestMapping(value = "/registration")
     public String create(@RequestParam String value){
 
@@ -28,12 +37,20 @@ public class RegistrationController {
         CreateTestDeployment(service_label, eureka_ip, node_selector);
         CreateZuulDeployment(service_label, eureka_ip, node_selector);
 
+        Integer nodePort_eureka = getIMONodePort();
+        Integer nodePort_zuul = nodePort_eureka+1;
+        CreateIMOService(service_label, nodePort_eureka.toString(), nodePort_zuul.toString());
+
         //store the information of the DG
         String service_ip = getServiceIPaddress(service_label);
         DGInformation.put(service_label, eureka_ip);
 
         return "DG is created successfully!";
         //return "Create Pod: " + value;
+    }
+
+    private Integer getIMONodePort(){
+        return 30001;
     }
     //ServiceName is the Service in K8S domain
     private String getDeploymentIPaddress(String serviceName){
@@ -49,8 +66,8 @@ public class RegistrationController {
         String prefix = "test";
         String deploy_name =  service_label + "-" + prefix;
         String container_name = deploy_name;
-        String container_images = "jkong85/dg-" + prefix + VERSION;
-        String container_port = "9005";
+        String container_images = DOCKER_IMAGE_PREFIX + prefix + VERSION;
+        String container_port = TEST_CONTAINER_PORT;
 
         return CreateDeployment(K8sApiServer, deploy_name, service_label,
                 container_name, container_images, container_port, eureka_ip, node_selector);
@@ -60,8 +77,8 @@ public class RegistrationController {
         String prefix = "eureka";
         String deploy_name =  service_label + "-" + prefix;
         String container_name = deploy_name;
-        String container_images = "jkong85/dg-" + prefix + VERSION;
-        String container_port = "8888";
+        String container_images = DOCKER_IMAGE_PREFIX + prefix + VERSION;
+        String container_port = EUREKA_CONTAINER_PORT;
 
         return CreateDeployment(K8sApiServer, deploy_name, service_label,
                 container_name, container_images, container_port, eureka_ip, node_selector);
@@ -71,8 +88,8 @@ public class RegistrationController {
         String prefix = "zuul";
         String deploy_name =  service_label + "-" + prefix;
         String container_name = deploy_name;
-        String container_images = "jkong85/dg-" + prefix + VERSION;
-        String container_port = "8889";
+        String container_images = DOCKER_IMAGE_PREFIX + prefix + VERSION;
+        String container_port = ZUUL_CONTAINER_PORT;
 
         return CreateDeployment(K8sApiServer, deploy_name, service_label,
                 container_name, container_images, container_port, eureka_ip, node_selector);
@@ -122,6 +139,12 @@ public class RegistrationController {
         System.out.println("end of creating pod!");
         return str;
     }
+
+    private String CreateIMOService(String service_label,
+                                    String nodePort_eureka,
+                                    String nodePort_zuul ){
+        return CreateService(K8sApiServer, service_label, nodePort_eureka, nodePort_zuul);
+    }
     private String CreateService(String URLApiServer,
                                  String service_label,
                                  String nodePort_eureka,
@@ -137,9 +160,13 @@ public class RegistrationController {
                 service_label +
                 "\",\"namespace\":\"default\"},\"spec\":{\"ports\":[{\"name\":\"eureka-port\",\"nodePort\":" +
                 nodePort_eureka +
-                ",\"port\":80,\"targetPort\":8888},{\"name\":\"zuul-port\",\"nodePort\":" +
+                ",\"port\":80,\"targetPort\":" +
+                EUREKA_CONTAINER_PORT +
+                "},{\"name\":\"zuul-port\",\"nodePort\":" +
                 nodePort_zuul +
-                ",\"port\":8080,\"targetPort\":8889}],\"selector\":{\"app\":\"" +
+                ",\"port\":8080,\"targetPort\":" +
+                ZUUL_CONTAINER_PORT +
+                "}],\"selector\":{\"app\":\"" +
                 service_label +
                 "\"},\"type\":\"" + "NodePort" + "\"}}";
 

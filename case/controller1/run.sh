@@ -16,6 +16,8 @@ function checkIP()
 
 echo ">>>> clean previous running..."
 ./stop.sh
+rm *.ymal
+rm eureka_server_ip
 
 NODE="node1"
 
@@ -68,4 +70,6 @@ echo ">>>> Create the microservices"
 kubectl create -f test.yaml
 sleep 20 
 kubectl create -f zuul.yaml
+sleep 20
+kubectl create -f service.yaml
 

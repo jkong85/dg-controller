@@ -10,3 +10,5 @@ kubectl delete -f zuul.yaml
 sleep 5 
 
 kubectl delete -f service.yaml
+
+
