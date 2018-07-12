@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c4d2589f-d158-4b34-8e3b-fea70abf8fa4" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/case/controller1/run.sh" beforeDir="false" afterPath="$PROJECT_DIR$/case/controller1/run.sh" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/case/controller1/template/eureka.yaml.template" beforeDir="false" afterPath="$PROJECT_DIR$/case/controller1/template/eureka.yaml.template" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/case/controller1/template/kubeclient.yaml.template" beforeDir="false" afterPath="$PROJECT_DIR$/case/controller1/template/kubeclient.yaml.template" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/case/controller1/template/test.yaml.template" beforeDir="false" afterPath="$PROJECT_DIR$/case/controller1/template/test.yaml.template" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/case/controller1/template/zuul.yaml.template" beforeDir="false" afterPath="$PROJECT_DIR$/case/controller1/template/zuul.yaml.template" afterDir="false" />
-    </list>
+    <list default="true" id="c4d2589f-d158-4b34-8e3b-fea70abf8fa4" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/controller-eureka/target/" />
     <ignored path="$PROJECT_DIR$/controller-kubeclient/target/" />
@@ -48,7 +42,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RegistrationController.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="RegistrationController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="645">
@@ -60,7 +54,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="run.sh" pinned="false" current-in-tab="true">
+      <file leaf-file-name="run.sh" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/case/controller1/run.sh">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="638">
@@ -350,12 +344,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1531364423498</updated>
-      <workItem from="1531364425597" duration="12540000" />
+      <workItem from="1531364425597" duration="13022000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="12540000" />
+    <option name="totallyTimeSpent" value="13022000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="992" extended-state="6" />
@@ -527,16 +521,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="645">
-          <caret line="43" column="50" selection-start-line="43" selection-start-column="50" selection-end-line="43" selection-end-column="50" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/case/controller1/template/kubeclient.yaml.template">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="345">
@@ -572,6 +556,16 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="638">
           <caret line="62" column="37" selection-start-line="62" selection-start-column="37" selection-end-line="62" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="645">
+          <caret line="43" column="50" selection-start-line="43" selection-start-column="50" selection-end-line="43" selection-end-column="50" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

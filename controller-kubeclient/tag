@@ -1,0 +1,3 @@
+sudo docker images | sed -n '2p'
+
+sudo docker tag $1 jkong85/dg-controller-kubeclient:0.2
