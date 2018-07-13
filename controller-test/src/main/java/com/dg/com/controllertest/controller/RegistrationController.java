@@ -15,6 +15,8 @@ import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @RestController
 public class RegistrationController {
@@ -29,6 +31,43 @@ public class RegistrationController {
     private String TEST_CONTAINER_PORT = "9005";
     private String SPEED_CONTAINER_PORT = "9001";
     private String OIL_CONTAINER_PORT = "9002";
+
+
+    private class Deployment{
+        boolean isDeployed;
+        String name;
+        String podName;
+        String podIP;
+        public Deployment(String name, boolean isDeployed){
+            this.name = name;
+            this.isDeployed = isDeployed;
+            this.podName = null;
+            this.podIP = null;
+        }
+    }
+
+    private class Service{
+        String name;
+        String clusterIP;
+        String nodeIP;
+        String eureka_node_port;
+        String zuul_node_port;
+        Deployment eureka;
+        Deployment zuul;
+        Deployment test;
+        Deployment speed;
+        Deployment oil;
+        public Service(String name, String eureka_node_port, String zuul_node_port){
+            this.name = name;
+            this.eureka_node_port = eureka_node_port;
+            this.zuul_node_port = zuul_node_port;
+            eureka = new Deployment(name + "-eureka", false);
+            zuul = new Deployment(name + "-zuul", false);
+            test = new Deployment(name + "-test", false);
+            speed = new Deployment(name + "-speed", false);
+            oil = new Deployment(name + "-oil", false);
+        }
+    }
 
     @RequestMapping(value = "/registration")
     public String create(@RequestParam String value){
@@ -82,9 +121,38 @@ public class RegistrationController {
         return testApplication.nodePortsPool.pop();
     }
     //ServiceName is the Service in K8S domain
-    private String getDeploymentIPaddress(String deployment){
-        //based on 'deployment', we need first find the pod name
-        //
+    private String getDeploymentIPaddress(String name_deploy){
+        String urlGetPods = K8sApiServer + "/api/v1/namespaces/default/pods?limit=500";
+        String response = httpGet(urlGetPods);
+        String[] pods_str_array = response.replace("\"", "").replace("{", "").split("metadata:");
+        System.out.println("All pods info: " + response);
+
+        String name_start = "name:";
+        //String name_deploy = "controller-eureka";
+        String name_end = ",generateName";
+
+        String podIP_start = "podIP:";
+        String podIP_end = ",startTime";
+
+        Matcher matcher;
+        Pattern pattern_name = Pattern.compile(name_start + name_deploy+ ".+?" + name_end);
+        Pattern pattern_podIP = Pattern.compile(podIP_start + ".+?" + podIP_end);
+        for(int i=0; i<pods_str_array.length; i++){
+            System.out.println("==================================");
+            System.out.println(pods_str_array[i]);
+            matcher = pattern_name.matcher(pods_str_array[i]);
+            if(matcher.find()){
+                String result = matcher.group();
+                System.out.println("Pod name is : " + result.substring(name_start.length(), result.length() - name_end.length()));
+            }
+            matcher = pattern_podIP.matcher(pods_str_array[i]);
+            if(matcher.find()){
+                String result = matcher.group();
+                System.out.println("Pod IP is : " + result.substring(podIP_start.length(), result.length() - podIP_end.length()));
+            }
+
+        }
+
 
         return null;
     }

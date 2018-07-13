@@ -15,7 +15,7 @@ function checkIP()
 }
 
 echo ">>>> clean previous running..."
-./stop.sh
+#./stop.sh
 rm *.ymal
 rm eureka_server_ip
 
