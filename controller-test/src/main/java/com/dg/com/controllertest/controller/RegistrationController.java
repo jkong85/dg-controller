@@ -266,6 +266,10 @@ public class RegistrationController {
     }
 
     private boolean isValidIP(String ip){
+        System.out.println("valid IP: " + ip);
+        if(ip==null || ip.length()<7){
+            return false;
+        }
       // REGX is a better way
         String IPADDRESS_PATTERN = "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
         Pattern pattern = Pattern.compile(IPADDRESS_PATTERN);

@@ -68,7 +68,7 @@ rm *.tmp
 
 echo ">>>> Create the microservices"
 kubectl create -f test.yaml
-sleep 20 
+sleep 3
 kubectl create -f zuul.yaml
 
 echo "end of staring all thing!"
