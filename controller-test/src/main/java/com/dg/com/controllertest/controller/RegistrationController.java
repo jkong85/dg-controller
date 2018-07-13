@@ -131,7 +131,7 @@ public class RegistrationController {
         String prefix = "speed";
         String deploy_name =  service_label + "-" + prefix;
         String container_name = deploy_name;
-        String container_images = DOCKER_IMAGE_PREFIX + prefix + VERSION;
+        String container_images = DOCKER_IMAGE_PREFIX + prefix + ":" + VERSION;
         String container_port = SPEED_CONTAINER_PORT;
 
         return CreateDeployment(K8sApiServer, deploy_name, service_label,
@@ -142,7 +142,7 @@ public class RegistrationController {
         String prefix = "test";
         String deploy_name =  service_label + "-" + prefix;
         String container_name = deploy_name;
-        String container_images = DOCKER_IMAGE_PREFIX + prefix + VERSION;
+        String container_images = DOCKER_IMAGE_PREFIX + prefix + ":" + VERSION;
         String container_port = TEST_CONTAINER_PORT;
 
         return CreateDeployment(K8sApiServer, deploy_name, service_label,
@@ -153,7 +153,7 @@ public class RegistrationController {
         String prefix = "eureka";
         String deploy_name =  service_label + "-" + prefix;
         String container_name = deploy_name;
-        String container_images = DOCKER_IMAGE_PREFIX + prefix + VERSION;
+        String container_images = DOCKER_IMAGE_PREFIX + prefix + ":" + VERSION;
         String container_port = EUREKA_CONTAINER_PORT;
 
         return CreateDeployment(K8sApiServer, deploy_name, service_label,
@@ -164,7 +164,7 @@ public class RegistrationController {
         String prefix = "zuul";
         String deploy_name =  service_label + "-" + prefix;
         String container_name = deploy_name;
-        String container_images = DOCKER_IMAGE_PREFIX + prefix + VERSION;
+        String container_images = DOCKER_IMAGE_PREFIX + prefix + ":" + VERSION;
         String container_port = ZUUL_CONTAINER_PORT;
 
         return CreateDeployment(K8sApiServer, deploy_name, service_label,
