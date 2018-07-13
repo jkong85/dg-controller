@@ -70,6 +70,6 @@ echo ">>>> Create the microservices"
 kubectl create -f test.yaml
 sleep 20 
 kubectl create -f zuul.yaml
-sleep 20
-kubectl create -f service.yaml
+
+echo "end of staring all thing!"
 
