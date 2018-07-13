@@ -9,3 +9,6 @@ sleep 2
 #sudo mvn clean install -Pdocker-push-image
 #mvn -Ddocker.username=jkong85 -Ddocker.password=19851208 docker:push
 
+
+sudo docker images | sed -n '2p'
+
