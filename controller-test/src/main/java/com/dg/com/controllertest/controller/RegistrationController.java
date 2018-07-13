@@ -61,8 +61,8 @@ public class RegistrationController {
         String eureka_ip = getDeploymentIPaddress(eureka_deploy_name);
         System.out.println("Eureka server IP address is: " + eureka_ip);
 
-        /*
-        CreateSpeedDeployment(service_label, eureka_ip, node_selector);
+        //CreateSpeedDeployment(service_label, eureka_ip, node_selector);
+        CreateTestDeployment(service_label, eureka_ip, node_selector);
         try{
             Thread.sleep(5000);
         }catch (InterruptedException ex){
@@ -77,8 +77,6 @@ public class RegistrationController {
 
         //store the information of the DG
         String serviceClusterIP = getServiceClusterIP(service_label);
-        testApplication.DGInformation.put(service_label, eureka_ip);
-        */
 
         return "DG is created successfully!";
         //return "Create Pod: " + value;
@@ -109,13 +107,14 @@ public class RegistrationController {
             System.out.println(pods_str_array[i]);
             matcher = pattern_name.matcher(pods_str_array[i]);
             if(matcher.find()){
-                String result = matcher.group();
-                System.out.println("Pod name is : " + result.substring(name_start.length(), result.length() - name_end.length()));
-            }
-            matcher = pattern_podIP.matcher(pods_str_array[i]);
-            if(matcher.find()){
-                String result = matcher.group();
-                System.out.println("Pod IP is : " + result.substring(podIP_start.length(), result.length() - podIP_end.length()));
+                String nameResult = matcher.group();
+                System.out.println("Pod name is : " + nameResult.substring(name_start.length(), nameResult.length() - name_end.length()));
+                matcher = pattern_podIP.matcher(pods_str_array[i]);
+                if(matcher.find()){
+                    String ipResult = matcher.group();
+                    System.out.println("Pod IP is : " + ipResult.substring(podIP_start.length(), ipResult.length() - podIP_end.length()));
+                    return ipResult;
+                }
             }
         }
         return null;
