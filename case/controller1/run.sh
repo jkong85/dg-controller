@@ -47,7 +47,7 @@ do
         echo "Eureka Server starts successfully, server ip: ${EUREKA_SERVER_IP}"
         break
     fi
-    sleep 10
+    sleep 3
     if [ $i -eq 59 ]; then
         echo "Can NOT get Eureka server ip address, QUIT!"
         exit 1
