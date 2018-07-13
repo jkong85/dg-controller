@@ -112,8 +112,9 @@ public class RegistrationController {
                 matcher = pattern_podIP.matcher(pods_str_array[i]);
                 if(matcher.find()){
                     String ipResult = matcher.group();
-                    System.out.println("Pod IP is : " + ipResult.substring(podIP_start.length(), ipResult.length() - podIP_end.length()));
-                    return ipResult;
+                    String podIP = ipResult.substring(podIP_start.length(), ipResult.length() - podIP_end.length());
+                    System.out.println("Pod IP is : " +podIP);
+                    return podIP;
                 }
             }
         }
