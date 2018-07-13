@@ -1,20 +1,20 @@
 package com.dg.com.controllertest.controller;
 
 import com.dg.com.controllertest.ControllerTestApplication;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.io.IOException;
 
 @RestController
 public class RegistrationController {
@@ -32,12 +32,36 @@ public class RegistrationController {
 
     @RequestMapping(value = "/registration")
     public String create(@RequestParam String value){
-
         String service_label = value;
+        //TODO: determine node based on the location
         String node_selector = "node1";
+
         CreateEurekaDeployment(service_label, "localhost", node_selector);
-        String eureka_ip = getDeploymentIPaddress(service_label);
-        CreateTestDeployment(service_label, eureka_ip, node_selector);
+        // Get eurkea ip after it is started
+        String eureka_prefix = "eureka";
+        String eureka_deploy_name =  service_label + "-" + eureka_prefix;
+        while(getDeploymentIPaddress(eureka_deploy_name) == null){
+            try{
+               Thread.sleep(5000);
+            }catch (InterruptedException ex){
+                System.out.println(ex.toString());
+            }
+        }
+        try{
+            Thread.sleep(1000);
+        }catch (InterruptedException ex){
+            System.out.println(ex.toString());
+        }
+        String eureka_ip = getDeploymentIPaddress(eureka_deploy_name);
+        System.out.println("Eureka server IP address is: " + eureka_ip);
+
+        /*
+        CreateSpeedDeployment(service_label, eureka_ip, node_selector);
+        try{
+            Thread.sleep(5000);
+        }catch (InterruptedException ex){
+            System.out.println(ex.toString());
+        }
         CreateZuulDeployment(service_label, eureka_ip, node_selector);
 
         // Get the node port form the node po
@@ -46,8 +70,9 @@ public class RegistrationController {
         CreateIMOService(service_label, nodePort_eureka.toString(), nodePort_zuul.toString());
 
         //store the information of the DG
-        String service_ip = getServiceIPaddress(service_label);
+        String serviceClusterIP = getServiceClusterIP(service_label);
         testApplication.DGInformation.put(service_label, eureka_ip);
+        */
 
         return "DG is created successfully!";
         //return "Create Pod: " + value;
@@ -57,14 +82,28 @@ public class RegistrationController {
         return testApplication.nodePortsPool.pop();
     }
     //ServiceName is the Service in K8S domain
-    private String getDeploymentIPaddress(String serviceName){
+    private String getDeploymentIPaddress(String deployment){
+        //based on 'deployment', we need first find the pod name
+        //
 
-        return "localhost";
+        return null;
     }
 
-    private String getServiceIPaddress(String serviceName){
+    private String getServiceClusterIP(String serviceName){
+        //https://172.17.8.101:6443/api/v1/namespaces/default/services/serviceName
+        String url = K8sApiServer + "api/v1/namespaces/default/services/" + serviceName;
+        String response = httpGet(url);
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            JsonNode root = mapper.readTree(response);
 
-        return "localhost";
+            JsonNode spec = root.path("spec");
+            String clusterIP = spec.get("clusterIP").toString();
+            return clusterIP;
+        }catch(IOException ex){
+            System.out.println(ex.toString());
+        }
+        return "0.0.0.0";
     }
     private String CreateSpeedDeployment(String service_label, String eureka_ip, String node_selector){
         String prefix = "speed";
@@ -120,7 +159,6 @@ public class RegistrationController {
                                     String node_selector
                                     ) throws HttpClientErrorException {
         System.out.println("Start to create pod!");
-        String accessToken = "/var/run/secrets/kubernetes.io/serviceaccount/token";
         String urlDeployment = URLApiServer+ "apis/apps/v1/namespaces/default/deployments";
 
         String body = "{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"name\":\"" +
@@ -140,18 +178,7 @@ public class RegistrationController {
                 "}]}],\"nodeSelector\":{\"kubernetes.io/hostname\":\"" +
                 node_selector +
                 "\"}}}}}";
-        //String body = "{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"name\":\"controller-test\",\"namespace\":\"default\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app\":\"controller\"}},\"template\":{\"metadata\":{\"labels\":{\"app\":\"controller\"}},\"spec\":{\"containers\":[{\"env\":[{\"name\":\"EUREKA_SERVER_IP\",\"value\":\"10.1.0.78\"}],\"image\":\"jkong85/dg-controller-test:0.2\",\"name\":\"controller-test\",\"ports\":[{\"containerPort\":9005}]}],\"nodeSelector\":{\"kubernetes.io/hostname\":\"node1\"}}}}}";
-        HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.APPLICATION_JSON);
-        headers.set("Authorization","Bearer "+accessToken);
-
-        HttpEntity<String> httpEntity = new HttpEntity<>(body, headers);
-        RestTemplate restTemplate = new RestTemplate();
-        System.out.println("headers: " + headers.toString());
-        System.out.println("body : " + body);
-        String str = restTemplate.postForObject(urlDeployment, httpEntity, String.class);
-        System.out.println(str);
-        System.out.println("end of creating pod!");
+        String str = httpPost(urlDeployment, body);
         return str;
     }
 
@@ -166,7 +193,6 @@ public class RegistrationController {
                                  String nodePort_zuul
                                 ) throws HttpClientErrorException{
         System.out.println("Start to create service : " + service_label);
-        String accessToken = "/var/run/secrets/kubernetes.io/serviceaccount/token";
         String urlService = URLApiServer+ "api/v1/namespaces/default/services";
 
         String body = "{\"apiVersion\":\"v1\",\"kind\":\"Service\",\"metadata\":{\"labels\":{\"app\":\"" +
@@ -185,17 +211,34 @@ public class RegistrationController {
                 service_label +
                 "\"},\"type\":\"" + "NodePort" + "\"}}";
 
+        String str = httpPost(urlService, body);
+        return str;
+    }
+    private static String httpGet(String urlService){
+        String accessToken = "/var/run/secrets/kubernetes.io/serviceaccount/token";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization","Bearer "+accessToken);
+
+        RestTemplate restTemplate = new RestTemplate();
+        String str = restTemplate.getForObject(urlService, String.class);
+        return str;
+
+        //ResponseEntity<String> response = restTemplate.getForEntity(urlService, String.class);
+        //return response.getBody();
+
+    }
+    private static String httpPost(String urlService, String body) throws HttpClientErrorException{
+        String accessToken = "/var/run/secrets/kubernetes.io/serviceaccount/token";
+
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.set("Authorization","Bearer "+accessToken);
 
         HttpEntity<String> httpEntity = new HttpEntity<>(body, headers);
         RestTemplate restTemplate = new RestTemplate();
-        System.out.println("headers: " + headers.toString());
-        System.out.println("body : " + body);
         String str = restTemplate.postForObject(urlService, httpEntity, String.class);
-        System.out.println(str);
-        System.out.println("end of creating service!");
         return str;
     }
 }
