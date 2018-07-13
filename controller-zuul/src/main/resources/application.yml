@@ -19,7 +19,7 @@ hystrix:
       execution:
         isolation:
           thread:
-            timeoutInMilliseconds: 80000
+            timeoutInMilliseconds: 30000
           strategy: THREAD
 ribbon:
   ReadTimeout: 20000 # 处理时间

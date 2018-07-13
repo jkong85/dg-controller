@@ -29,43 +29,6 @@ public class RegistrationController {
     private String SPEED_CONTAINER_PORT = "9001";
     private String OIL_CONTAINER_PORT = "9002";
 
-
-    private class Deployment{
-        boolean isDeployed;
-        String name;
-        String podName;
-        String podIP;
-        public Deployment(String name, boolean isDeployed){
-            this.name = name;
-            this.isDeployed = isDeployed;
-            this.podName = null;
-            this.podIP = null;
-        }
-    }
-
-    private class Service{
-        String name;
-        String clusterIP;
-        String nodeIP;
-        String eureka_node_port;
-        String zuul_node_port;
-        Deployment eureka;
-        Deployment zuul;
-        Deployment test;
-        Deployment speed;
-        Deployment oil;
-        public Service(String name, String eureka_node_port, String zuul_node_port){
-            this.name = name;
-            this.eureka_node_port = eureka_node_port;
-            this.zuul_node_port = zuul_node_port;
-            eureka = new Deployment(name + "-eureka", false);
-            zuul = new Deployment(name + "-zuul", false);
-            test = new Deployment(name + "-test", false);
-            speed = new Deployment(name + "-speed", false);
-            oil = new Deployment(name + "-oil", false);
-        }
-    }
-
     @RequestMapping(value = "/registration")
     public String create(@RequestParam String value){
         String service_label = value;
@@ -76,18 +39,25 @@ public class RegistrationController {
         // Get eurkea ip after it is started
         String eureka_prefix = "eureka";
         String eureka_deploy_name =  service_label + "-" + eureka_prefix;
-        while(getDeploymentIPaddress(eureka_deploy_name) == null){
+        int wait = 300;
+        String ip = null;
+        while(wait-- > 0){
+            System.out.println("Wait for Eureka starting ...");
+            ip = getDeploymentIPaddress(eureka_deploy_name);
+            if(isValidIP(ip)){
+                break;
+            }
             try{
-               Thread.sleep(5000);
+                Thread.sleep(1000);
             }catch (InterruptedException ex){
                 System.out.println(ex.toString());
             }
         }
-        try{
-            Thread.sleep(1000);
-        }catch (InterruptedException ex){
-            System.out.println(ex.toString());
+        if(!isValidIP(ip)){
+            System.out.println("Eureka cannot start successfully!");
+            return "Eureka cannot start successfully! ";
         }
+
         String eureka_ip = getDeploymentIPaddress(eureka_deploy_name);
         System.out.println("Eureka server IP address is: " + eureka_ip);
 
@@ -293,5 +263,17 @@ public class RegistrationController {
         RestTemplate restTemplate = new RestTemplate();
         String str = restTemplate.postForObject(urlService, httpEntity, String.class);
         return str;
+    }
+
+    private boolean isValidIP(String ip){
+      // REGX is a better way
+        String IPADDRESS_PATTERN = "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
+        Pattern pattern = Pattern.compile(IPADDRESS_PATTERN);
+        Matcher matcher = pattern.matcher(ip);
+        if (matcher.find()) {
+//            System.out.println("IP is: " + matcher.group());
+            return true;
+        }
+        return false;
     }
 }
