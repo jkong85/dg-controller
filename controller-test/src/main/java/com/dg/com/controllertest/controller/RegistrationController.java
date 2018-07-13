@@ -180,7 +180,7 @@ public class RegistrationController {
                                     String eureka_ip,
                                     String node_selector
                                     ) throws HttpClientErrorException {
-        System.out.println("Start to create pod!");
+        System.out.println("Start to create deployment : " + deploy_name);
         String urlDeployment = URLApiServer+ "apis/apps/v1/namespaces/default/deployments";
 
         String body = "{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"name\":\"" +
@@ -200,6 +200,7 @@ public class RegistrationController {
                 "}]}],\"nodeSelector\":{\"kubernetes.io/hostname\":\"" +
                 node_selector +
                 "\"}}}}}";
+        System.out.println("Create deployment HTTP body: " + body);
         String str = httpPost(urlDeployment, body);
         return str;
     }
@@ -232,6 +233,8 @@ public class RegistrationController {
                 "}],\"selector\":{\"app\":\"" +
                 service_label +
                 "\"},\"type\":\"" + "NodePort" + "\"}}";
+
+        System.out.println("Create Service HTTP body: " + body);
 
         String str = httpPost(urlService, body);
         return str;
