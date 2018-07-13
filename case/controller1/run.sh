@@ -25,7 +25,7 @@ echo ">>>> Start the eureka server"
 cp template/eureka.yaml.template eureka.yaml
 sed -i .tmp -e "s/NODE/${NODE}/g" eureka.yaml
 kubectl create -f eureka.yaml
-sleep 120
+#sleep 120
 
 echo ">>>> Create the service"
 cp template/service.yaml.template service.yaml

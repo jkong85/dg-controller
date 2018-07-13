@@ -1,13 +1,10 @@
 package com.dg.com.controllertest.controller;
 
 import com.dg.com.controllertest.ControllerTestApplication;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -150,10 +147,7 @@ public class RegistrationController {
                 String result = matcher.group();
                 System.out.println("Pod IP is : " + result.substring(podIP_start.length(), result.length() - podIP_end.length()));
             }
-
         }
-
-
         return null;
     }
 
@@ -161,16 +155,7 @@ public class RegistrationController {
         //https://172.17.8.101:6443/api/v1/namespaces/default/services/serviceName
         String url = K8sApiServer + "api/v1/namespaces/default/services/" + serviceName;
         String response = httpGet(url);
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            JsonNode root = mapper.readTree(response);
 
-            JsonNode spec = root.path("spec");
-            String clusterIP = spec.get("clusterIP").toString();
-            return clusterIP;
-        }catch(IOException ex){
-            System.out.println(ex.toString());
-        }
         return "0.0.0.0";
     }
     private String CreateSpeedDeployment(String service_label, String eureka_ip, String node_selector){
