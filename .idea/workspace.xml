@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c4d2589f-d158-4b34-8e3b-fea70abf8fa4" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java" afterDir="false" />
-    </list>
+    <list default="true" id="c4d2589f-d158-4b34-8e3b-fea70abf8fa4" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/controller-eureka/target/" />
     <ignored path="$PROJECT_DIR$/controller-kubeclient/target/" />
@@ -444,12 +442,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1531364423498</updated>
-      <workItem from="1531364425597" duration="40485000" />
+      <workItem from="1531364425597" duration="40898000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="40485000" />
+    <option name="totallyTimeSpent" value="40898000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="992" extended-state="6" />
