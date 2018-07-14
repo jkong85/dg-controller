@@ -1,6 +1,7 @@
 package com.dg.com.controllertest.controller;
 
 import com.dg.com.controllertest.ControllerTestApplication;
+import com.dg.com.controllertest.ImoDGs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -11,7 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,11 +29,32 @@ public class RegistrationController {
     private String SPEED_CONTAINER_PORT = "9001";
     private String OIL_CONTAINER_PORT = "9002";
 
-    @RequestMapping(value = "/registration")
-    public String create(@RequestParam String value){
-        String service_label = value;
-        //TODO: determine node based on the location
-        String node_selector = "node1";
+    @RequestMapping(value = "/register")
+    public String register(@RequestParam String value) {
+        //e.g., value = "Car1", we need generate "Car1-0" on core node, "Car1-1" service on edge node
+        // To check whether it is already registered
+        if( testApplication.DGInfoMap.containsKey(value)){
+            ImoDGs imoDgs = testApplication.DGInfoMap.get(value);
+            //get the DG ip address on Core
+
+        }
+        return testApplication.DGInfoMap.get(value).getAllDgIpPort();
+    }
+    @RequestMapping(value = "/copy")
+    public String copy(String value) {
+
+        return "DG is copied to *** !";
+    }
+
+    @RequestMapping(value = "/info")
+    public String getInfo(@RequestParam String value){
+        return testApplication.DGInfoMap.get(value).getAllDgIpPort();
+    }
+
+    private String createIMODG(String service_label, String node_selector){
+        //e.g., Car1-0-***, Car1-1-***
+//        String service_label = "Car1-0";
+//        String node_selector = "node1";
 
         CreateEurekaDeployment(service_label, "localhost", node_selector);
         // Get eurkea ip after it is started
@@ -64,7 +85,7 @@ public class RegistrationController {
         //CreateSpeedDeployment(service_label, eureka_ip, node_selector);
         CreateTestDeployment(service_label, eureka_ip, node_selector);
         try{
-            Thread.sleep(5000);
+            Thread.sleep(1000);
         }catch (InterruptedException ex){
             System.out.println(ex.toString());
         }
