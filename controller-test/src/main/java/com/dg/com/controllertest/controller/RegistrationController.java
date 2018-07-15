@@ -65,10 +65,12 @@ public class RegistrationController {
         for(DgService curDgService : dgInfoMap.get(imoName).edgeDGs){
             if(curDgService.node == edgeLocation){
                 isExisted = true;
+                System.out.println("There is one DG existed. No need to create a new one!");
                 break;
             }
         }
         if(!isExisted){// create a new one on edge node
+            System.out.println("Create a new DG!");
             DgService newDgService  = createIMODG(imoName, edgeLocation) ;
             if(newDgService == null){
                 System.out.println("Cannot create DG for " + imoName + " on edge node : " + edgeLocation);
@@ -76,7 +78,7 @@ public class RegistrationController {
                 dgInfoMap.get(imoName).edgeDGs.add(newDgService);
             }
         }
-
+        // Find ou the IP:port of the DGs created on Core and Edge nodes
         return testApplication.DGInfoMap.get(value).getAllDgIpPort();
     }
     @RequestMapping(value = "/copy")
@@ -114,6 +116,7 @@ public class RegistrationController {
 
     @RequestMapping(value = "/info")
     public String getInfo(@RequestParam String value){
+        System.out.println("get the IP:port for core DG, and edge DG ");
         return testApplication.DGInfoMap.get(value).getAllDgIpPort();
     }
 

@@ -24,11 +24,13 @@ public class ImoDGs {
         sb.append(coreDG.nodeIP);
         sb.append(":");
         sb.append(coreDG.zuul_node_port);
+        System.out.println("CoreIP:Port: " + coreDG.nodeIP + " : " + coreDG.zuul_node_port);
         for(int i=0; i<edgeDGs.size(); i++){
             sb.append(",");
-            sb.append(coreDG.nodeIP);
+            sb.append(edgeDGs.get(i).nodeIP);
             sb.append(":");
-            sb.append(coreDG.zuul_node_port);
+            sb.append(edgeDGs.get(i).zuul_node_port);
+            System.out.println("EdgeIP:Port: " + edgeDGs.get(i).nodeIP + " : " + edgeDGs.get(i).zuul_node_port);
         }
         return sb.toString();
     }
