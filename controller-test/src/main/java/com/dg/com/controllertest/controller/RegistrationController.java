@@ -120,9 +120,9 @@ public class RegistrationController {
     // Override this based on the algorithms
     private String getLocation(String location){
         if(Integer.valueOf(location) > 10) {
-            return EDGE_NODE_1;
+            return CORE_NODE;
         }
-        else return EDGE_NODE_2;
+        else return CORE_NODE;
     }
 
 
