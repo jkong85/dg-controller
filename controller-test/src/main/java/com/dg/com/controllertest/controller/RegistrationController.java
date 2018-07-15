@@ -20,6 +20,8 @@ import java.util.regex.Pattern;
 @RestController
 public class RegistrationController {
     private String K8sApiServer = "http://172.17.8.101:8080/";
+    private String K8S_GET_PODS_API = "/api/v1/namespaces/default/pods?limit=500";
+    private String K8S_GET_SERVICE_API = "api/v1/namespaces/default/services/";
     private String DOCKER_IMAGE_PREFIX = "jkong85/dg-imo-";
     private String VERSION = "0.1";
 
@@ -74,7 +76,6 @@ public class RegistrationController {
                 dgInfoMap.get(imoName).edgeDGs.add(newDgService);
             }
         }
-        //TODO: !!! update all information of deployments and services
 
         return testApplication.DGInfoMap.get(value).getAllDgIpPort();
     }
@@ -107,8 +108,6 @@ public class RegistrationController {
                 dgInfoMap.get(imoName).edgeDGs.add(newDgService);
             }
         }
-
-        //TODO: !!! update all information of deployments and services
 
         return "DG of " + imoName + " is copied to " + destination;
     }
@@ -158,8 +157,10 @@ public class RegistrationController {
         String eureka_ip = getDeploymentIPaddress(eureka_deploy_name);
         System.out.println("Eureka server IP address is: " + eureka_ip);
 
+        // TODO: Different type of Car will run different services
         //CreateSpeedDeployment(service_label, eureka_ip, node_selector);
         CreateTestDeployment(service_label, eureka_ip, node_selector);
+
         try{
             Thread.sleep(1000);
         }catch (InterruptedException ex){
@@ -172,7 +173,9 @@ public class RegistrationController {
         Integer nodePort_zuul = nodePort_eureka+1;
         CreateIMOService(service_label, nodePort_eureka.toString(), nodePort_zuul.toString());
 
-        return new DgService(service_label, nodePort_eureka, nodePort_zuul);
+        String nodeIP = testApplication.nodeIpMap.get(node_selector);
+
+        return new DgService(service_label, nodeIP, nodePort_eureka, nodePort_zuul);
     }
 
     private Integer getIMONodePort(){
@@ -338,19 +341,11 @@ public class RegistrationController {
     //ServiceName is the Service in K8S domain
     //e.g., name_deploy = "controller-eureka", or "car1-1-eureka"
     private String getDeploymentIPaddress(String name_deploy){
-        String urlGetPods = K8sApiServer + "/api/v1/namespaces/default/pods?limit=500";
+        //String urlGetPods = K8sApiServer + "/api/v1/namespaces/default/pods?limit=500";
+        String urlGetPods = K8sApiServer + K8S_GET_PODS_API;
         String response = httpGet(urlGetPods);
         return getDeploymentIPbyRegx(response, name_deploy);
     }
-
-    //TODO: may change to JSON lib
-    private void getAllDeployIPofService(ImoDGs imoDgs){
-        String urlGetPods = K8sApiServer + "/api/v1/namespaces/default/pods?limit=500";
-        String response = httpGet(urlGetPods);
-        for(int i=0; i<)
-        // update to ImoDgs
-    }
-
 
     //e.g., name_deploy = "controller-eureka", or "car1-1-eureka"
     private String getDeploymentIPbyRegx(String response, String name_deploy){
@@ -389,7 +384,9 @@ public class RegistrationController {
 
     private String getServiceClusterIP(String serviceName){
         //https://172.17.8.101:6443/api/v1/namespaces/default/services/serviceName
-        String url = K8sApiServer + "api/v1/namespaces/default/services/" + serviceName;
+        //String url = K8sApiServer + "api/v1/namespaces/default/services/" + serviceName;
+        String url = K8sApiServer + K8S_GET_SERVICE_API + serviceName;
+
         String response = httpGet(url);
 
         return "0.0.0.0";

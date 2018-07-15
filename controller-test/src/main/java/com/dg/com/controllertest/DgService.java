@@ -18,8 +18,9 @@ public class DgService {
 //    public DgDeployment test;
 //    public DgDeployment speed;
 //    public DgDeployment oil;
-    public DgService(String name, Integer eureka_node_port, Integer zuul_node_port){
+    public DgService(String name, String nodeIP, Integer eureka_node_port, Integer zuul_node_port){
         this.name = name;
+        this.nodeIP = nodeIP;
         this.eureka_node_port = eureka_node_port;
         this.zuul_node_port = zuul_node_port;
         this.deploymentMap = new HashMap<>();
