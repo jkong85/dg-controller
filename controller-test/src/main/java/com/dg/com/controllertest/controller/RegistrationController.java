@@ -71,6 +71,11 @@ public class RegistrationController {
             }
         }
         if(!isExisted){// create a new one on edge node
+            try{
+                Thread.sleep(1000);
+            }catch (InterruptedException ex){
+                System.out.println(ex.toString());
+            }
             System.out.println("Create a new DG on edge node : " + edgeLocation);
             Integer edgeIndex = dgInfoMap.get(imoName).indexPool.pop();
             String edgeImoDg = imoName + "-" + Integer.toString(edgeIndex);

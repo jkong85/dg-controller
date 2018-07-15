@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c4d2589f-d158-4b34-8e3b-fea70abf8fa4" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/ImoDGs.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/ImoDGs.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
@@ -23,8 +22,8 @@
       <file leaf-file-name="RegistrationController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="656">
-              <caret line="77" column="12" selection-start-line="77" selection-start-column="12" selection-end-line="77" selection-end-column="12" />
+            <state relative-caret-position="89">
+              <caret line="357" column="52" selection-start-line="357" selection-start-column="52" selection-end-line="357" selection-end-column="52" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#5841#5842#0" expanded="true" />
@@ -472,12 +471,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1531364423498</updated>
-      <workItem from="1531364425597" duration="57272000" />
+      <workItem from="1531364425597" duration="58027000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="57272000" />
+    <option name="totallyTimeSpent" value="58027000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="992" extended-state="6" />
@@ -816,8 +815,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="656">
-          <caret line="77" column="12" selection-start-line="77" selection-start-column="12" selection-end-line="77" selection-end-column="12" />
+        <state relative-caret-position="89">
+          <caret line="357" column="52" selection-start-line="357" selection-start-column="52" selection-end-line="357" selection-end-column="52" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#5841#5842#0" expanded="true" />
