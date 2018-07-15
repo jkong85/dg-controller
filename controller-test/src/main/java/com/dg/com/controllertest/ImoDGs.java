@@ -7,14 +7,14 @@ import java.util.Stack;
 public class ImoDGs {
     private static final int CAPACITY = 100;
     public String name;
-    public Stack<Integer> index;
+    public Stack<Integer> indexPool;
     public DgService coreDG;
     public List<DgService> edgeDGs;
     public ImoDGs(String name){
         this.name = name;
-        index = new Stack<>();
+        indexPool = new Stack<>();
         for(int i=CAPACITY; i>0; i--){
-            index.push(i);
+            indexPool.push(i);
         }
         edgeDGs = new ArrayList<>();
     }

@@ -51,7 +51,8 @@ public class RegistrationController {
         Map<String, ImoDGs>  dgInfoMap = testApplication.DGInfoMap;
         if( !dgInfoMap.containsKey(imoName)){
             ImoDGs newImoDgs = new ImoDGs(imoName);
-            DgService newDgService = createIMODG(imoName, CORE_NODE);
+            String mainIMODG = imoName + "-0";
+            DgService newDgService = createIMODG(mainIMODG, CORE_NODE);
             if(newDgService == null){
                 return "Cannot create DGs on core node for this car!";
             }
@@ -70,8 +71,10 @@ public class RegistrationController {
             }
         }
         if(!isExisted){// create a new one on edge node
-            System.out.println("Create a new DG!");
-            DgService newDgService  = createIMODG(imoName, edgeLocation) ;
+            System.out.println("Create a new DG on edge node : " + edgeLocation);
+            Integer edgeIndex = dgInfoMap.get(imoName).indexPool.pop();
+            String edgeImoDg = imoName + "-" + Integer.toString(edgeIndex);
+            DgService newDgService  = createIMODG(edgeImoDg, edgeLocation) ;
             if(newDgService == null){
                 System.out.println("Cannot create DG for " + imoName + " on edge node : " + edgeLocation);
             }else {
