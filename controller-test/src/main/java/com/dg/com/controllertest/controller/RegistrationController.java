@@ -1,6 +1,7 @@
 package com.dg.com.controllertest.controller;
 
 import com.dg.com.controllertest.ControllerTestApplication;
+import com.dg.com.controllertest.DgService;
 import com.dg.com.controllertest.ImoDGs;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
@@ -12,38 +13,104 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @RestController
 public class RegistrationController {
-    @Autowired
-    private ControllerTestApplication testApplication;
-
     private String K8sApiServer = "http://172.17.8.101:8080/";
-    private String VERSION = "0.1";
     private String DOCKER_IMAGE_PREFIX = "jkong85/dg-imo-";
+    private String VERSION = "0.1";
+
     private String EUREKA_CONTAINER_PORT = "8888";
     private String ZUUL_CONTAINER_PORT = "8889";
     private String TEST_CONTAINER_PORT = "9005";
     private String SPEED_CONTAINER_PORT = "9001";
     private String OIL_CONTAINER_PORT = "9002";
 
+    private String CORE_NODE = "node1";
+    private String EDGE_NODE_1 = "node2";
+    private String EDGE_NODE_2 = "node3";
+
+    @Autowired
+    private ControllerTestApplication testApplication;
+
+
     @RequestMapping(value = "/register")
     public String register(@RequestParam String value) {
         //e.g., value = "Car1", we need generate "Car1-0" on core node, "Car1-1" service on edge node
         // To check whether it is already registered
-        if( testApplication.DGInfoMap.containsKey(value)){
-            ImoDGs imoDgs = testApplication.DGInfoMap.get(value);
-            //get the DG ip address on Core
+        //TODO: change here
+        String imoName = value;
+        //TODO: change here based on the input
+        String location = "10";
 
+        Map<String, ImoDGs>  dgInfoMap = testApplication.DGInfoMap;
+        if( !dgInfoMap.containsKey(imoName)){
+            ImoDGs newImoDgs = new ImoDGs(imoName);
+            DgService newDgService = createIMODG(imoName, CORE_NODE);
+            if(newDgService == null){
+                return "Cannot create DGs on core node for this car!";
+            }
+            newImoDgs.coreDG = newDgService;
+            dgInfoMap.put(imoName, newImoDgs);
         }
+        // determine the location of the IMO
+        String edgeLocation = getLocation(location);
+        //Check whether there is a DG of this IMO  on this edge node
+        boolean isExisted = false;
+        for(DgService curDgService : dgInfoMap.get(imoName).edgeDGs){
+            if(curDgService.node == edgeLocation){
+                isExisted = true;
+                break;
+            }
+        }
+        if(!isExisted){// create a new one on edge node
+            DgService newDgService  = createIMODG(imoName, edgeLocation) ;
+            if(newDgService == null){
+                System.out.println("Cannot create DG for " + imoName + " on edge node : " + edgeLocation);
+            }else {
+                dgInfoMap.get(imoName).edgeDGs.add(newDgService);
+            }
+        }
+        //TODO: !!! update all information of deployments and services
+
         return testApplication.DGInfoMap.get(value).getAllDgIpPort();
     }
     @RequestMapping(value = "/copy")
-    public String copy(String value) {
+    public String copy(@RequestParam String value) {
+        // TODO: change here based on the input
+        String source = EDGE_NODE_1;
+        // TODO: change here based on the input
+        String destination = EDGE_NODE_2;
+        // TODO: change here based on the input
+        String imoName = value;
 
-        return "DG is copied to *** !";
+        if(source == destination){
+            return "New destination of DG is the same with the source, no need to copy it!";
+        }
+
+        Map<String, ImoDGs> dgInfoMap = testApplication.DGInfoMap;
+        boolean isExisted = false;
+        for(DgService curDgService : dgInfoMap.get(imoName).edgeDGs){
+            if(curDgService.node == destination){
+                isExisted = true;
+                break;
+            }
+        }
+        if(!isExisted){// create a new one on edge node
+            DgService newDgService  = createIMODG(imoName, destination) ;
+            if(newDgService == null){
+                System.out.println("Cannot create DG for " + imoName + " on edge node : " + destination);
+            }else {
+                dgInfoMap.get(imoName).edgeDGs.add(newDgService);
+            }
+        }
+
+        //TODO: !!! update all information of deployments and services
+
+        return "DG of " + imoName + " is copied to " + destination;
     }
 
     @RequestMapping(value = "/info")
@@ -51,16 +118,25 @@ public class RegistrationController {
         return testApplication.DGInfoMap.get(value).getAllDgIpPort();
     }
 
-    private String createIMODG(String service_label, String node_selector){
+    // Override this based on the algorithms
+    private String getLocation(String location){
+        if(Integer.valueOf(location) > 10) {
+            return EDGE_NODE_1;
+        }
+        else return EDGE_NODE_2;
+    }
+
+
+    private DgService createIMODG(String service_label, String node_selector){
         //e.g., Car1-0-***, Car1-1-***
 //        String service_label = "Car1-0";
 //        String node_selector = "node1";
-
         CreateEurekaDeployment(service_label, "localhost", node_selector);
         // Get eurkea ip after it is started
         String eureka_prefix = "eureka";
         String eureka_deploy_name =  service_label + "-" + eureka_prefix;
-        int wait = 300;
+        // Wait for 2 min
+        int wait = 120;
         String ip = null;
         while(wait-- > 0){
             System.out.println("Wait for Eureka starting ...");
@@ -76,7 +152,7 @@ public class RegistrationController {
         }
         if(!isValidIP(ip)){
             System.out.println("Eureka cannot start successfully!");
-            return "Eureka cannot start successfully! ";
+            return null;
         }
 
         String eureka_ip = getDeploymentIPaddress(eureka_deploy_name);
@@ -96,59 +172,14 @@ public class RegistrationController {
         Integer nodePort_zuul = nodePort_eureka+1;
         CreateIMOService(service_label, nodePort_eureka.toString(), nodePort_zuul.toString());
 
-        //store the information of the DG
-        String serviceClusterIP = getServiceClusterIP(service_label);
-
-        return "DG is created successfully!";
-        //return "Create Pod: " + value;
+        return new DgService(service_label, nodePort_eureka, nodePort_zuul);
     }
 
     private Integer getIMONodePort(){
         return testApplication.nodePortsPool.pop();
     }
-    //ServiceName is the Service in K8S domain
-    private String getDeploymentIPaddress(String name_deploy){
-        String urlGetPods = K8sApiServer + "/api/v1/namespaces/default/pods?limit=500";
-        String response = httpGet(urlGetPods);
-        String[] pods_str_array = response.replace("\"", "").replace("{", "").split("metadata:");
-        System.out.println("All pods info: " + response);
 
-        String name_start = "name:";
-        //String name_deploy = "controller-eureka";
-        String name_end = ",generateName";
 
-        String podIP_start = "podIP:";
-        String podIP_end = ",startTime";
-
-        Matcher matcher;
-        Pattern pattern_name = Pattern.compile(name_start + name_deploy+ ".+?" + name_end);
-        Pattern pattern_podIP = Pattern.compile(podIP_start + ".+?" + podIP_end);
-        for(int i=0; i<pods_str_array.length; i++){
-            System.out.println("==================================");
-            System.out.println(pods_str_array[i]);
-            matcher = pattern_name.matcher(pods_str_array[i]);
-            if(matcher.find()){
-                String nameResult = matcher.group();
-                System.out.println("Pod name is : " + nameResult.substring(name_start.length(), nameResult.length() - name_end.length()));
-                matcher = pattern_podIP.matcher(pods_str_array[i]);
-                if(matcher.find()){
-                    String ipResult = matcher.group();
-                    String podIP = ipResult.substring(podIP_start.length(), ipResult.length() - podIP_end.length());
-                    System.out.println("Pod IP is : " +podIP);
-                    return podIP;
-                }
-            }
-        }
-        return null;
-    }
-
-    private String getServiceClusterIP(String serviceName){
-        //https://172.17.8.101:6443/api/v1/namespaces/default/services/serviceName
-        String url = K8sApiServer + "api/v1/namespaces/default/services/" + serviceName;
-        String response = httpGet(url);
-
-        return "0.0.0.0";
-    }
     private String CreateSpeedDeployment(String service_label, String eureka_ip, String node_selector){
         String prefix = "speed";
         String deploy_name =  service_label + "-" + prefix;
@@ -201,7 +232,7 @@ public class RegistrationController {
                                     String container_port,
                                     String eureka_ip,
                                     String node_selector
-                                    ) throws HttpClientErrorException {
+    ) throws HttpClientErrorException {
         System.out.println("Start to create deployment : " + deploy_name);
         String urlDeployment = URLApiServer+ "apis/apps/v1/namespaces/default/deployments";
 
@@ -236,7 +267,7 @@ public class RegistrationController {
                                  String service_label,
                                  String nodePort_eureka,
                                  String nodePort_zuul
-                                ) throws HttpClientErrorException{
+    ) throws HttpClientErrorException{
         System.out.println("Start to create service : " + service_label);
         String urlService = URLApiServer+ "api/v1/namespaces/default/services";
 
@@ -294,7 +325,7 @@ public class RegistrationController {
         if(ip==null || ip.length()<7){
             return false;
         }
-      // REGX is a better way
+        // REGX is a better way
         String IPADDRESS_PATTERN = "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)";
         Pattern pattern = Pattern.compile(IPADDRESS_PATTERN);
         Matcher matcher = pattern.matcher(ip);
@@ -303,5 +334,64 @@ public class RegistrationController {
             return true;
         }
         return false;
+    }
+    //ServiceName is the Service in K8S domain
+    //e.g., name_deploy = "controller-eureka", or "car1-1-eureka"
+    private String getDeploymentIPaddress(String name_deploy){
+        String urlGetPods = K8sApiServer + "/api/v1/namespaces/default/pods?limit=500";
+        String response = httpGet(urlGetPods);
+        return getDeploymentIPbyRegx(response, name_deploy);
+    }
+
+    //TODO: may change to JSON lib
+    private void getAllDeployIPofService(ImoDGs imoDgs){
+        String urlGetPods = K8sApiServer + "/api/v1/namespaces/default/pods?limit=500";
+        String response = httpGet(urlGetPods);
+        for(int i=0; i<)
+        // update to ImoDgs
+    }
+
+
+    //e.g., name_deploy = "controller-eureka", or "car1-1-eureka"
+    private String getDeploymentIPbyRegx(String response, String name_deploy){
+        String[] pods_str_array = response.replace("\"", "").replace("{", "").split("metadata:");
+        System.out.println("All pods info: " + response);
+
+        String name_start = "name:";
+        //String name_deploy = "controller-eureka";
+        String name_end = ",generateName";
+
+        String podIP_start = "podIP:";
+        String podIP_end = ",startTime";
+
+        Matcher matcher;
+        Pattern pattern_name = Pattern.compile(name_start + name_deploy + ".+?" + name_end);
+        Pattern pattern_podIP = Pattern.compile(podIP_start + ".+?" + podIP_end);
+        for(int i=0; i<pods_str_array.length; i++){
+            System.out.println("==================================");
+            System.out.println(pods_str_array[i]);
+            matcher = pattern_name.matcher(pods_str_array[i]);
+            if(matcher.find()){
+                String nameResult = matcher.group();
+                System.out.println("Pod name is : " + nameResult.substring(name_start.length(), nameResult.length() - name_end.length()));
+                matcher = pattern_podIP.matcher(pods_str_array[i]);
+                if(matcher.find()){
+                    String ipResult = matcher.group();
+                    String podIP = ipResult.substring(podIP_start.length(), ipResult.length() - podIP_end.length());
+                    System.out.println("Pod IP is : " +podIP);
+                    return podIP;
+                }
+            }
+        }
+        return null;
+    }
+
+
+    private String getServiceClusterIP(String serviceName){
+        //https://172.17.8.101:6443/api/v1/namespaces/default/services/serviceName
+        String url = K8sApiServer + "api/v1/namespaces/default/services/" + serviceName;
+        String response = httpGet(url);
+
+        return "0.0.0.0";
     }
 }

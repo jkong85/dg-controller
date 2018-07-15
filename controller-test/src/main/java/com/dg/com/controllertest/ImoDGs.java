@@ -5,14 +5,15 @@ import java.util.List;
 import java.util.Stack;
 
 public class ImoDGs {
-    String name;
-    Stack<Integer> index;
-    DgService coreDG;
-    List<DgService> edgeDGs;
+    private static final int CAPACITY = 100;
+    public String name;
+    public Stack<Integer> index;
+    public DgService coreDG;
+    public List<DgService> edgeDGs;
     public ImoDGs(String name){
         this.name = name;
         index = new Stack<>();
-        for(int i=10; i>0; i--){
+        for(int i=CAPACITY; i>0; i--){
             index.push(i);
         }
         edgeDGs = new ArrayList<>();

@@ -1,10 +1,10 @@
 package com.dg.com.controllertest;
 
 public class DgDeployment {
-    boolean isDeployed;
-    String name;
-    String podName;
-    String podIP;
+    public boolean isDeployed;
+    public String name;
+    public String podName;
+    public String podIP;
     public DgDeployment(String name, boolean isDeployed){
         this.name = name;
         this.isDeployed = isDeployed;
