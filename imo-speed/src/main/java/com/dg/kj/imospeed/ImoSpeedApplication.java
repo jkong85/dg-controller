@@ -11,8 +11,10 @@ import java.util.List;
 @EnableDiscoveryClient
 public class ImoSpeedApplication {
     public static List<Integer> speedHistoryData = new ArrayList<>();
+    public static List<Integer> locationHistoryData = new ArrayList<>();
     public static void main(String[] args) {
         speedHistoryData = new ArrayList<>();
+        locationHistoryData = new ArrayList<>();
         SpringApplication.run(ImoSpeedApplication.class, args);
     }
 }

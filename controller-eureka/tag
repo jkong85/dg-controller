@@ -1,3 +1,4 @@
 sudo docker images | sed -n '2p'
 
 sudo docker tag $1 jkong85/dg-controller-eureka:0.1
+sudo docker tag $1 jkong85/dg-imo-eureka:0.1

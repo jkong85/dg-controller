@@ -11,8 +11,11 @@ public class SpeedController {
     @Autowired
     private ImoSpeedApplication imoSpeedApplication;
     @RequestMapping(value = "/cur")
-    public String index(@RequestParam String value){
+    public String index(@RequestParam String name,
+                        @RequestParam String value,
+                        @RequestParam String location ){
         imoSpeedApplication.speedHistoryData.add(0, Integer.valueOf(value));
+        imoSpeedApplication.locationHistoryData.add(0, Integer.valueOf(location));
         Integer total = 0;
         for(int i=0; i<imoSpeedApplication.speedHistoryData.size(); i++){
             total += imoSpeedApplication.speedHistoryData.get(i);
@@ -22,6 +25,8 @@ public class SpeedController {
 
     @RequestMapping(value="/history")
     public String history(){
-        return "all history data is : " + imoSpeedApplication.speedHistoryData.toString();
+        String result = "Speed history data is: " + imoSpeedApplication.speedHistoryData.toString();
+        result += "\n" + "Location history data is: " + imoSpeedApplication.locationHistoryData.toString();
+        return result;
     }
 }

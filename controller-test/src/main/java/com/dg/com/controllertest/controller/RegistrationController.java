@@ -40,13 +40,14 @@ public class RegistrationController {
 
 
     @RequestMapping(value = "/register")
-    public String register(@RequestParam String value) {
+    public String register(@RequestParam String name,
+                            @RequestParam String location) {
         //e.g., value = "Car1", we need generate "Car1-0" on core node, "Car1-1" service on edge node
         // To check whether it is already registered
         //TODO: change here
-        String imoName = value;
+        String imoName = name;
         //TODO: change here based on the input
-        String location = "10";
+        String imoLocation = location;
 
         Map<String, ImoDGs>  dgInfoMap = testApplication.DGInfoMap;
         if( !dgInfoMap.containsKey(imoName)){
@@ -60,7 +61,7 @@ public class RegistrationController {
             dgInfoMap.put(imoName, newImoDgs);
         }
         // determine the location of the IMO
-        String edgeLocation = getLocation(location);
+        String edgeLocation = getLocation(imoLocation);
         //Check whether there is a DG of this IMO  on this edge node
         boolean isExisted = false;
         for(DgService curDgService : dgInfoMap.get(imoName).edgeDGs){
@@ -87,16 +88,15 @@ public class RegistrationController {
             }
         }
         // Find ou the IP:port of the DGs created on Core and Edge nodes
-        return testApplication.DGInfoMap.get(value).getAllDgIpPort();
+        return testApplication.DGInfoMap.get(name).getAllDgIpPort();
     }
     @RequestMapping(value = "/copy")
-    public String copy(@RequestParam String value) {
-        // TODO: change here based on the input
-        String source = EDGE_NODE_1;
-        // TODO: change here based on the input
-        String destination = EDGE_NODE_2;
-        // TODO: change here based on the input
-        String imoName = value;
+    public String copy(@RequestParam String name,
+                       @RequestParam String srcNode,
+                       @RequestParam String dstNode) {
+        String source = srcNode;
+        String destination = dstNode;
+        String imoName = name;
 
         if(source == destination){
             return "New destination of DG is the same with the source, no need to copy it!";
@@ -128,7 +128,7 @@ public class RegistrationController {
         return testApplication.DGInfoMap.get(value).getAllDgIpPort();
     }
 
-    // Override this based on the algorithms
+    // TODO: Override this based on the algorithms
     private String getLocation(String location){
         if(Integer.valueOf(location) > 10) {
             return CORE_NODE;
