@@ -56,6 +56,7 @@ do
 done
 
 echo ${EUREKA_SERVER_IP} > eureka_server_ip
+echo "IP address of eureka server is: ${EUREKA_SERVER_IP}"
 
 echo ">>>> Config the YAML based on template"
 cp template/zuul.yaml.template zuul.yaml
