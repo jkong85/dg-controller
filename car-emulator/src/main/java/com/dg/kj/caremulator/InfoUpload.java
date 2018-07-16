@@ -5,6 +5,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+
 public class InfoUpload implements Runnable{
     private Thread t;
     private String threadName;
@@ -45,6 +46,8 @@ public class InfoUpload implements Runnable{
     }
 
     public void run() {
+        String name = CarEmulatorApplication.NAME;
+        String type = CarEmulatorApplication.TYPE;
         System.out.println("Running InfoUploda of " +  threadName );
         try {
             RestTemplate template = new RestTemplate();
@@ -58,8 +61,14 @@ public class InfoUpload implements Runnable{
                     MultiValueMap<String, Object> speedParamMap = new LinkedMultiValueMap<String, Object>();
                     MultiValueMap<String, Object> locationParamMap = new LinkedMultiValueMap<String, Object>();
                     MultiValueMap<String, Object> oilParamMap = new LinkedMultiValueMap<String, Object>();
+                    speedParamMap.add("name", name);
+                    speedParamMap.add("type", type);
                     speedParamMap.add("value", speed[i]);
+                    oilParamMap.add("name", name);
+                    oilParamMap.add("type", type);
                     oilParamMap.add("value", oil[i]);
+                    locationParamMap.add("name", name);
+                    locationParamMap.add("type", type);
                     locationParamMap.add("value", location[i]);
 
                     boolean speedResend = true;

@@ -28,6 +28,10 @@ public class CarEmulatorApplication {
     public static List<String> destination = new ArrayList<>();
     public static Integer index = 0;
 
+    public static String NAME = null;
+    public static String TYPE = null;
+
+
     public static void main(String[] args) {
         //SpringApplication.run(CarEmulatorApplication.class, args);
 
@@ -38,6 +42,9 @@ public class CarEmulatorApplication {
 
         String name = args[0];
         String type = args[1];
+        NAME = name;
+        TYPE = type;
+
         if(!type.equals(HONDA) && !type.equals(TOYOTA)){
             System.out.println("Car type of " + type + " is not supported!");
         }
