@@ -36,6 +36,13 @@
         <docker.image.jdk>docker.io/adoptopenjdk/openjdk8-openj9:jdk8u162-b12_openj9-0.8.0-alpine</docker.image.jdk>
         <docker.image.port>8080</docker.image.port>
 
+         <!--added for JVM, REF: https://cn.aliyun.com/jiaocheng/840747.html-->
+        <docker.env.JAVA_OPTS>-Xmx256m</docker.env.JAVA_OPTS>
+        <docker.env.JAVA_OPTS>-Xms64m</docker.env.JAVA_OPTS>
+        <docker.env.JAVA_OPTS>-XX:PermSize=128M</docker.env.JAVA_OPTS>
+        <docker.env.JAVA_OPTS>-XX:MaxNewSize=256</docker.env.JAVA_OPTS>
+        <docker.env.JAVA_OPTS>-XX:MaxPermSize=256m</docker.env.JAVA_OPTS>
+
     </properties>
 
     <dependencies>
@@ -141,6 +148,12 @@
                                     <!--<runCmd>./start.sh</runCmd>-->
                                 </runCmds>
                             </build>
+                            <!--Added for JAVA_OPTIONS-->
+                            <external>
+                                <type>properties</type>
+                                <prefix>docker</prefix> <!-- this is the default -->
+                                <mode>only</mode> <!-- this is the default -->
+                            </external>
                         </image>
                     </images>
                 </configuration>
