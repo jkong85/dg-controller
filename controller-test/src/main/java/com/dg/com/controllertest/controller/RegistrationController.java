@@ -35,12 +35,16 @@ public class RegistrationController {
     private String EDGE_NODE_1 = "node2";
     private String EDGE_NODE_2 = "node3";
 
+    private String HONDA_TYPE = "honda";
+    private String TOYOTA_TYPE = "toyota";
+
     @Autowired
     private ControllerTestApplication testApplication;
 
 
     @RequestMapping(value = "/register")
     public String register(@RequestParam String name,
+                            @RequestParam String type,
                             @RequestParam String location) {
         //e.g., value = "Car1", we need generate "Car1-0" on core node, "Car1-1" service on edge node
         // To check whether it is already registered
@@ -53,7 +57,7 @@ public class RegistrationController {
         if( !dgInfoMap.containsKey(imoName)){
             ImoDGs newImoDgs = new ImoDGs(imoName);
             String mainIMODG = imoName + "-0";
-            DgService newDgService = createIMODG(mainIMODG, CORE_NODE);
+            DgService newDgService = createIMODG(mainIMODG, CORE_NODE, type);
             if(newDgService == null){
                 return "Cannot create DGs on core node for this car!";
             }
@@ -73,14 +77,14 @@ public class RegistrationController {
         }
         if(!isExisted){// create a new one on edge node
             try{
-                Thread.sleep(1000);
+                Thread.sleep(500);
             }catch (InterruptedException ex){
                 System.out.println(ex.toString());
             }
             System.out.println("Create a new DG on edge node : " + edgeLocation);
             Integer edgeIndex = dgInfoMap.get(imoName).indexPool.pop();
             String edgeImoDg = imoName + "-" + Integer.toString(edgeIndex);
-            DgService newDgService  = createIMODG(edgeImoDg, edgeLocation) ;
+            DgService newDgService  = createIMODG(edgeImoDg, edgeLocation, type) ;
             if(newDgService == null){
                 System.out.println("Cannot create DG for " + imoName + " on edge node : " + edgeLocation);
             }else {
@@ -92,6 +96,7 @@ public class RegistrationController {
     }
     @RequestMapping(value = "/copy")
     public String copy(@RequestParam String name,
+                       @RequestParam String type,
                        @RequestParam String srcNode,
                        @RequestParam String dstNode) {
         String source = srcNode;
@@ -111,7 +116,7 @@ public class RegistrationController {
             }
         }
         if(!isExisted){// create a new one on edge node
-            DgService newDgService  = createIMODG(imoName, destination) ;
+            DgService newDgService  = createIMODG(imoName, destination, type) ;
             if(newDgService == null){
                 System.out.println("Cannot create DG for " + imoName + " on edge node : " + destination);
             }else {
@@ -128,7 +133,7 @@ public class RegistrationController {
         return testApplication.DGInfoMap.get(value).getAllDgIpPort();
     }
 
-    // TODO: Override this based on the algorithms
+    //TODO: override this based on the algorithms
     private String getLocation(String location){
         if(Integer.valueOf(location) > 10) {
             return CORE_NODE;
@@ -137,7 +142,7 @@ public class RegistrationController {
     }
 
 
-    private DgService createIMODG(String service_label, String node_selector){
+    private DgService createIMODG(String service_label, String node_selector, String type){
         //e.g., Car1-0-***, Car1-1-***
 //        String service_label = "Car1-0";
 //        String node_selector = "node1";
@@ -169,8 +174,14 @@ public class RegistrationController {
         System.out.println("Eureka server IP address is: " + eureka_ip);
 
         // TODO: Different type of Car will run different services
-        //CreateSpeedDeployment(service_label, eureka_ip, node_selector);
-        CreateTestDeployment(service_label, eureka_ip, node_selector);
+        if(type == HONDA_TYPE){
+            //CreateSpeedDeployment(service_label, eureka_ip, node_selector);
+            CreateTestDeployment(service_label, eureka_ip, node_selector);
+        }else if (type == TOYOTA_TYPE){
+            CreateTestDeployment(service_label, eureka_ip, node_selector);
+        }else{
+            System.out.println("Not a correct car type!");
+        }
 
         try{
             Thread.sleep(1000);
@@ -201,8 +212,9 @@ public class RegistrationController {
         String container_images = DOCKER_IMAGE_PREFIX + prefix + ":" + VERSION;
         String container_port = SPEED_CONTAINER_PORT;
 
-        return CreateDeployment(K8sApiServer, deploy_name, service_label,
+        CreateDeployment(K8sApiServer, deploy_name, service_label,
                 container_name, container_images, container_port, eureka_ip, node_selector);
+        return "Speed service is starting...\n";
     }
 
     private String CreateTestDeployment(String service_label, String eureka_ip, String node_selector){
@@ -212,8 +224,9 @@ public class RegistrationController {
         String container_images = DOCKER_IMAGE_PREFIX + prefix + ":" + VERSION;
         String container_port = TEST_CONTAINER_PORT;
 
-        return CreateDeployment(K8sApiServer, deploy_name, service_label,
+        CreateDeployment(K8sApiServer, deploy_name, service_label,
                 container_name, container_images, container_port, eureka_ip, node_selector);
+        return "Test service is starting...\n";
     }
 
     private String CreateEurekaDeployment(String service_label, String eureka_ip, String node_selector){
@@ -223,8 +236,10 @@ public class RegistrationController {
         String container_images = DOCKER_IMAGE_PREFIX + prefix + ":" + VERSION;
         String container_port = EUREKA_CONTAINER_PORT;
 
-        return CreateDeployment(K8sApiServer, deploy_name, service_label,
+        CreateDeployment(K8sApiServer, deploy_name, service_label,
                 container_name, container_images, container_port, eureka_ip, node_selector);
+
+        return "Eureka server is starting... \n";
     }
 
     private String CreateZuulDeployment(String service_label, String eureka_ip, String node_selector){
@@ -234,8 +249,9 @@ public class RegistrationController {
         String container_images = DOCKER_IMAGE_PREFIX + prefix + ":" + VERSION;
         String container_port = ZUUL_CONTAINER_PORT;
 
-        return CreateDeployment(K8sApiServer, deploy_name, service_label,
+        CreateDeployment(K8sApiServer, deploy_name, service_label,
                 container_name, container_images, container_port, eureka_ip, node_selector);
+        return "API gateway Zuul is starting... \n";
     }
 
     private String CreateDeployment(String URLApiServer,

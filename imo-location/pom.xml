@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.dg.kj</groupId>
+    <artifactId>imo-location</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <name>imo-location</name>
+    <description>Demo project for Spring Boot</description>
+
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.14.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <java.version>1.8</java.version>
+        <spring-cloud.version>Edgware.SR4</spring-cloud.version>
+
+        <docker.daemon.hostname/> <!-- inject into maven build via -Ddocker.daemon.hostname=the.hostname -->
+        <docker.daemon.port>2375</docker.daemon.port>
+        <docker.daemon.protocol>http</docker.daemon.protocol>
+        <docker.daemon.url>${docker.daemon.protocol}://${docker.daemon.hostname}:${docker.daemon.port}
+        </docker.daemon.url>
+
+        <docker.registry>docker.io</docker.registry>
+        <docker.repository>${docker.registry}/eclipse</docker.repository>
+        <docker.image.additional.tag/>
+        <docker.image.jdk>docker.io/adoptopenjdk/openjdk8-openj9:jdk8u162-b12_openj9-0.8.0-alpine</docker.image.jdk>
+        <docker.image.port>8080</docker.image.port>
+
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-eureka</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.cloud</groupId>
+                <artifactId>spring-cloud-dependencies</artifactId>
+                <version>${spring-cloud.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5.1</version>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>exec-maven-plugin</artifactId>
+                <version>1.6.0</version>
+                <configuration>
+                    <executable>java</executable>
+                    <arguments>
+                        <argument>-classpath</argument>
+                        <classpath />
+                        <argument>com.dg.kj.imolocation.ImoLocationApplication</argument>
+                    </arguments>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>io.fabric8</groupId>
+                <artifactId>docker-maven-plugin</artifactId>
+                <configuration>
+                    <autoPull>always</autoPull> <!-- always pull latest BaseImage -->
+                    <!--<registry>docker.io</registry>-->
+                    <pushRegistry>docker.io</pushRegistry>
+                    <images>
+                        <image>
+                            <alias>dg-${name}</alias>
+                            <name>
+                                dg-${name}
+                            </name>
+                            <build>
+                                <from>${docker.image.jdk}</from>
+                                <tags>
+                                    <tag>${docker.image.additional.tag}</tag>
+                                </tags>
+                                <ports>
+                                    <port>${docker.image.port}</port>
+                                </ports>
+                                <env>
+                                    <HTTP_PORT>${docker.image.port}</HTTP_PORT>
+                                    <HOSTING_ENVIRONMENT>Docker</HOSTING_ENVIRONMENT>
+                                </env>
+                                <workdir>/opt/dg</workdir>
+                                <entryPoint>
+                                    <exec>
+                                        <!-- <arg>java</arg> -->
+                                        <arg>/opt/java/openjdk/bin/java</arg>
+                                        <arg>-jar</arg>
+                                        <arg>/opt/dg/starter.jar</arg>
+                                    </exec>
+                                </entryPoint>
+                                <assembly>
+                                    <basedir>/</basedir>
+                                    <descriptor>assembly.xml</descriptor>
+                                </assembly>
+                                <runCmds>
+                                    <runCmd>ln -s /opt/dg/${name}-${version}.jar /opt/dg/starter.jar</runCmd>
+                                    <!--<runCmd>chmod u+x start.sh</runCmd>-->
+                                    <!--<runCmd>./start.sh</runCmd>-->
+                                </runCmds>
+                            </build>
+                        </image>
+                    </images>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>docker-build-image</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>io.fabric8</groupId>
+                        <artifactId>docker-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>docker-build-image</id>
+                                <phase>install</phase>
+                                <goals>
+                                    <goal>remove</goal>
+                                    <!-- In order to clean up! -->
+                                    <goal>build</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+
+</project>

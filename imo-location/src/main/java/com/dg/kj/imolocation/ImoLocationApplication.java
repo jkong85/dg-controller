@@ -1,4 +1,4 @@
-package com.dg.kj.imospeed;
+package com.dg.kj.imolocation;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -9,10 +9,11 @@ import java.util.List;
 
 @SpringBootApplication
 @EnableDiscoveryClient
-public class ImoSpeedApplication {
-    public static List<Integer> speedHistoryData = new ArrayList<>();
+public class ImoLocationApplication {
+
+    public static List<Integer> locationHistoryData = new ArrayList<>();
     public static void main(String[] args) {
-        speedHistoryData = new ArrayList<>();
-        SpringApplication.run(ImoSpeedApplication.class, args);
+        locationHistoryData = new ArrayList<>();
+        SpringApplication.run(ImoLocationApplication.class, args);
     }
 }

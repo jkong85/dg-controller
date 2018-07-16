@@ -5,6 +5,8 @@
     <file url="file://$PROJECT_DIR$/controller-kubeclient" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/controller-test" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/controller-zuul" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/imo-location" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/imo-oil" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/imo-speed" charset="UTF-8" />
   </component>
 </project>
