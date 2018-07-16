@@ -17,7 +17,7 @@ public class CarEmulatorApplication {
     public static String TOYOTA = "toyota";
 
     public static Integer[] honda_speed = {10, 14, 20, 30, 25, 40, 20, 60, 70};
-    public static Integer[] honda_location = {1, 2, 3, 4, 5, 6, 7, 8, 9};
+    public static Integer[] honda_location = {1, 2, 3, 4, 5, 40, 7, 8, 9};
     public static Integer[] honda_oil = {1, 2, 3, 4, 5, 6, 7, 8, 9};
 
     public static Integer[] toyota_speed = {10, 14, 20, 30, 25, 40, 20, 60, 70};

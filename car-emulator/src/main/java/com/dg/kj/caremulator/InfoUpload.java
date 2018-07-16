@@ -108,7 +108,7 @@ public class InfoUpload implements Runnable{
                         }
                         //if(!(speedResend && oilResend && locationResend)){
                         if(!(speedResend && locationResend)){
-                            System.out.println("The " + Integer.toString(index) + " data of " + "  is uploaded to " + CarEmulatorApplication.destination.get(i));
+                            System.out.println("The " + Integer.toString(index) + " data is uploaded to " + CarEmulatorApplication.destination.get(i));
                         }
                         Thread.sleep(200);
                     }

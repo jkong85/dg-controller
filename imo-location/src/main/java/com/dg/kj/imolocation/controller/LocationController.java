@@ -16,6 +16,7 @@ public class LocationController {
     private static final String EDGE_NODE1 = "node2";
     private static final String EDGE_NODE2 = "node3";
     private static final String CONTROLLER_URL = "http://172.17.8.101:8080/test/info";
+    private static boolean isMigrated = false;
     @Autowired
     private ImoLocationApplication imoLocationApplication;
     @RequestMapping(value = "/cur")
@@ -29,9 +30,10 @@ public class LocationController {
         //TODO: develop your own migration algorithm
         Integer location = Integer.valueOf(value);
         String migrateInfo = null;
-        if(location == 40){
+        if(location >= 40 && (!isMigrated)){
             migrate(name, type, EDGE_NODE1, EDGE_NODE2);
             migrateInfo = "Copy DG from " + EDGE_NODE1 + " to " +  EDGE_NODE2;
+            isMigrated = true;
         }
 
         return "Current location is: " + value + "\n" + migrateInfo;
