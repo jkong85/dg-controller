@@ -53,7 +53,7 @@ public class InfoUpload implements Runnable{
                     System.out.println("No DGs are available, waiting...");
                 }
                 for (int i = 0; i < CarEmulatorApplication.destination.size(); i++) {
-                    String dstURL = CarEmulatorApplication.destination.get(i);
+                    String dstURL = "http://" + CarEmulatorApplication.destination.get(i);
                     MultiValueMap<String, Object> speedParamMap = new LinkedMultiValueMap<String, Object>();
                     MultiValueMap<String, Object> locationParamMap = new LinkedMultiValueMap<String, Object>();
                     MultiValueMap<String, Object> oilParamMap = new LinkedMultiValueMap<String, Object>();
