@@ -2,17 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c4d2589f-d158-4b34-8e3b-fea70abf8fa4" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/car-emulator/run" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/DestinationUpdate.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/InfoUpload.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/ControllerTestApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/ControllerTestApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/SpeedController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller-zuul/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/controller-zuul/src/main/resources/application.yml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/case/controller1/stop.sh" beforeDir="false" afterPath="$PROJECT_DIR$/case/controller1/stop.sh" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/controller-eureka/target/" />
@@ -32,7 +22,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="CarEmulatorApplication.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CarEmulatorApplication.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/CarEmulatorApplication.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="539">
@@ -48,8 +38,8 @@
       <file leaf-file-name="InfoUpload.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/InfoUpload.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="446">
-              <caret line="48" column="26" selection-start-line="48" selection-start-column="26" selection-end-line="48" selection-end-column="26" />
+            <state relative-caret-position="443">
+              <caret line="35" column="59" selection-start-line="35" selection-start-column="59" selection-end-line="35" selection-end-column="59" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#853#869#0" expanded="true" />
@@ -75,7 +65,7 @@
       <file leaf-file-name="DestinationUpdate.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/DestinationUpdate.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="62">
+            <state relative-caret-position="165">
               <caret line="11" column="22" lean-forward="true" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -87,11 +77,29 @@
       <file leaf-file-name="RegistrationController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5218">
-              <caret line="386" column="28" selection-start-line="386" selection-start-column="28" selection-end-line="386" selection-end-column="28" />
+            <state relative-caret-position="191">
+              <caret line="32" column="49" lean-forward="true" selection-start-line="32" selection-start-column="49" selection-end-line="32" selection-end-column="49" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="application.yml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/controller-zuul/src/main/resources/application.yml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="18" column="28" selection-start-line="18" selection-start-column="28" selection-end-line="18" selection-end-column="28" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="stop.sh" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/case/controller1/stop.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="510">
+              <caret line="34" selection-start-line="34" selection-end-line="34" />
             </state>
           </provider>
         </entry>
@@ -131,7 +139,6 @@
         <option value="$PROJECT_DIR$/controller-test/pom.xml" />
         <option value="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/DgDeployment.java" />
         <option value="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/DgService.java" />
-        <option value="$PROJECT_DIR$/case/controller1/stop.sh" />
         <option value="$PROJECT_DIR$/case/controller1/run.sh" />
         <option value="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/ImoDGs.java" />
         <option value="$PROJECT_DIR$/controller-zuul/tag" />
@@ -152,13 +159,14 @@
         <option value="$PROJECT_DIR$/imo-location/src/main/java/com/dg/kj/imolocation/ImoLocationApplication.java" />
         <option value="$PROJECT_DIR$/imo-location/src/main/java/com/dg/kj/imolocation/controller/LocationController.java" />
         <option value="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/ControllerTestApplication.java" />
-        <option value="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java" />
         <option value="$PROJECT_DIR$/controller-zuul/src/main/resources/application.yml" />
         <option value="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/UpdateDstIP.java" />
         <option value="$PROJECT_DIR$/car-emulator/run" />
         <option value="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/DestinationUpdate.java" />
-        <option value="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/InfoUpload.java" />
         <option value="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/CarEmulatorApplication.java" />
+        <option value="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/InfoUpload.java" />
+        <option value="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java" />
+        <option value="$PROJECT_DIR$/case/controller1/stop.sh" />
       </list>
     </option>
   </component>
@@ -585,12 +593,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1531364423498</updated>
-      <workItem from="1531364425597" duration="75276000" />
+      <workItem from="1531364425597" duration="76267000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="75276000" />
+    <option name="totallyTimeSpent" value="76267000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="989" extended-state="6" />
@@ -617,7 +625,7 @@
       <window_info anchor="bottom" id="Version Control" />
       <window_info anchor="bottom" id="Spring" />
       <window_info anchor="bottom" id="Terminal" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22678572" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23988095" />
       <window_info anchor="right" id="Bean Validation" />
       <window_info id="Web" side_tool="true" />
       <window_info anchor="right" id="Theme Preview" />
@@ -713,13 +721,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
           <caret line="4" column="86" selection-start-line="4" selection-start-column="86" selection-end-line="4" selection-end-column="86" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/case/controller1/stop.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="300">
-          <caret line="20" column="27" selection-start-line="20" selection-start-column="27" selection-end-line="20" selection-end-column="27" />
         </state>
       </provider>
     </entry>
@@ -978,27 +979,21 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controller-zuul/src/main/resources/application.yml">
+    <entry file="file://$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/CarEmulatorApplication.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="18" column="28" selection-start-line="18" selection-start-column="28" selection-end-line="18" selection-end-column="28" />
+        <state relative-caret-position="539">
+          <caret line="40" column="54" selection-start-line="40" selection-start-column="54" selection-end-line="40" selection-end-column="54" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2397#2413#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/DestinationUpdate.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="62">
+        <state relative-caret-position="165">
           <caret line="11" column="22" lean-forward="true" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5218">
-          <caret line="386" column="28" selection-start-line="386" selection-start-column="28" selection-end-line="386" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1007,8 +1002,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/InfoUpload.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="446">
-          <caret line="48" column="26" selection-start-line="48" selection-start-column="26" selection-end-line="48" selection-end-column="26" />
+        <state relative-caret-position="443">
+          <caret line="35" column="59" selection-start-line="35" selection-start-column="59" selection-end-line="35" selection-end-column="59" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#853#869#0" expanded="true" />
@@ -1018,14 +1013,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/CarEmulatorApplication.java">
+    <entry file="file://$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="539">
-          <caret line="40" column="54" selection-start-line="40" selection-start-column="54" selection-end-line="40" selection-end-column="54" />
+        <state relative-caret-position="191">
+          <caret line="32" column="49" lean-forward="true" selection-start-line="32" selection-start-column="49" selection-end-line="32" selection-end-column="49" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#2397#2413#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controller-zuul/src/main/resources/application.yml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="28" selection-start-line="18" selection-start-column="28" selection-end-line="18" selection-end-column="28" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/case/controller1/stop.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="510">
+          <caret line="34" selection-start-line="34" selection-end-line="34" />
         </state>
       </provider>
     </entry>
