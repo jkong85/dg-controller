@@ -15,6 +15,7 @@ public class SpeedController {
                         @RequestParam String type,
                         @RequestParam String value){
         imoSpeedApplication.speedHistoryData.add(0, Integer.valueOf(value));
+        imoSpeedApplication.type = type;
         Integer total = 0;
         for(int i=0; i<imoSpeedApplication.speedHistoryData.size(); i++){
             total += imoSpeedApplication.speedHistoryData.get(i);

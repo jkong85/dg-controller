@@ -10,6 +10,7 @@ import java.util.List;
 @SpringBootApplication
 @EnableDiscoveryClient
 public class ImoSpeedApplication {
+    public static String type = "honda";
     public static List<Integer> speedHistoryData = new ArrayList<>();
     public static void main(String[] args) {
         speedHistoryData = new ArrayList<>();

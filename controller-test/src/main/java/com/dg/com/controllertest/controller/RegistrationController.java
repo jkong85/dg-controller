@@ -42,7 +42,6 @@ public class RegistrationController {
     @Autowired
     private ControllerTestApplication testApplication;
 
-
     @RequestMapping(value = "/register")
     public String register(@RequestParam String name,
                             @RequestParam String type,
@@ -107,6 +106,7 @@ public class RegistrationController {
         if(source == destination){
             return "New destination of DG is the same with the source, no need to copy it!";
         }
+        //TODO: need to valid the srcNode and dstNode
 
         Map<String, ImoDGs> dgInfoMap = testApplication.DGInfoMap;
         boolean isExisted = false;
@@ -137,9 +137,9 @@ public class RegistrationController {
     //TODO: override this based on the algorithms
     private String getLocation(String location){
         if(Integer.valueOf(location) > 10) {
-            return CORE_NODE;
+            return EDGE_NODE_1;
         }
-        else return CORE_NODE;
+        else return EDGE_NODE_1;
     }
 
 
@@ -174,7 +174,7 @@ public class RegistrationController {
         String eureka_ip = getDeploymentIPaddress(eureka_deploy_name);
         System.out.println("Eureka server IP address is: " + eureka_ip);
 
-        // TODO: Different type of Car will run different services
+        // Different type of Car will run different services
         if(type.equals(HONDA_TYPE)){
             CreateSpeedDeployment(service_label, eureka_ip, node_selector);
             CreateLocationDeployment(service_label, eureka_ip, node_selector);

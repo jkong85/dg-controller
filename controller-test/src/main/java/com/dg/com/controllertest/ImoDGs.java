@@ -19,7 +19,7 @@ public class ImoDGs {
         edgeDGs = new ArrayList<>();
     }
     public String getAllDgIpPort(){
-        // name:value,name:value
+        // name:value, name:value
         StringBuilder sb = new StringBuilder();
         sb.append(coreDG.nodeIP);
         sb.append(":");
