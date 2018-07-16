@@ -66,16 +66,13 @@ public class InfoUpload implements Runnable{
                     //MultiValueMap<String, Object> oilParamMap = new LinkedMultiValueMap<String, Object>();
                     speedParamMap.add("name", name);
                     speedParamMap.add("type", type);
-                    speedParamMap.add("value", speed[i]);
+                    speedParamMap.add("value", Integer.toString(speed[i]));
                     //oilParamMap.add("name", name);
                     //oilParamMap.add("type", type);
                     //oilParamMap.add("value", oil[i]);
                     locationParamMap.add("name", name);
                     locationParamMap.add("type", type);
                     locationParamMap.add("value", Integer.toString(location[i]));
-
-                    HttpHeaders headers = new HttpHeaders();
-                    headers.setContentType(MediaType.APPLICATION_JSON);
 
                     boolean speedResend = true;
                     boolean oilResend = true;
@@ -84,7 +81,8 @@ public class InfoUpload implements Runnable{
                         if(speedResend) {
                             speedResend = false;
                             try {
-                                String response = template.postForObject(dstURL + speedURL + "?name="+ name +"&" + "type=" + type + "value=" + Integer.toString(speed[i]), null, String.class);
+                                template.postForObject(dstURL + speedURL, speedParamMap, String.class);
+//                                String response = template.postForObject(dstURL + speedURL + "?name="+ name +"&" + "type=" + type + "value=" + Integer.toString(speed[i]), null, String.class);
                             } catch (RestClientException re) {
                                 System.out.println("Resend speed data!");
                                 speedResend = true;
