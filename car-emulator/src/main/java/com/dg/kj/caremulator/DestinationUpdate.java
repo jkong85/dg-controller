@@ -23,6 +23,7 @@ public class DestinationUpdate implements Runnable{
             RestTemplate restTemplate = new RestTemplate();
             while(true) {
                 String response = restTemplate.getForObject(urlService, String.class);
+                System.out.println("response from INFO cmd: " + response);
                 // shoud return: "IP1:port1, IP2:port2,..."
                 String[] ipPort = response.split(",");
                 boolean isValid = ipPort == null ? false : true;
