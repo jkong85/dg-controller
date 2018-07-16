@@ -130,6 +130,7 @@
                                 <env>
                                     <HTTP_PORT>${docker.image.port}</HTTP_PORT>
                                     <HOSTING_ENVIRONMENT>Docker</HOSTING_ENVIRONMENT>
+                                    <JAVA_OPTS>-Xms64m -Xmx256m -XX:PermSize=128M -XX:MaxNewSize=256m -XX:MaxPermSize=256m</JAVA_OPTS>
                                 </env>
                                 <workdir>/opt/dg</workdir>
                                 <entryPoint>
