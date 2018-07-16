@@ -39,7 +39,7 @@ public class DestinationUpdate implements Runnable{
                     System.out.println("Destination of the DGs are :");
                     for (String str : ipPort) {
                         CarEmulatorApplication.destination.add(str);
-                        System.out.println(str + "\n");
+                        System.out.println("===> " + str);
                     }
                 }
             }catch(RestClientException re){

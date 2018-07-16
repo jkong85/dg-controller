@@ -1,5 +1,8 @@
 package com.dg.kj.caremulator;
 
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
@@ -71,6 +74,9 @@ public class InfoUpload implements Runnable{
                     locationParamMap.add("type", type);
                     locationParamMap.add("value", location[i]);
 
+                    HttpHeaders headers = new HttpHeaders();
+                    headers.setContentType(MediaType.APPLICATION_JSON);
+
                     boolean speedResend = true;
                     boolean oilResend = true;
                     boolean locationResend = true;
@@ -78,7 +84,8 @@ public class InfoUpload implements Runnable{
                         if(speedResend) {
                             speedResend = false;
                             try {
-                                String response = template.postForObject(dstURL + speedURL, speedParamMap, String.class);
+                                HttpEntity<String> httpEntity = new HttpEntity<>(speedParamMap.toString(), headers);
+                                String response = template.postForObject(dstURL + speedURL, httpEntity, String.class);
                             } catch (RestClientException re) {
                                 System.out.println("Resend speed data!");
                                 speedResend = true;
@@ -96,7 +103,8 @@ public class InfoUpload implements Runnable{
                         if(locationResend) {
                             locationResend = false;
                             try {
-                                template.postForObject(dstURL + locationURL, locationParamMap, String.class);
+                                HttpEntity<String> httpEntity = new HttpEntity<>(locationParamMap.toString(), headers);
+                                template.postForObject(dstURL + locationURL, httpEntity, String.class);
                             } catch (RestClientException re) {
                                 System.out.println("Resend location data!");
                                 locationResend = true;
