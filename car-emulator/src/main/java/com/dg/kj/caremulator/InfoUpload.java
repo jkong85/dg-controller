@@ -54,7 +54,7 @@ public class InfoUpload implements Runnable{
         System.out.println("Running InfoUploda of " +  threadName );
         try {
             RestTemplate template = new RestTemplate();
-            while(index < size) {
+            while(index < CarEmulatorApplication.toyota_location.length) {
                 System.out.println(index + " data is available");
                 if (CarEmulatorApplication.destination.size() == 0) {
                     System.out.println("No DGs are available, waiting...");
@@ -69,7 +69,7 @@ public class InfoUpload implements Runnable{
                     speedParamMap.add("value", Integer.toString(speed[i]));
                     //oilParamMap.add("name", name);
                     //oilParamMap.add("type", type);
-                    //oilParamMap.add("value", oil[i]);
+                    //oilParamMap.add("value", Integer.toString(oil[i]));
                     locationParamMap.add("name", name);
                     locationParamMap.add("type", type);
                     locationParamMap.add("value", Integer.toString(location[i]));
@@ -82,7 +82,6 @@ public class InfoUpload implements Runnable{
                             speedResend = false;
                             try {
                                 template.postForObject(dstURL + speedURL, speedParamMap, String.class);
-//                                String response = template.postForObject(dstURL + speedURL + "?name="+ name +"&" + "type=" + type + "value=" + Integer.toString(speed[i]), null, String.class);
                             } catch (RestClientException re) {
                                 System.out.println("Resend speed data!");
                                 speedResend = true;
@@ -106,7 +105,9 @@ public class InfoUpload implements Runnable{
                                 locationResend = true;
                             }
                         }
-
+                        if(!(speedResend && oilResend && locationResend)){
+                            System.out.println("The " + Integer.toString(index) + " data is uploaded!");
+                        }
                         Thread.sleep(2000);
                     }
                 }
