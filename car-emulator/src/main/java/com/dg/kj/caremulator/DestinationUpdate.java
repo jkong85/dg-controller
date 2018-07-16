@@ -1,5 +1,7 @@
 package com.dg.kj.caremulator;
 
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.regex.Matcher;
@@ -40,7 +42,11 @@ public class DestinationUpdate implements Runnable{
                         System.out.println(str + "\n");
                     }
                 }
-                Thread.sleep(5000);
+            }catch(RestClientException re){
+                System.out.println("Retry to pull infomation again!");
+            }
+            try {
+                Thread.sleep(2000);
             }catch (InterruptedException e) {
                 System.out.println("Destination update of " +  name + " interrupted.");
             }
