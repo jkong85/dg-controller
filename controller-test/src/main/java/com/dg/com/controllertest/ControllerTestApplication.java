@@ -15,8 +15,6 @@ public class ControllerTestApplication {
     // Maintain All DG information
     public static Map<String, ImoDGs>  DGInfoMap = new HashMap<>();
 
-    public static List<Integer> speedData = new ArrayList<>();
-
     public static void main(String[] args) {
         Initialize();
         SpringApplication.run(ControllerTestApplication.class, args);
@@ -30,7 +28,6 @@ public class ControllerTestApplication {
         nodeIpMap.put("node3", "172.17.8.103");
 
         nodePortsPool = new Stack<>();
-        speedData = new ArrayList<>();
         // initialize node ports pool
         for(int i=32000; i>30004; i-=2){
             nodePortsPool.push(i);

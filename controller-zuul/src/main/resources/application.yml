@@ -11,6 +11,13 @@ zuul:
     speed:
       path: /speed/**
       serviceId: imo-speed
+    oil:
+      path: /oil/**
+      serviceId: imo-oil
+    location:
+      path: /location/**
+      serviceId: imo-location
+
 
 # Increase the Hystrix timeout to 60s (globally)
 hystrix:

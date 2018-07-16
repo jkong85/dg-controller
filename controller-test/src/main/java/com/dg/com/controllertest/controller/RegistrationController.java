@@ -30,6 +30,7 @@ public class RegistrationController {
     private String TEST_CONTAINER_PORT = "9005";
     private String SPEED_CONTAINER_PORT = "9001";
     private String OIL_CONTAINER_PORT = "9002";
+    private String LOCATION_CONTAINER_PORT = "9003";
 
     private String CORE_NODE = "node1";
     private String EDGE_NODE_1 = "node2";
@@ -174,11 +175,12 @@ public class RegistrationController {
         System.out.println("Eureka server IP address is: " + eureka_ip);
 
         // TODO: Different type of Car will run different services
-        if(type == HONDA_TYPE){
-            //CreateSpeedDeployment(service_label, eureka_ip, node_selector);
-            CreateTestDeployment(service_label, eureka_ip, node_selector);
-        }else if (type == TOYOTA_TYPE){
-            CreateTestDeployment(service_label, eureka_ip, node_selector);
+        if(type.equals(HONDA_TYPE)){
+            CreateSpeedDeployment(service_label, eureka_ip, node_selector);
+            CreateLocationDeployment(service_label, eureka_ip, node_selector);
+        }else if (type.equals(TOYOTA_TYPE)){
+            CreateLocationDeployment(service_label, eureka_ip, node_selector);
+            CreateOilDeployment(service_label, eureka_ip, node_selector);
         }else{
             System.out.println("Not a correct car type!");
         }
@@ -216,6 +218,30 @@ public class RegistrationController {
                 container_name, container_images, container_port, eureka_ip, node_selector);
         return "Speed service is starting...\n";
     }
+
+    private String CreateOilDeployment(String service_label, String eureka_ip, String node_selector){
+        String prefix = "oil";
+        String deploy_name =  service_label + "-" + prefix;
+        String container_name = deploy_name;
+        String container_images = DOCKER_IMAGE_PREFIX + prefix + ":" + VERSION;
+        String container_port = OIL_CONTAINER_PORT;
+
+        CreateDeployment(K8sApiServer, deploy_name, service_label,
+                container_name, container_images, container_port, eureka_ip, node_selector);
+        return "Oil service is starting...\n";
+    }
+    private String CreateLocationDeployment(String service_label, String eureka_ip, String node_selector){
+        String prefix = "location";
+        String deploy_name =  service_label + "-" + prefix;
+        String container_name = deploy_name;
+        String container_images = DOCKER_IMAGE_PREFIX + prefix + ":" + VERSION;
+        String container_port = LOCATION_CONTAINER_PORT;
+
+        CreateDeployment(K8sApiServer, deploy_name, service_label,
+                container_name, container_images, container_port, eureka_ip, node_selector);
+        return "Loaction service is starting...\n";
+    }
+
 
     private String CreateTestDeployment(String service_label, String eureka_ip, String node_selector){
         String prefix = "test";
