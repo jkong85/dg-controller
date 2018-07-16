@@ -21,29 +21,34 @@ public class DestinationUpdate implements Runnable{
     public void run() {
         System.out.println("Running dst update of " +  name );
         while(true) {
-            try {
-                String urlService = infoURL + name;
-                RestTemplate restTemplate = new RestTemplate();
-                String response = restTemplate.getForObject(urlService, String.class);
-                System.out.println("response from INFO cmd: " + response);
-                // shoud return: "IP1:port1, IP2:port2,..."
-                String[] ipPort = response.split(",");
-                boolean isValid = ipPort == null ? false : true;
-                for (String str : ipPort) {
-                    if (!isValidIP(str.split(":")[0])) {
-                        isValid = false;
-                    }
-                }
-                if (isValid) {
-                    CarEmulatorApplication.destination.clear();
-                    System.out.println("Destination of the DGs are :");
+            String urlService = infoURL + name;
+            RestTemplate restTemplate = new RestTemplate();
+            int cnt = 4;
+            while(cnt > 0 ) {
+                try {
+                    String response = restTemplate.getForObject(urlService, String.class);
+                    System.out.println("response from INFO cmd: " + response);
+                    // shoud return: "IP1:port1, IP2:port2,..."
+                    String[] ipPort = response.split(",");
+                    boolean isValid = ipPort == null ? false : true;
                     for (String str : ipPort) {
-                        CarEmulatorApplication.destination.add(str);
-                        System.out.println("===> " + str);
+                        if (!isValidIP(str.split(":")[0])) {
+                            isValid = false;
+                        }
                     }
+                    if (isValid) {
+                        CarEmulatorApplication.destination.clear();
+                        System.out.println("Destination of the DGs are :");
+                        for (String str : ipPort) {
+                            CarEmulatorApplication.destination.add(str);
+                            System.out.println("===> " + str);
+                        }
+                    }
+                    cnt = 0;
+                } catch (RestClientException re) {
+                    cnt--;
+                    System.out.println("Retry to pull infomation again!");
                 }
-            }catch(RestClientException re){
-                System.out.println("Retry to pull infomation again!");
             }
             try {
                 Thread.sleep(10000);

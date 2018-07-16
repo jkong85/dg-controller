@@ -75,9 +75,10 @@ public class InfoUpload implements Runnable{
                     locationParamMap.add("value", Integer.toString(location[index]));
 
                     boolean speedResend = true;
-                    boolean oilResend = true;
+                    //boolean oilResend = true;
                     boolean locationResend = true;
-                    while(speedResend || oilResend || locationResend) {
+                    //while(speedResend || oilResend || locationResend) {
+                    while(speedResend || locationResend) {
                         if(speedResend) {
                             speedResend = false;
                             try {
@@ -105,10 +106,11 @@ public class InfoUpload implements Runnable{
                                 locationResend = true;
                             }
                         }
-                        if(!(speedResend && oilResend && locationResend)){
+                        //if(!(speedResend && oilResend && locationResend)){
+                        if(!(speedResend && locationResend)){
                             System.out.println("The " + Integer.toString(index) + " data of " + "  is uploaded to " + CarEmulatorApplication.destination.get(i));
                         }
-                        Thread.sleep(2000);
+                        Thread.sleep(200);
                     }
                 }
                 index++;
