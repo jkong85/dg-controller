@@ -2,6 +2,7 @@ package com.dg.kj.caremulator;
 
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 public class InfoUpload implements Runnable{
@@ -49,7 +50,7 @@ public class InfoUpload implements Runnable{
             RestTemplate template = new RestTemplate();
             while(index < size) {
                 System.out.println(index + " data is available");
-                if(CarEmulatorApplication.destination.size()==0){
+                if (CarEmulatorApplication.destination.size() == 0) {
                     System.out.println("No DGs are available, waiting...");
                 }
                 for (int i = 0; i < CarEmulatorApplication.destination.size(); i++) {
@@ -61,13 +62,45 @@ public class InfoUpload implements Runnable{
                     oilParamMap.add("value", oil[i]);
                     locationParamMap.add("value", location[i]);
 
-                    String result = template.postForObject(dstURL + speedURL, speedParamMap, String.class);
-                    template.postForObject(dstURL + oilURL, oilParamMap, String.class);
-                    template.postForObject(dstURL + locationURL, locationParamMap, String.class);
-
+                    boolean speedResend = true;
+                    boolean oilResend = true;
+                    boolean locationResend = true;
+                    while(speedResend || oilResend || locationResend) {
+                        if(speedResend) {
+                            speedResend = false;
+                            try {
+                                String response = template.postForObject(dstURL + speedURL, speedParamMap, String.class);
+                            } catch (RestClientException re) {
+                                System.out.println("Resend speed data!");
+                                speedResend = true;
+                                Thread.sleep(5000);
+                            }
+                        }
+                        if(oilResend) {
+                            oilResend = false;
+                            try {
+                                template.postForObject(dstURL + oilURL, oilParamMap, String.class);
+                            } catch (RestClientException re) {
+                                System.out.println("Resend oil data!");
+                                oilResend = true;
+                                Thread.sleep(5000);
+                            }
+                        }
+                        if(locationResend) {
+                            locationResend = false;
+                            try {
+                                template.postForObject(dstURL + locationURL, locationParamMap, String.class);
+                            } catch (RestClientException re) {
+                                System.out.println("Resend location data!");
+                                locationResend = true;
+                                Thread.sleep(5000);
+                            }
+                        }
+                    }
                 }
                 index++;
                 Thread.sleep(5000);
+
             }
         }catch (InterruptedException e) {
             System.out.println("Thread " +  threadName + " interrupted.");
