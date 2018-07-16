@@ -60,13 +60,13 @@ public class InfoUpload implements Runnable{
                     String dstURL = "http://" + CarEmulatorApplication.destination.get(i);
                     MultiValueMap<String, Object> speedParamMap = new LinkedMultiValueMap<String, Object>();
                     MultiValueMap<String, Object> locationParamMap = new LinkedMultiValueMap<String, Object>();
-                    MultiValueMap<String, Object> oilParamMap = new LinkedMultiValueMap<String, Object>();
+                    //MultiValueMap<String, Object> oilParamMap = new LinkedMultiValueMap<String, Object>();
                     speedParamMap.add("name", name);
                     speedParamMap.add("type", type);
                     speedParamMap.add("value", speed[i]);
-                    oilParamMap.add("name", name);
-                    oilParamMap.add("type", type);
-                    oilParamMap.add("value", oil[i]);
+                    //oilParamMap.add("name", name);
+                    //oilParamMap.add("type", type);
+                    //oilParamMap.add("value", oil[i]);
                     locationParamMap.add("name", name);
                     locationParamMap.add("type", type);
                     locationParamMap.add("value", location[i]);
@@ -84,15 +84,15 @@ public class InfoUpload implements Runnable{
                                 speedResend = true;
                             }
                         }
-                        if(oilResend) {
-                            oilResend = false;
-                            try {
-                                template.postForObject(dstURL + oilURL, oilParamMap, String.class);
-                            } catch (RestClientException re) {
-                                System.out.println("Resend oil data!");
-                                oilResend = true;
-                            }
-                        }
+                        //if(oilResend) {
+                        //    oilResend = false;
+                        //    try {
+                        //        template.postForObject(dstURL + oilURL, oilParamMap, String.class);
+                        //    } catch (RestClientException re) {
+                        //        System.out.println("Resend oil data!");
+                        //        oilResend = true;
+                        //    }
+                        //}
                         if(locationResend) {
                             locationResend = false;
                             try {
