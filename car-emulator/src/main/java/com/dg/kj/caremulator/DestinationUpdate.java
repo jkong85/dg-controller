@@ -46,7 +46,7 @@ public class DestinationUpdate implements Runnable{
                 System.out.println("Retry to pull infomation again!");
             }
             try {
-                Thread.sleep(2000);
+                Thread.sleep(10000);
             }catch (InterruptedException e) {
                 System.out.println("Destination update of " +  name + " interrupted.");
             }

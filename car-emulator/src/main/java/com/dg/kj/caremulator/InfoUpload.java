@@ -72,7 +72,7 @@ public class InfoUpload implements Runnable{
                     //oilParamMap.add("value", oil[i]);
                     locationParamMap.add("name", name);
                     locationParamMap.add("type", type);
-                    locationParamMap.add("value", location[i]);
+                    locationParamMap.add("value", Integer.toString(location[i]));
 
                     HttpHeaders headers = new HttpHeaders();
                     headers.setContentType(MediaType.APPLICATION_JSON);
@@ -84,8 +84,7 @@ public class InfoUpload implements Runnable{
                         if(speedResend) {
                             speedResend = false;
                             try {
-                                HttpEntity<String> httpEntity = new HttpEntity<>(speedParamMap.toString(), headers);
-                                String response = template.postForObject(dstURL + speedURL, httpEntity, String.class);
+                                String response = template.postForObject(dstURL + speedURL + "?name="+ name +"&" + "type=" + type + "value=" + Integer.toString(speed[i]), null, String.class);
                             } catch (RestClientException re) {
                                 System.out.println("Resend speed data!");
                                 speedResend = true;
@@ -103,19 +102,18 @@ public class InfoUpload implements Runnable{
                         if(locationResend) {
                             locationResend = false;
                             try {
-                                HttpEntity<String> httpEntity = new HttpEntity<>(locationParamMap.toString(), headers);
-                                template.postForObject(dstURL + locationURL, httpEntity, String.class);
+                                template.postForObject(dstURL + locationURL, locationParamMap, String.class);
                             } catch (RestClientException re) {
                                 System.out.println("Resend location data!");
                                 locationResend = true;
                             }
                         }
 
-                        Thread.sleep(5000);
+                        Thread.sleep(2000);
                     }
                 }
                 index++;
-                Thread.sleep(5000);
+                Thread.sleep(2000);
 
             }
         }catch (InterruptedException e) {
