@@ -66,13 +66,13 @@ public class InfoUpload implements Runnable{
                     //MultiValueMap<String, Object> oilParamMap = new LinkedMultiValueMap<String, Object>();
                     speedParamMap.add("name", name);
                     speedParamMap.add("type", type);
-                    speedParamMap.add("value", Integer.toString(speed[i]));
+                    speedParamMap.add("value", Integer.toString(speed[index]));
                     //oilParamMap.add("name", name);
                     //oilParamMap.add("type", type);
-                    //oilParamMap.add("value", Integer.toString(oil[i]));
+                    //oilParamMap.add("value", Integer.toString(oil[index]));
                     locationParamMap.add("name", name);
                     locationParamMap.add("type", type);
-                    locationParamMap.add("value", Integer.toString(location[i]));
+                    locationParamMap.add("value", Integer.toString(location[index]));
 
                     boolean speedResend = true;
                     boolean oilResend = true;
@@ -106,7 +106,7 @@ public class InfoUpload implements Runnable{
                             }
                         }
                         if(!(speedResend && oilResend && locationResend)){
-                            System.out.println("The " + Integer.toString(index) + " data is uploaded!");
+                            System.out.println("The " + Integer.toString(index) + " data of " + "  is uploaded to " + CarEmulatorApplication.destination.get(i));
                         }
                         Thread.sleep(2000);
                     }
