@@ -4,6 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -52,15 +53,32 @@ public class CarEmulatorApplication {
         infoThread.start();
 
     }
-    private static String register(String name, String type, String location){
+    private static String register(String name, String type, String location) {
         MultiValueMap<String, Object> registerParamMap = new LinkedMultiValueMap<String, Object>();
         registerParamMap.add("name", name);
         registerParamMap.add("type", type);
         registerParamMap.add("location", location);
 
         RestTemplate template = new RestTemplate();
-        String result = template.postForObject(registerURL, registerParamMap, String.class);
+        String result = null;
 
+        boolean regResend = true;
+        while(regResend) {
+            regResend = false;
+            try {
+                result = template.postForObject(registerURL, registerParamMap, String.class);
+            } catch (RestClientException re) {
+                System.out.println("Resend register cmd : " + re.toString());
+                regResend = true;
+                try {
+                    Thread.sleep(5000);
+                }catch(InterruptedException ie){
+
+                }
+            }
+        }
         return result;
+
+
     }
 }

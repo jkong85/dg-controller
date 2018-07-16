@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c4d2589f-d158-4b34-8e3b-fea70abf8fa4" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/InfoUpload.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/InfoUpload.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/CarEmulatorApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/CarEmulatorApplication.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/controller-eureka/target/" />
@@ -34,11 +34,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CarEmulatorApplication.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="CarEmulatorApplication.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/CarEmulatorApplication.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="418">
-              <caret line="39" column="50" selection-start-line="39" selection-start-column="50" selection-end-line="39" selection-end-column="50" />
+            <state relative-caret-position="660">
+              <caret line="70" column="74" selection-start-line="70" selection-start-column="74" selection-end-line="70" selection-end-column="74" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -58,11 +58,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="InfoUpload.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="InfoUpload.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/InfoUpload.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="735">
-              <caret line="93" column="67" selection-start-line="93" selection-start-column="67" selection-end-line="93" selection-end-column="67" />
+            <state relative-caret-position="300">
+              <caret line="64" column="19" selection-start-line="64" selection-start-column="19" selection-end-line="64" selection-end-column="19" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -142,7 +142,6 @@
         <option value="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/UpdateDstIP.java" />
         <option value="$PROJECT_DIR$/car-emulator/run" />
         <option value="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/DestinationUpdate.java" />
-        <option value="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/CarEmulatorApplication.java" />
         <option value="$PROJECT_DIR$/case/controller1/stop.sh" />
         <option value="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/ImoDGs.java" />
         <option value="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/DgService.java" />
@@ -158,6 +157,7 @@
         <option value="$PROJECT_DIR$/imo-oil/pom.xml" />
         <option value="$PROJECT_DIR$/imo-speed/pom.xml" />
         <option value="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/InfoUpload.java" />
+        <option value="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/CarEmulatorApplication.java" />
       </list>
     </option>
   </component>
@@ -632,12 +632,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1531364423498</updated>
-      <workItem from="1531364425597" duration="87037000" />
+      <workItem from="1531364425597" duration="87359000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="87037000" />
+    <option name="totallyTimeSpent" value="87359000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="989" extended-state="6" />
@@ -1039,16 +1039,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/CarEmulatorApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="39" column="50" selection-start-line="39" selection-start-column="50" selection-end-line="39" selection-end-column="50" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/DestinationUpdate.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="148">
@@ -1061,8 +1051,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/InfoUpload.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="735">
-          <caret line="93" column="67" selection-start-line="93" selection-start-column="67" selection-end-line="93" selection-end-column="67" />
+        <state relative-caret-position="300">
+          <caret line="64" column="19" selection-start-line="64" selection-start-column="19" selection-end-line="64" selection-end-column="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/CarEmulatorApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="660">
+          <caret line="70" column="74" selection-start-line="70" selection-start-column="74" selection-end-line="70" selection-end-column="74" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
