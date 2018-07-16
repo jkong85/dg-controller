@@ -73,7 +73,6 @@ public class InfoUpload implements Runnable{
                             } catch (RestClientException re) {
                                 System.out.println("Resend speed data!");
                                 speedResend = true;
-                                Thread.sleep(5000);
                             }
                         }
                         if(oilResend) {
@@ -83,7 +82,6 @@ public class InfoUpload implements Runnable{
                             } catch (RestClientException re) {
                                 System.out.println("Resend oil data!");
                                 oilResend = true;
-                                Thread.sleep(5000);
                             }
                         }
                         if(locationResend) {
@@ -93,9 +91,10 @@ public class InfoUpload implements Runnable{
                             } catch (RestClientException re) {
                                 System.out.println("Resend location data!");
                                 locationResend = true;
-                                Thread.sleep(5000);
                             }
                         }
+
+                        Thread.sleep(5000);
                     }
                 }
                 index++;

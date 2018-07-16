@@ -21,22 +21,26 @@ public class DestinationUpdate implements Runnable{
         try {
             String urlService = infoURL + name;
             RestTemplate restTemplate = new RestTemplate();
-            String response = restTemplate.getForObject(urlService, String.class);
-            // shoud return: "IP1:port1, IP2:port2,..."
-            String [] ipPort = response.split(",");
-            boolean isValid = ipPort==null? false: true;
-            for(String str : ipPort){
-                if(!isValidIP(str.split(":")[0])){
-                    isValid = false;
+            while(true) {
+                String response = restTemplate.getForObject(urlService, String.class);
+                // shoud return: "IP1:port1, IP2:port2,..."
+                String[] ipPort = response.split(",");
+                boolean isValid = ipPort == null ? false : true;
+                for (String str : ipPort) {
+                    if (!isValidIP(str.split(":")[0])) {
+                        isValid = false;
+                    }
                 }
-            }
-            if(isValid) {
-                CarEmulatorApplication.destination.clear();
-                for(String str : ipPort){
-                    CarEmulatorApplication.destination.add(str);
+                if (isValid) {
+                    CarEmulatorApplication.destination.clear();
+                    System.out.println("Destination of the DGs are :");
+                    for (String str : ipPort) {
+                        CarEmulatorApplication.destination.add(str);
+                        System.out.println(str + "\n");
+                    }
                 }
+                Thread.sleep(5000);
             }
-            Thread.sleep(1000);
         }catch (InterruptedException e) {
             System.out.println("Destination update of " +  name + " interrupted.");
         }
