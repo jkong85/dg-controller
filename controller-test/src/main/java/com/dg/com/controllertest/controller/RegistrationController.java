@@ -69,7 +69,7 @@ public class RegistrationController {
         //Check whether there is a DG of this IMO  on this edge node
         boolean isExisted = false;
         for(DgService curDgService : dgInfoMap.get(imoName).edgeDGs){
-            if(curDgService.node == edgeLocation){
+            if(curDgService.node.equals(edgeLocation)){
                 isExisted = true;
                 System.out.println("There is one DG existed. No need to create a new one!");
                 break;
@@ -111,13 +111,15 @@ public class RegistrationController {
         Map<String, ImoDGs> dgInfoMap = testApplication.DGInfoMap;
         boolean isExisted = false;
         for(DgService curDgService : dgInfoMap.get(imoName).edgeDGs){
-            if(curDgService.node == destination){
+            if(curDgService.node.equals(destination)){
                 isExisted = true;
                 break;
             }
         }
         if(!isExisted){// create a new one on edge node
-            DgService newDgService  = createIMODG(imoName, destination, type) ;
+            Integer edgeIndex = dgInfoMap.get(imoName).indexPool.pop();
+            String edgeImoDg = imoName + "-" + Integer.toString(edgeIndex);
+            DgService newDgService  = createIMODG(edgeImoDg, destination, type) ;
             if(newDgService == null){
                 System.out.println("Cannot create DG for " + imoName + " on edge node : " + destination);
             }else {

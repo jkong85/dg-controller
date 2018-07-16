@@ -15,8 +15,11 @@ public class LocationController {
     private static final String CORE_NODE = "node1";
     private static final String EDGE_NODE1 = "node2";
     private static final String EDGE_NODE2 = "node3";
-    private static final String CONTROLLER_URL = "http://172.17.8.101:8080/test/info";
+    private static final String CONTROLLER_COPY_URL = "http://172.17.8.101:30002/test/copy";
     private static boolean isMigrated = false;
+    private static boolean isDestroyedofOld = false;
+    private static boolean isDestroyedofNew = false;
+
     @Autowired
     private ImoLocationApplication imoLocationApplication;
     @RequestMapping(value = "/cur")
@@ -34,6 +37,13 @@ public class LocationController {
             migrate(name, type, EDGE_NODE1, EDGE_NODE2);
             migrateInfo = "Copy DG from " + EDGE_NODE1 + " to " +  EDGE_NODE2;
             isMigrated = true;
+        }
+        if(location > 60 && location < 100)
+        if(location >=100){
+            // delete all edge DGs
+            if(!isDestroyedofNew) {
+                destroy(name, type, EDGE_NODE2);
+            }
         }
 
         return "Current location is: " + value + "\n" + migrateInfo;
@@ -53,6 +63,10 @@ public class LocationController {
             copyParamMap.add("srcNode", src);
             copyParamMap.add("dstNode", dst);
 
-            String result = template.postForObject(CONTROLLER_URL, copyParamMap, String.class);
+            String result = template.postForObject(CONTROLLER_COPY_URL, copyParamMap, String.class);
+    }
+    //destroy the DGs on node
+    private void destroy(String name, String type, String node){
+
     }
 }
