@@ -126,6 +126,11 @@
                                 <env>
                                     <HTTP_PORT>${docker.image.port}</HTTP_PORT>
                                     <HOSTING_ENVIRONMENT>Docker</HOSTING_ENVIRONMENT>
+                                    <JAVA_OPTS>-Xms64m -Xmx256m -XX:PermSize=128M -XX:MaxNewSize=256m -XX:MaxPermSize=256m</JAVA_OPTS>
+                                    <!--<JAVA_OPTS>-Xmx256m</JAVA_OPTS>-->
+                                    <!--<JAVA_OPTS>-XX:PermSize=128M</JAVA_OPTS>-->
+                                    <!--<JAVA_OPTS>-XX:MaxNewSize=256</JAVA_OPTS>-->
+                                    <!--<JAVA_OPTS>-XX:MaxPermSize=256m</JAVA_OPTS>-->
                                 </env>
                                 <workdir>/opt/dg</workdir>
                                 <entryPoint>
@@ -148,12 +153,6 @@
                                     <!--<runCmd>./start.sh</runCmd>-->
                                 </runCmds>
                             </build>
-                            <!--Added for JAVA_OPTIONS-->
-                            <external>
-                                <type>properties</type>
-                                <prefix>docker</prefix> <!-- this is the default -->
-                                <mode>only</mode> <!-- this is the default -->
-                            </external>
                         </image>
                     </images>
                 </configuration>
