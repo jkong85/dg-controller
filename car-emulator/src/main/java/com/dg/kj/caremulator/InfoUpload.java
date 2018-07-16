@@ -9,9 +9,9 @@ public class InfoUpload implements Runnable{
     private Thread t;
     private String threadName;
     private String type;
-    private static String speedURL = "/speed";
-    private static String locationURL = "/location";
-    private static String oilURL = "/oil";
+    private static String speedURL = "/speed/cur";
+    private static String locationURL = "/location/cur";
+    private static String oilURL = "/oil/cur";
 
 
     private static Integer index = 0;
