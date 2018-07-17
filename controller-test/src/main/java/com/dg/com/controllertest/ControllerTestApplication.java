@@ -18,6 +18,8 @@ public class ControllerTestApplication {
     public static Map<String, String> DeployPodMap = new HashMap<>();
     public static Map<String, String> PodIPaddressMap = new HashMap<>();
 
+    public static Map<String, Integer> ServicePortMap = new HashMap<>();
+
     public static void main(String[] args) {
         Initialize();
         SpringApplication.run(ControllerTestApplication.class, args);

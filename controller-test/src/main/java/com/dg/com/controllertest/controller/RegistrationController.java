@@ -165,9 +165,11 @@ public class RegistrationController {
         //finally, delete the service
         String urlServcePrefix = K8sApiServer + "api/v1/namespaces/default/services/";
         System.out.println("Delete service: " + urlServcePrefix + serviceName);
-        httpDelete(urlServcePrefix + serviceName);
-
-
+        if(httpDelete(urlServcePrefix + serviceName)){
+            Integer port = testApplication.ServicePortMap.get(serviceName);
+            System.out.println("Release the port : " + port.toString());
+            testApplication.nodePortsPool.push(port);
+        }
         return "Deleting the DG services";
     }
 
@@ -246,6 +248,7 @@ public class RegistrationController {
 
         // Get the node port form the node po
         Integer nodePort_eureka = getIMONodePort();
+        testApplication.ServicePortMap.put(service_label, nodePort_eureka);
         Integer nodePort_zuul = nodePort_eureka+1;
         CreateIMOService(service_label, nodePort_eureka.toString(), nodePort_zuul.toString());
 
@@ -422,7 +425,7 @@ public class RegistrationController {
 
     }
 
-    private static void httpDelete(String urlService){
+    private static boolean httpDelete(String urlService){
         String accessToken = "/var/run/secrets/kubernetes.io/serviceaccount/token";
 
         HttpHeaders headers = new HttpHeaders();
@@ -433,8 +436,10 @@ public class RegistrationController {
         try {
             restTemplate.delete(urlService);
             System.out.println("Successful delete : " + urlService);
+            return true;
         }catch(HttpClientErrorException he){
             System.out.println("Delete Exeception: " + urlService + " ==> " + he.toString());
+            return false;
         }
     }
     private static String httpPost(String urlService, String body) throws HttpClientErrorException{
