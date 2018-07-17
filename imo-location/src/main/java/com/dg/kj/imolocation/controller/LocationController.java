@@ -35,6 +35,7 @@ public class LocationController {
 
         imoLocationApplication.locationHistoryData.add(0, Integer.valueOf(value));
 
+        /*
         // determine whether to migrate to other nodes
         //TODO: develop your own migration algorithm
         Integer location = Integer.valueOf(value);
@@ -55,7 +56,8 @@ public class LocationController {
             destroy(curServiceName, type, curNode);
             isDestroyed = true;
         }
-        return "Current location is: " + value + "\n" + migrateInfo;
+        */
+        return "Current location is: " + value;
     }
 
     @RequestMapping(value="/history")
