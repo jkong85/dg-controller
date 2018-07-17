@@ -19,8 +19,8 @@ public class MigrationCopy implements Runnable {
     private static boolean isDestroyed = false;
 
 
-    MigrationCopy(){
-
+    MigrationCopy(String name){
+        threadName = name;
     }
 
     public void run() {
@@ -36,15 +36,17 @@ public class MigrationCopy implements Runnable {
                 String curNode = System.getenv("CUR_NODE");
                 String type = "honda";
 
-                if (location >= 40 && (!isMigrated)) {
+                if (location >= 10 && (!isMigrated)) {
+                    System.out.println(" Migrate to Edge Node 2");
                     migrate(curServiceName, type, EDGE_NODE1, EDGE_NODE2);
                     migrateInfo = "Copy DG from " + EDGE_NODE1 + " to " + EDGE_NODE2;
                     isMigrated = true;
                 }
                 if (!isDestroyed &&
-                        ((location > 60 && curNode.equals(EDGE_NODE1))
-                                || (location >= 100 && curNode.equals(EDGE_NODE2)))) {
+                        ((location > 20 && curNode.equals(EDGE_NODE1))
+                                || (location >= 30 && curNode.equals(EDGE_NODE2)))) {
                     // destroy it's self
+                    System.out.println(" Destroy DGs on " + curNode);
                     destroy(curServiceName, type, curNode);
                     isDestroyed = true;
                 }
