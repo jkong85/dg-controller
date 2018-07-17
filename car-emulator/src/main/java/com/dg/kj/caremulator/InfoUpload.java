@@ -35,12 +35,10 @@ public class InfoUpload implements Runnable{
         if(type.equals(CarEmulatorApplication.HONDA)){
             for(int i=0; i<size; i++){
                 speed[i] = CarEmulatorApplication.honda_speed[i];
-                oil[i] = CarEmulatorApplication.honda_oil[i];
                 location[i] = CarEmulatorApplication.honda_location[i];
             }
         }else if(type.equals(CarEmulatorApplication.TOYOTA)){
             for(int i=0; i<size; i++) {
-                speed[i] = CarEmulatorApplication.toyota_speed[i];
                 oil[i] = CarEmulatorApplication.toyota_oil[i];
                 location[i] = CarEmulatorApplication.toyota_location[i];
             }
