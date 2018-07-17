@@ -154,6 +154,7 @@ public class RegistrationController {
         String urlDeployPrefix = K8sApiServer + "apis/extensions/v1beta1/namespaces/default/deployments/";
         // delete the deployment one by one
         for(String deployment : deployList){
+            deployment = deployment.substring(0, deployment.length()-6);
             String deployname = serviceName + "-" + deployment;
             System.out.println("Destroy the DG " + deployment);
             System.out.println(deployment + " URL is : " + urlDeployPrefix+ deployname);
