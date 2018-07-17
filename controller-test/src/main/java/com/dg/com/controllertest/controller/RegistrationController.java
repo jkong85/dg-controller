@@ -163,8 +163,10 @@ public class RegistrationController {
             httpDelete(urlPodPrefix + podName.substring(0, podName.length()-6));
         }
         //finally, delete the service
-        String urlServcePrefix = "api/v1/namespaces/default/services/";
+        String urlServcePrefix = K8sApiServer + "api/v1/namespaces/default/services/";
+        System.out.println("Delete service: " + urlServcePrefix + serviceName);
         httpDelete(urlServcePrefix + serviceName);
+
 
         return "Deleting the DG services";
     }
@@ -430,8 +432,9 @@ public class RegistrationController {
         RestTemplate restTemplate = new RestTemplate();
         try {
             restTemplate.delete(urlService);
+            System.out.println("Successful delete : " + urlService);
         }catch(HttpClientErrorException he){
-            System.out.println("delete pod/server/deployment: " + he.toString());
+            System.out.println("Delete Exeception: " + urlService + " ==> " + he.toString());
         }
     }
     private static String httpPost(String urlService, String body) throws HttpClientErrorException{
