@@ -52,7 +52,11 @@ public class CarEmulatorApplication {
         if(args[2].equals("y")) {
             register(name, type, location.toString() );
         }
+        try{
+            Thread.sleep(20000);
+        }catch(InterruptedException ie){
 
+        }
         // pull the destination address per 1 sec
         DestinationUpdate dstThread = new DestinationUpdate(name, type);
         dstThread.start();
