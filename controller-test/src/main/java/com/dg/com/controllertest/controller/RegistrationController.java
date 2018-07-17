@@ -155,6 +155,7 @@ public class RegistrationController {
         // delete the deployment one by one
         for(String deployment : deployList){
             String deployname = serviceName + "-" + deployment;
+            System.out.println("Destroy the DG " + deployment);
             httpDelete(urlPodPrefix + deployPodMap.get(deployname));
             httpDelete(urlDeployPrefix + deployment);
         }
@@ -485,8 +486,8 @@ public class RegistrationController {
             String name_deploy = service + "-" + dep;
             Pattern pattern_name = Pattern.compile(name_start + name_deploy + ".+?" + name_end);
             for (int i = 0; i < pods_str_array.length; i++) {
-                System.out.println("==================================");
-                System.out.println(pods_str_array[i]);
+                //System.out.println("==================================");
+                //System.out.println(pods_str_array[i]);
                 matcher = pattern_name.matcher(pods_str_array[i]);
                 if (matcher.find()) {
                     String nameResult = matcher.group();
