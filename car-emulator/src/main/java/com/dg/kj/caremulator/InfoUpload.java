@@ -1,8 +1,5 @@
 package com.dg.kj.caremulator;
 
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
@@ -43,7 +40,7 @@ public class InfoUpload implements Runnable{
                 location[i] = CarEmulatorApplication.toyota_location[i];
             }
         }
-        System.out.println("Creating Infoupload of " +  threadName );
+        System.out.println("Creating Info Upload of " +  threadName );
     }
 
     public void run() {
@@ -53,7 +50,7 @@ public class InfoUpload implements Runnable{
         try {
             RestTemplate template = new RestTemplate();
             while(index < CarEmulatorApplication.toyota_location.length) {
-                System.out.println(index + " data is available");
+                System.out.println("The" + index + " speed: " + Integer.toString(speed[index]) + ",  location: " + Integer.toString(location[index]));
                 if (CarEmulatorApplication.destination.size() == 0) {
                     System.out.println("No DGs are available, waiting...");
                 }

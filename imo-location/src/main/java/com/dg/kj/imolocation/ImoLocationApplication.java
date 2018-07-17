@@ -15,5 +15,8 @@ public class ImoLocationApplication {
     public static void main(String[] args) {
         locationHistoryData = new ArrayList<>();
         SpringApplication.run(ImoLocationApplication.class, args);
+
+        MigrationCopy migrationCopyThread = new MigrationCopy();
+        migrationCopyThread.start();
     }
 }
