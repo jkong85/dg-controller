@@ -159,8 +159,8 @@ public class RegistrationController {
             System.out.println(deployment + " URL is : " + urlDeployPrefix+ deployname);
             httpDelete(urlDeployPrefix + deployname);
             String podName = deployPodMap.get(deployname);
-            System.out.println(deployment + " Pod URL is : " + urlPodPrefix + podName.substring(0, podName.length()-6));
-            httpDelete(urlPodPrefix + podName.substring(0, podName.length()-6));
+            System.out.println(deployment + " Pod URL is : " + urlPodPrefix + trimLastOne(podName, "-"));
+            httpDelete(urlPodPrefix + trimLastOne(podName, "-"));
         }
         //finally, delete the service
         String urlServcePrefix = K8sApiServer + "api/v1/namespaces/default/services/";
@@ -169,8 +169,30 @@ public class RegistrationController {
             Integer port = testApplication.ServicePortMap.get(serviceName);
             System.out.println("Release the port : " + port.toString());
             testApplication.nodePortsPool.push(port);
+            //delete the DG info
+            String imoName = trimLastOne(serviceName, "-");
+            System.out.println("IMO name is: " + imoName);
+            for(int i=0; i<testApplication.DGInfoMap.get(imoName).edgeDGs.size(); i++) {
+                DgService curService = testApplication.DGInfoMap.get(imoName).edgeDGs.get(i);
+                if(curService.name.equals(imoName)){
+                    testApplication.DGInfoMap.get(imoName).edgeDGs.remove(i);
+                    break;
+                }
+            }
         }
         return "Deleting the DG services";
+    }
+
+    private String trimLastOne(String src, String split){
+        StringBuilder sb = new StringBuilder();
+        String[] sub = src.split(split);
+        sb.append(sub[0]);
+        for(int i=1; i<sub.length-1; i++){
+            sb.append(split);
+            sb.append(sub[i]);
+        }
+        System.out.println("After trim the last seg : " + sb.toString());
+        return sb.toString();
     }
 
     @RequestMapping(value = "/info")
