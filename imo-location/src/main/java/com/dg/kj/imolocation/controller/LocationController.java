@@ -23,8 +23,8 @@ public class LocationController {
     private static final String CONTROLLER_COPY_URL = "http://172.17.8.101:30002/test/copy";
     private static final String CONTROLLER_DESTROY_URL = "http://172.17.8.101:30002/test/destroy";
     private static boolean isMigrated = false;
-    private static boolean isDestroyedofOld = false;
-    private static boolean isDestroyedofNew = false;
+
+    private static boolean isDestroyed = false;
 
     @Autowired
     private ImoLocationApplication imoLocationApplication;
@@ -48,16 +48,13 @@ public class LocationController {
             migrateInfo = "Copy DG from " + EDGE_NODE1 + " to " +  EDGE_NODE2;
             isMigrated = true;
         }
-        if(location > 60 && location < 100){
-
+        if(!isDestroyed &&
+                ((location > 60 && curNode.equals(EDGE_NODE1))
+                || (location >=100 && curNode.equals(EDGE_NODE2)))){
+            // destroy it's self
+            destroy(curServiceName, type, curNode);
+            isDestroyed = true;
         }
-        if(location >=100){
-            // delete all edge DGs
-            if(!isDestroyedofNew) {
-                destroy(curServiceName, type, curNode);
-            }
-        }
-
         return "Current location is: " + value + "\n" + migrateInfo;
     }
 

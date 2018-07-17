@@ -137,6 +137,7 @@ public class RegistrationController {
     public String destroy(@RequestParam String serviceName,
                           @RequestParam String type,
                           @RequestParam String node){
+        System.out.println("Get the destroy cmd from " + serviceName + " on node : " + node);
         List<String> deployList = new ArrayList<>();
         //basis components
         deployList.add("eureka");
@@ -174,6 +175,8 @@ public class RegistrationController {
             testApplication.nodePortsPool.push(port);
             //delete the DG info
             String imoName = trimLastOne(serviceName, "-");
+            testApplication.DGInfoMap.get(imoName).indexPool.push(Integer.valueOf(getLastOne(serviceName, "-")));
+            System.out.println("Release the index : " + getLastOne(serviceName, "-"));
             System.out.println("IMO name is: " + imoName);
             for(int i=0; i<testApplication.DGInfoMap.get(imoName).edgeDGs.size(); i++) {
                 DgService curService = testApplication.DGInfoMap.get(imoName).edgeDGs.get(i);
@@ -197,6 +200,10 @@ public class RegistrationController {
         }
         System.out.println("After trim the last seg : " + sb.toString());
         return sb.toString();
+    }
+    private String getLastOne(String src, String split){
+        String[] sub = src.split(split);
+        return sub[sub.length-1];
     }
 
     @RequestMapping(value = "/info")
