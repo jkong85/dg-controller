@@ -157,7 +157,7 @@ public class RegistrationController {
             String deployname = serviceName + "-" + deployment;
             System.out.println("Destroy the DG " + deployment);
             System.out.println(deployment + " URL is : " + urlDeployPrefix+ deployname);
-            httpDelete(urlDeployPrefix + deployment);
+            httpDelete(urlDeployPrefix + deployname);
             String podName = deployPodMap.get(deployname);
             System.out.println(deployment + " Pod URL is : " + urlPodPrefix + podName.substring(0, podName.length()-6));
             httpDelete(urlPodPrefix + podName.substring(0, podName.length()-6));
