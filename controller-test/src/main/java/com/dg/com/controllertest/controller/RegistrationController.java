@@ -106,7 +106,7 @@ public class RegistrationController {
         String destination = dstNode;
         String imoName = name;
 
-        if(source == destination){
+        if(source.equals(destination)){
             return "New destination of DG is the same with the source, no need to copy it!";
         }
         //TODO: need to valid the srcNode and dstNode

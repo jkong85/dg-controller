@@ -65,23 +65,23 @@ public class MigrationCopy implements Runnable {
             t.start ();
         }
     }
-      private void migrate(String name, String type, String src, String dst) throws HttpClientErrorException {
-            RestTemplate template = new RestTemplate();
-            MultiValueMap<String, Object> copyParamMap = new LinkedMultiValueMap<String, Object>();
-            copyParamMap.add("name", name);
-            copyParamMap.add("type", type);
-            copyParamMap.add("srcNode", src);
-            copyParamMap.add("dstNode", dst);
+    private void migrate(String name, String type, String src, String dst) throws HttpClientErrorException {
+        RestTemplate template = new RestTemplate();
+        MultiValueMap<String, Object> copyParamMap = new LinkedMultiValueMap<String, Object>();
+        copyParamMap.add("name", name);
+        copyParamMap.add("type", type);
+        copyParamMap.add("srcNode", src);
+        copyParamMap.add("dstNode", dst);
 
-          boolean retry = true;
-          while(retry){
-              try {
-                  String result = template.postForObject(CONTROLLER_COPY_URL, copyParamMap, String.class);
-                  retry = false;
-              }catch(HttpClientErrorException he) {
-                  retry = true;
-              }
-          }
+        boolean retry = true;
+        while(retry){
+            try {
+                String result = template.postForObject(CONTROLLER_COPY_URL, copyParamMap, String.class);
+                retry = false;
+            }catch(HttpClientErrorException he) {
+                retry = true;
+            }
+        }
     }
     //destroy the DGs on node
     private void destroy(String name, String type, String node){
