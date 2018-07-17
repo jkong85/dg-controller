@@ -156,13 +156,13 @@ public class RegistrationController {
         for(String deployment : deployList){
             String deployname = serviceName + "-" + deployment;
             System.out.println("Destroy the DG " + deployment);
-            System.out.println(deployment + " Pod URL is : " + urlPodPrefix + deployPodMap.get(deployname));
-            httpDelete(urlPodPrefix + deployPodMap.get(deployname));
             System.out.println(deployment + " URL is : " + urlDeployPrefix+ deployname);
             httpDelete(urlDeployPrefix + deployment);
+            System.out.println(deployment + " Pod URL is : " + urlPodPrefix + deployPodMap.get(deployname));
+            httpDelete(urlPodPrefix + deployPodMap.get(deployname));
         }
         //finally, delete the service
-        String urlServcePrefix = "/api/v1/namespaces/default/services/";
+        String urlServcePrefix = "api/v1/namespaces/default/services/";
         httpDelete(urlServcePrefix + serviceName);
 
         return "Deleting the DG services";
@@ -427,7 +427,11 @@ public class RegistrationController {
         headers.set("Authorization","Bearer "+accessToken);
 
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.delete(urlService);
+        try {
+            restTemplate.delete(urlService);
+        }catch(HttpClientErrorException he){
+            System.out.println("delete pod/server/deployment: " + he.toString());
+        }
     }
     private static String httpPost(String urlService, String body) throws HttpClientErrorException{
         String accessToken = "/var/run/secrets/kubernetes.io/serviceaccount/token";
