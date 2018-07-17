@@ -150,7 +150,8 @@ public class RegistrationController {
         }
         Map<String, String> deployPodMap = new HashMap<>();
         findPodOfDeploymentMap(serviceName, deployList, deployPodMap);
-        String urlPodPrefix = K8sApiServer + "apis/extensions/v1beta1/namespaces/default/replicasets/";
+        String urlPodPrefix = K8sApiServer + "api/v1/namespaces/default/pods/";
+        String urlRCPrefix = K8sApiServer + "apis/extensions/v1beta1/namespaces/default/replicasets/";
         String urlDeployPrefix = K8sApiServer + "apis/extensions/v1beta1/namespaces/default/deployments/";
         // delete the deployment one by one
         for(String deployment : deployList){
@@ -159,8 +160,10 @@ public class RegistrationController {
             System.out.println(deployment + " URL is : " + urlDeployPrefix+ deployname);
             httpDelete(urlDeployPrefix + deployname);
             String podName = deployPodMap.get(deployname);
-            System.out.println(deployment + " Pod URL is : " + urlPodPrefix + trimLastOne(podName, "-"));
-            httpDelete(urlPodPrefix + trimLastOne(podName, "-"));
+            System.out.println(deployment + " RC URL is : " + urlRCPrefix + trimLastOne(podName, "-"));
+            httpDelete(urlRCPrefix + trimLastOne(podName, "-"));
+            System.out.println(deployment + " Pod URL is : " + urlPodPrefix + podName);
+            httpDelete(urlPodPrefix + podName);
         }
         //finally, delete the service
         String urlServcePrefix = K8sApiServer + "api/v1/namespaces/default/services/";
@@ -174,8 +177,9 @@ public class RegistrationController {
             System.out.println("IMO name is: " + imoName);
             for(int i=0; i<testApplication.DGInfoMap.get(imoName).edgeDGs.size(); i++) {
                 DgService curService = testApplication.DGInfoMap.get(imoName).edgeDGs.get(i);
-                if(curService.name.equals(imoName)){
+                if(curService.name.equals(serviceName)){
                     testApplication.DGInfoMap.get(imoName).edgeDGs.remove(i);
+                    System.out.println("remove the DG service : " + serviceName);
                     break;
                 }
             }
