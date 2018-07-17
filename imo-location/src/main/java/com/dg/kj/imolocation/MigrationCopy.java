@@ -73,7 +73,15 @@ public class MigrationCopy implements Runnable {
             copyParamMap.add("srcNode", src);
             copyParamMap.add("dstNode", dst);
 
-            String result = template.postForObject(CONTROLLER_COPY_URL, copyParamMap, String.class);
+          boolean retry = true;
+          while(retry){
+              try {
+                  String result = template.postForObject(CONTROLLER_COPY_URL, copyParamMap, String.class);
+                  retry = false;
+              }catch(HttpClientErrorException he) {
+                  retry = true;
+              }
+          }
     }
     //destroy the DGs on node
     private void destroy(String name, String type, String node){
@@ -83,7 +91,15 @@ public class MigrationCopy implements Runnable {
         destroyParamMap.add("type", type);
         destroyParamMap.add("node", node);
 
-        String result = template.postForObject(CONTROLLER_DESTROY_URL, destroyParamMap, String.class);
+        boolean retry = true;
+          while(retry){
+              try {
+                  String result = template.postForObject(CONTROLLER_DESTROY_URL, destroyParamMap, String.class);
+                  retry = false;
+              }catch(HttpClientErrorException he) {
+                  retry = true;
+              }
+          }
 
     }
 }

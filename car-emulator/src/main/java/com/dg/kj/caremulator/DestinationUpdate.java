@@ -23,7 +23,7 @@ public class DestinationUpdate implements Runnable{
         while(true) {
             String urlService = infoURL + name;
             RestTemplate restTemplate = new RestTemplate();
-            int cnt = 4;
+            int cnt = 5;
             while(cnt > 0 ) {
                 try {
                     String response = restTemplate.getForObject(urlService, String.class);
@@ -51,7 +51,7 @@ public class DestinationUpdate implements Runnable{
                 }
             }
             try {
-                Thread.sleep(10000);
+                Thread.sleep(5000);
             }catch (InterruptedException e) {
                 System.out.println("Destination update of " +  name + " interrupted.");
             }
