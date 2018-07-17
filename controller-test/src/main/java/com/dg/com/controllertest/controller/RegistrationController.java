@@ -154,13 +154,13 @@ public class RegistrationController {
         String urlDeployPrefix = K8sApiServer + "apis/extensions/v1beta1/namespaces/default/deployments/";
         // delete the deployment one by one
         for(String deployment : deployList){
-            deployment = deployment.substring(0, deployment.length()-6);
             String deployname = serviceName + "-" + deployment;
             System.out.println("Destroy the DG " + deployment);
             System.out.println(deployment + " URL is : " + urlDeployPrefix+ deployname);
             httpDelete(urlDeployPrefix + deployment);
-            System.out.println(deployment + " Pod URL is : " + urlPodPrefix + deployPodMap.get(deployname));
-            httpDelete(urlPodPrefix + deployPodMap.get(deployname));
+            String podName = deployPodMap.get(deployname);
+            System.out.println(deployment + " Pod URL is : " + urlPodPrefix + podName.substring(0, podName.length()-6));
+            httpDelete(urlPodPrefix + podName.substring(0, podName.length()-6));
         }
         //finally, delete the service
         String urlServcePrefix = "api/v1/namespaces/default/services/";
