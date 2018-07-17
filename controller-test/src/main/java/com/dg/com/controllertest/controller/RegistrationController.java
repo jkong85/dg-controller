@@ -150,8 +150,8 @@ public class RegistrationController {
         }
         Map<String, String> deployPodMap = new HashMap<>();
         findPodOfDeploymentMap(serviceName, deployList, deployPodMap);
-        String urlPodPrefix = K8sApiServer + "/apis/extensions/v1beta1/namespaces/default/replicasets/";
-        String urlDeployPrefix = K8sApiServer + "/apis/extensions/v1beta1/namespaces/default/deployments/";
+        String urlPodPrefix = K8sApiServer + "apis/extensions/v1beta1/namespaces/default/replicasets/";
+        String urlDeployPrefix = K8sApiServer + "apis/extensions/v1beta1/namespaces/default/deployments/";
         // delete the deployment one by one
         for(String deployment : deployList){
             String deployname = serviceName + "-" + deployment;
