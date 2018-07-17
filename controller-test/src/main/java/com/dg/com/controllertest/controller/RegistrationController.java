@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -130,6 +133,38 @@ public class RegistrationController {
         return "DG of " + imoName + " is copied to " + destination;
     }
 
+    @RequestMapping(value = "/destroy")
+    public String destroy(@RequestParam String serviceName,
+                          @RequestParam String type,
+                          @RequestParam String node){
+        List<String> deployList = new ArrayList<>();
+        //basis components
+        deployList.add("eureka");
+        deployList.add("zuul");
+        if(type.equals(HONDA_TYPE)){
+            deployList.add("speed");
+            deployList.add("location");
+        }else if(type.equals(TOYOTA_TYPE)){
+            deployList.add("oil");
+            deployList.add("location");
+        }
+        Map<String, String> deployPodMap = new HashMap<>();
+        findPodOfDeploymentMap(serviceName, deployList, deployPodMap);
+        String urlPodPrefix = K8sApiServer + "/apis/extensions/v1beta1/namespaces/default/replicasets/";
+        String urlDeployPrefix = K8sApiServer + "/apis/extensions/v1beta1/namespaces/default/deployments/";
+        // delete the deployment one by one
+        for(String deployment : deployList){
+            String deployname = serviceName + "-" + deployment;
+            httpDelete(urlPodPrefix + deployPodMap.get(deployname));
+            httpDelete(urlDeployPrefix + deployment);
+        }
+        //finally, delete the service
+        String urlServcePrefix = "/api/v1/namespaces/default/services/";
+        httpDelete(urlServcePrefix + serviceName);
+
+        return "Deleting the DG services";
+    }
+
     @RequestMapping(value = "/info")
     public String getInfo(@RequestParam String value){
         System.out.println("get the IP:port for core DG, and edge DG ");
@@ -144,7 +179,16 @@ public class RegistrationController {
         else return EDGE_NODE_1;
     }
 
+    private String deletePod(){
+        String response = null;
 
+        return response;
+    }
+    private String deleteDeployment(){
+        String response = null;
+
+        return response;
+    }
     private DgService createIMODG(String service_label, String node_selector, String type){
         //e.g., Car1-0-***, Car1-1-***
 //        String service_label = "Car1-0";
@@ -302,6 +346,10 @@ public class RegistrationController {
                 service_label +
                 "\"}},\"spec\":{\"containers\":[{\"env\":[{\"name\":\"EUREKA_SERVER_IP\",\"value\":\"" +
                 eureka_ip +
+                "\"},{\"name\":\"SERVICE_LABEL\",\"value\":\"" +
+                service_label +
+                "\"},{\"name\":\"CUR_NODE\",\"value\":\"" +
+                node_selector +
                 "\"}],\"image\":\"" +
                 container_images +
                 "\",\"name\":\"" +
@@ -311,6 +359,7 @@ public class RegistrationController {
                 "}]}],\"nodeSelector\":{\"kubernetes.io/hostname\":\"" +
                 node_selector +
                 "\"}}}}}";
+
         System.out.println("Create deployment HTTP body: " + body);
         String str = httpPost(urlDeployment, body);
         return str;
@@ -350,6 +399,7 @@ public class RegistrationController {
         String str = httpPost(urlService, body);
         return str;
     }
+
     private static String httpGet(String urlService){
         String accessToken = "/var/run/secrets/kubernetes.io/serviceaccount/token";
 
@@ -364,6 +414,17 @@ public class RegistrationController {
         //ResponseEntity<String> response = restTemplate.getForEntity(urlService, String.class);
         //return response.getBody();
 
+    }
+
+    private static void httpDelete(String urlService){
+        String accessToken = "/var/run/secrets/kubernetes.io/serviceaccount/token";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.set("Authorization","Bearer "+accessToken);
+
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.delete(urlService);
     }
     private static String httpPost(String urlService, String body) throws HttpClientErrorException{
         String accessToken = "/var/run/secrets/kubernetes.io/serviceaccount/token";
@@ -395,6 +456,47 @@ public class RegistrationController {
     }
     //ServiceName is the Service in K8S domain
     //e.g., name_deploy = "controller-eureka", or "car1-1-eureka"
+
+    //TODO: maintain the global mapping information
+    private String getDeploymentIPaddressFromMap(String name_deploy){
+        Map<String, String> deployPodMap = new HashMap<>();
+        Map<String, String> podIPaddressMap = new HashMap<>();
+//        findDeployPodIPaddressMap(deployPodMap, podIPaddressMap);
+//        return podIPaddressMap.get(deployPodMap.get(name_deploy));
+        return null;
+    }
+    private void findPodOfDeploymentMap(String service, List<String> deploy, Map<String, String> depoyPodMap) {
+        String urlGetPods = K8sApiServer + K8S_GET_PODS_API;
+        String response = httpGet(urlGetPods);
+        String[] pods_str_array = response.replace("\"", "").replace("{", "").split("metadata:");
+        System.out.println("All pods info: " + response);
+
+        String name_start = "name:";
+        //String name_deploy = "controller-eureka";
+        String name_end = ",generateName";
+
+        String podIP_start = "podIP:";
+        String podIP_end = ",startTime";
+
+        Matcher matcher;
+        System.out.println("Find the mapping between Deployment and Pods");
+
+        for (String dep : deploy) {
+            String name_deploy = service + "-" + dep;
+            Pattern pattern_name = Pattern.compile(name_start + name_deploy + ".+?" + name_end);
+            for (int i = 0; i < pods_str_array.length; i++) {
+                System.out.println("==================================");
+                System.out.println(pods_str_array[i]);
+                matcher = pattern_name.matcher(pods_str_array[i]);
+                if (matcher.find()) {
+                    String nameResult = matcher.group();
+                    depoyPodMap.put(name_deploy, nameResult.substring(name_start.length(), nameResult.length() - name_end.length()));
+                    System.out.println(name_deploy + " : " + depoyPodMap.get(name_deploy));
+                }
+            }
+        }
+    }
+
     private String getDeploymentIPaddress(String name_deploy){
         //String urlGetPods = K8sApiServer + "/api/v1/namespaces/default/pods?limit=500";
         String urlGetPods = K8sApiServer + K8S_GET_PODS_API;

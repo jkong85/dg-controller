@@ -15,6 +15,9 @@ public class ControllerTestApplication {
     // Maintain All DG information
     public static Map<String, ImoDGs>  DGInfoMap = new HashMap<>();
 
+    public static Map<String, String> DeployPodMap = new HashMap<>();
+    public static Map<String, String> PodIPaddressMap = new HashMap<>();
+
     public static void main(String[] args) {
         Initialize();
         SpringApplication.run(ControllerTestApplication.class, args);
@@ -32,5 +35,8 @@ public class ControllerTestApplication {
         for(int i=32000; i>30004; i-=2){
             nodePortsPool.push(i);
         }
+
+        DeployPodMap = new HashMap<>();
+        PodIPaddressMap = new HashMap<>();
     }
 }
