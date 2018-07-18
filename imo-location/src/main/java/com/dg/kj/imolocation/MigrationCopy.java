@@ -107,6 +107,7 @@ public class MigrationCopy implements Runnable {
         boolean retry = true;
         int cnt = 5;
         while(retry && cnt-->0){
+            System.out.println("Try " + Integer.toString(6-cnt) + " time to migrate the DGs of " + name);
             try {
                 String result = template.postForObject(CONTROLLER_COPY_URL, copyParamMap, String.class);
                 retry = false;
@@ -114,6 +115,13 @@ public class MigrationCopy implements Runnable {
                 retry = true;
                 System.out.println(re);
             }
+            try{
+                Thread.sleep(1000);
+            }catch (InterruptedException ie){
+            }
+        }
+        if(retry == true){
+            System.out.println("Cannot migrate successfully!");
         }
     }
     //destroy the DGs on node
@@ -133,6 +141,10 @@ public class MigrationCopy implements Runnable {
             }catch(RestClientException re) {
                 retry = true;
                 System.out.println(re);
+            }
+            try{
+                Thread.sleep(200);
+            }catch (InterruptedException ie){
             }
         }
 
