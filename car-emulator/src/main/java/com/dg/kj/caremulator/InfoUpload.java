@@ -77,8 +77,8 @@ public class InfoUpload implements Runnable{
                         if(speedResend) {
                             speedResend = false;
                             try {
-                                //template.postForObject(dstURL + speedURL, speedParamMap, String.class);
-                                template.put(dstURL + speedURL, speedParamMap, String.class);
+                                template.postForObject(dstURL + speedURL, speedParamMap, String.class);
+                                //template.put(dstURL + speedURL, speedParamMap, String.class);
                             } catch (RestClientException re) {
                                 System.out.println("Resend speed data!");
                                 speedResend = true;
@@ -97,8 +97,8 @@ public class InfoUpload implements Runnable{
                         if(locationResend) {
                             locationResend = false;
                             try {
-                                //template.postForObject(dstURL + locationURL, locationParamMap, String.class);
-                                template.put(dstURL + locationURL, locationParamMap, String.class);
+                                template.postForObject(dstURL + locationURL, locationParamMap, String.class);
+                                //template.put(dstURL + locationURL, locationParamMap, String.class);
                             } catch (RestClientException re) {
                                 System.out.println("Resend location data!");
                                 locationResend = true;
