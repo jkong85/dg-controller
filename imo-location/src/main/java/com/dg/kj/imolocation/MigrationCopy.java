@@ -38,8 +38,10 @@ public class MigrationCopy implements Runnable {
         }
 
         System.out.println("Copy DG from " + EDGE_NODE1 + " to " + EDGE_NODE2);
-        migrate(curServiceName, type, EDGE_NODE1, EDGE_NODE2);
-        isMigrated = true;
+        if(curNode.equals(EDGE_NODE1)) {
+            migrate(curServiceName, type, EDGE_NODE1, EDGE_NODE2);
+            isMigrated = true;
+        }
 
 
         try{
@@ -48,8 +50,10 @@ public class MigrationCopy implements Runnable {
         }
 
         System.out.println(" Destroy DGs on " + curNode);
-        destroy(curServiceName, type, curNode);
-        isDestroyed = true;
+        if(curNode.equals(EDGE_NODE1)) {
+            destroy(curServiceName, type, curNode);
+            isDestroyed = true;
+        }
 
         try{
             Thread.sleep(20000);
