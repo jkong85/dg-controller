@@ -3,6 +3,7 @@ package com.dg.kj.imolocation;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 public class MigrationCopy implements Runnable {
@@ -111,9 +112,9 @@ public class MigrationCopy implements Runnable {
             try {
                 String result = template.postForObject(CONTROLLER_COPY_URL, copyParamMap, String.class);
                 retry = false;
-            }catch(HttpClientErrorException he) {
+            }catch(RestClientException re) {
                 retry = true;
-                System.out.println(he);
+                System.out.println(re);
             }
         }
     }
@@ -130,8 +131,9 @@ public class MigrationCopy implements Runnable {
               try {
                   String result = template.postForObject(CONTROLLER_DESTROY_URL, destroyParamMap, String.class);
                   retry = false;
-              }catch(HttpClientErrorException he) {
+              }catch(RestClientException re) {
                   retry = true;
+                  System.out.println(re);
               }
           }
 
