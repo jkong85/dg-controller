@@ -105,13 +105,12 @@ public class RegistrationController {
         String source = srcNode;
         String destination = dstNode;
         String imoName = name;
+        System.out.println("Receive Copy cmd from " + srcNode + " to : " + dstNode + " for IMO: " + imoName);
 
         if(source.equals(destination)){
             return "New destination of DG is the same with the source, no need to copy it!";
         }
         //TODO: need to valid the srcNode and dstNode
-
-        //Map<String, ImoDGs> dgInfoMap = testApplication.DGInfoMap;
         boolean isExisted = false;
         if(!testApplication.DGInfoMap.containsKey(imoName)){
             return "Cannot find the DGs : " + imoName;
@@ -123,6 +122,7 @@ public class RegistrationController {
             }
         }
         if(!isExisted){// create a new one on edge node
+            System.out.println("Create a new one on Node : " + destination);
             Integer edgeIndex = testApplication.DGInfoMap.get(imoName).indexPool.pop();
             String edgeImoDg = imoName + "-" + Integer.toString(edgeIndex);
             DgService newDgService  = createIMODG(edgeImoDg, destination, type) ;
@@ -237,6 +237,7 @@ public class RegistrationController {
         //e.g., Car1-0-***, Car1-1-***
 //        String service_label = "Car1-0";
 //        String node_selector = "node1";
+        System.out.println("Create an IMO DG: " + service_label);
         CreateEurekaDeployment(service_label, "localhost", node_selector);
         // Get eurkea ip after it is started
         String eureka_prefix = "eureka";
