@@ -13,16 +13,11 @@ public class LogThread implements Runnable{
     public void run() {
         System.out.println("Running " + threadName);
         while(true) {
-            if(ImoLocationApplication.logQueue.isEmpty()){
-                try {
-                    Thread.sleep(200);
-                } catch (InterruptedException ie) {
-                }
+            if(!ImoLocationApplication.logQueue.isEmpty()) {
+                Integer location = ImoLocationApplication.logQueue.poll();
+                System.out.println("Upload location log : " + ImoLocationApplication.curServiceName + " : " + location.toString());
+                ImoLocationApplication.logUpload(ImoLocationApplication.curServiceName, location.toString());
             }
-            Integer location = ImoLocationApplication.logQueue.poll();
-            System.out.println("Upload location log : " + ImoLocationApplication.curServiceName + " : " + location.toString());
-
-            ImoLocationApplication.logUpload(ImoLocationApplication.curServiceName, location.toString());
 
             try {
                 Thread.sleep(200);

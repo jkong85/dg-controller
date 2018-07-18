@@ -56,12 +56,12 @@ public class ImoLocationApplication {
             }
         }
     }
-    public static void logUpload(String sender, String log){
+    public static void logUpload(String sender, String log, int cnt){
         MultiValueMap<String, Object> logParamMap = new LinkedMultiValueMap<String, Object>();
         logParamMap.add("sender", sender);
         logParamMap.add("log", log);
         System.out.println("Upload location log : " + sender + " : " + log);
 
-        httpPost(URL_CONTROLLER_LOG, logParamMap, 4);
+        httpPost(URL_CONTROLLER_LOG, logParamMap, cnt);
     }
 }

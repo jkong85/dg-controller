@@ -86,6 +86,8 @@ public class MigrationCopy implements Runnable {
         if(retry == true){
             System.out.println("Cannot migrate successfully!");
         }
+
+        ImoLocationApplication.logUpload(name, "Migrate DG form " + src + " to " + dst, 3);
     }
     //destroy the DGs on node
     private void destroy(String name, String type, String node){
@@ -111,6 +113,7 @@ public class MigrationCopy implements Runnable {
             }
         }
 
+        ImoLocationApplication.logUpload(name, "Destroy DG on " + node, 3);
     }
 
 }
