@@ -70,14 +70,14 @@ public class MigrationCopy implements Runnable {
             if(ImoLocationApplication.locationHistoryData.size()>0) {
                 Integer location = ImoLocationApplication.locationHistoryData.get(0);
 
-                if (location >= 10 && (!isMigrated)) {
+                if (location >= 40 && (!isMigrated)) {
                     System.out.println(" Migrate to Edge Node 2");
                     migrate(curServiceName, type, EDGE_NODE1, EDGE_NODE2);
                     String migrateInfo = "Copy DG from " + EDGE_NODE1 + " to " + EDGE_NODE2;
                     isMigrated = true;
                 }
-                if (((location > 20 && curNode.equals(EDGE_NODE1))
-                                || (location >= 30 && curNode.equals(EDGE_NODE2)))) {
+                if (((location > 60 && curNode.equals(EDGE_NODE1))
+                                || (location >= 100 && curNode.equals(EDGE_NODE2)))) {
                     // destroy it's self
                     System.out.println(" Destroy DGs on " + curNode);
                     destroy(curServiceName, type, curNode);
