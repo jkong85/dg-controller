@@ -12,8 +12,14 @@ import java.util.List;
 public class ImoLocationApplication {
 
     public static List<Integer> locationHistoryData = new ArrayList<>();
+    public static String curServiceName;
+    public static String curNode;
     public static void main(String[] args) {
         locationHistoryData = new ArrayList<>();
+
+        curServiceName = System.getenv("SERVICE_LABEL");
+        curNode = System.getenv("CUR_NODE");
+
         SpringApplication.run(ImoLocationApplication.class, args);
 
         MigrationCopy migrationCopyThread = new MigrationCopy(" Monitoring the location ");
