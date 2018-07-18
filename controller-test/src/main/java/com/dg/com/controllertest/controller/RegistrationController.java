@@ -3,6 +3,7 @@ package com.dg.com.controllertest.controller;
 import com.dg.com.controllertest.ControllerTestApplication;
 import com.dg.com.controllertest.DgService;
 import com.dg.com.controllertest.ImoDGs;
+import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -45,6 +46,9 @@ public class RegistrationController {
     @Autowired
     private ControllerTestApplication testApplication;
 
+    @Autowired
+    private LogController logController;
+
     @RequestMapping(value = "/register")
     public String register(@RequestParam String name,
                             @RequestParam String type,
@@ -55,13 +59,16 @@ public class RegistrationController {
         String imoName = name;
         //TODO: change here based on the input
         String imoLocation = location;
-
+        logController.logList.add(imoName+ " is registered to the controller");
+        System.out.println("=========================hello world====================");
         //Map<String, ImoDGs>  dgInfoMap = testApplication.DGInfoMap;
         if( !testApplication.DGInfoMap.containsKey(imoName)){
             ImoDGs newImoDgs = new ImoDGs(imoName);
             String mainIMODG = imoName + "-0";
             DgService newDgService = createIMODG(mainIMODG, CORE_NODE, type);
+            logController.logList.add("Controller is creating DGs on Core cloud node for " + imoName);
             if(newDgService == null){
+                logController.logList.add("Creating the DG is failed");
                 return "Cannot create DGs on core node for this car!";
             }
             newImoDgs.coreDG = newDgService;
@@ -69,11 +76,13 @@ public class RegistrationController {
         }
         // determine the location of the IMO
         String edgeLocation = getLocation(imoLocation);
+        logController.logList.add("Determine " + imoName + " is in Edge node: " + edgeLocation);
         //Check whether there is a DG of this IMO  on this edge node
         boolean isExisted = false;
         for(DgService curDgService : testApplication.DGInfoMap.get(imoName).edgeDGs){
             if(curDgService.node.equals(edgeLocation)){
                 isExisted = true;
+                logController.logList.add(" One DG existed, No need to create a new one for " + imoName);
                 System.out.println("There is one DG existed. No need to create a new one!");
                 break;
             }
@@ -85,6 +94,7 @@ public class RegistrationController {
                 System.out.println(ex.toString());
             }
             System.out.println("Create a new DG on edge node : " + edgeLocation);
+            logController.logList.add("Creating a new DG on edge node: " + edgeLocation + " for " + imoName);
             Integer edgeIndex = testApplication.DGInfoMap.get(imoName).indexPool.pop();
             String edgeImoDg = imoName + "-" + Integer.toString(edgeIndex);
             DgService newDgService  = createIMODG(edgeImoDg, edgeLocation, type) ;
@@ -95,7 +105,9 @@ public class RegistrationController {
             }
         }
         // Find ou the IP:port of the DGs created on Core and Edge nodes
-        return testApplication.DGInfoMap.get(name).getAllDgIpPort();
+        String dstIPPort = testApplication.DGInfoMap.get(name).getAllDgIpPort();
+        logController.logList.add("New DG on Core and Edge nodes are created suuccessfully, with IP/Port: " + dstIPPort);
+        return dstIPPort;
     }
 
     @RequestMapping(value = "/copy")
@@ -107,6 +119,7 @@ public class RegistrationController {
         String destination = dstNode;
         String imoName = trimLastOne(name, "-");
         System.out.println("Receive Copy cmd from " + srcNode + " to : " + dstNode + " for IMO: " + imoName);
+        logController.logList.add(imoName + " is copied from " + srcNode + " to "  + dstNode);
 
         if(source.equals(destination)){
             return "New destination of DG is the same with the source, no need to copy it!";
