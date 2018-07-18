@@ -16,6 +16,7 @@ public class LocationController {
                           @RequestParam String value){
 
         imoLocationApplication.locationHistoryData.add(0, Integer.valueOf(value));
+        imoLocationApplication.logQueue.offer(Integer.valueOf(value));
 
         return "Current location is: " + value;
     }
