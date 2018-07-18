@@ -26,6 +26,7 @@ public class ImoLocationApplication {
 
     public static void main(String[] args) {
         locationHistoryData = new ArrayList<>();
+        logQueue = new LinkedList<>();
 
         curServiceName = System.getenv("SERVICE_LABEL");
         curNode = System.getenv("CUR_NODE");

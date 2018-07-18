@@ -16,7 +16,7 @@ public class LogThread implements Runnable{
             if(!ImoLocationApplication.logQueue.isEmpty()) {
                 Integer location = ImoLocationApplication.logQueue.poll();
                 System.out.println("Upload location log : " + ImoLocationApplication.curServiceName + " : " + location.toString());
-                ImoLocationApplication.logUpload(ImoLocationApplication.curServiceName, location.toString());
+                ImoLocationApplication.logUpload(ImoLocationApplication.curServiceName, location.toString(), 3);
             }
 
             try {
