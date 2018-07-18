@@ -97,6 +97,7 @@ public class RegistrationController {
         // Find ou the IP:port of the DGs created on Core and Edge nodes
         return testApplication.DGInfoMap.get(name).getAllDgIpPort();
     }
+
     @RequestMapping(value = "/copy")
     public String copy(@RequestParam String name,
                        @RequestParam String type,
@@ -104,7 +105,7 @@ public class RegistrationController {
                        @RequestParam String dstNode) {
         String source = srcNode;
         String destination = dstNode;
-        String imoName = name;
+        String imoName = trimLastOne(name, "-");
         System.out.println("Receive Copy cmd from " + srcNode + " to : " + dstNode + " for IMO: " + imoName);
 
         if(source.equals(destination)){

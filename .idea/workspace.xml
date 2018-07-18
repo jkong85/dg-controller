@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c4d2589f-d158-4b34-8e3b-fea70abf8fa4" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imo-location/src/main/java/com/dg/kj/imolocation/MigrationCopy.java" beforeDir="false" afterPath="$PROJECT_DIR$/imo-location/src/main/java/com/dg/kj/imolocation/MigrationCopy.java" afterDir="false" />
-    </list>
+    <list default="true" id="c4d2589f-d158-4b34-8e3b-fea70abf8fa4" name="Default" comment="" />
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/controller-eureka/target/" />
     <ignored path="$PROJECT_DIR$/controller-kubeclient/target/" />
@@ -27,7 +23,7 @@
       <file leaf-file-name="RegistrationController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2908">
+            <state relative-caret-position="2786">
               <caret line="239" column="64" selection-start-line="239" selection-start-column="64" selection-end-line="239" selection-end-column="64" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -89,8 +85,8 @@
       <file leaf-file-name="MigrationCopy.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/imo-location/src/main/java/com/dg/kj/imolocation/MigrationCopy.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="401">
-              <caret line="40" column="87" selection-start-line="40" selection-start-column="87" selection-end-line="40" selection-end-column="87" />
+            <state relative-caret-position="289">
+              <caret line="113" column="64" selection-start-line="113" selection-start-column="64" selection-end-line="113" selection-end-column="64" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#834#835#0" expanded="true" />
@@ -685,12 +681,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1531364423498</updated>
-      <workItem from="1531364425597" duration="125545000" />
+      <workItem from="1531364425597" duration="125777000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="125545000" />
+    <option name="totallyTimeSpent" value="125777000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1920" height="1018" extended-state="6" />
@@ -1147,8 +1143,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/imo-location/src/main/java/com/dg/kj/imolocation/MigrationCopy.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="401">
-          <caret line="40" column="87" selection-start-line="40" selection-start-column="87" selection-end-line="40" selection-end-column="87" />
+        <state relative-caret-position="289">
+          <caret line="113" column="64" selection-start-line="113" selection-start-column="64" selection-end-line="113" selection-end-column="64" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#834#835#0" expanded="true" />
@@ -1161,7 +1157,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2908">
+        <state relative-caret-position="2786">
           <caret line="239" column="64" selection-start-line="239" selection-start-column="64" selection-end-line="239" selection-end-column="64" />
           <folding>
             <element signature="imports" expanded="true" />

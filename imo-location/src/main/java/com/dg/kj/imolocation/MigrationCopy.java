@@ -38,7 +38,7 @@ public class MigrationCopy implements Runnable {
             System.out.println("Count down " + cnt);
         }
 
-        System.out.println("CUR_NODE" + curNode+ " , curServiceName: " + curServiceName);
+        System.out.println("CUR_NODE: " + curNode+ " , curServiceName: " + curServiceName);
         if(curNode.equals(EDGE_NODE1)) {
             System.out.println("Copy DG from " + EDGE_NODE1 + " to " + EDGE_NODE2);
             migrate(curServiceName, type, EDGE_NODE1, EDGE_NODE2);
