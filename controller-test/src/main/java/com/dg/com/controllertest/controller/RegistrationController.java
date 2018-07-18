@@ -56,8 +56,8 @@ public class RegistrationController {
         //TODO: change here based on the input
         String imoLocation = location;
 
-        Map<String, ImoDGs>  dgInfoMap = testApplication.DGInfoMap;
-        if( !dgInfoMap.containsKey(imoName)){
+        //Map<String, ImoDGs>  dgInfoMap = testApplication.DGInfoMap;
+        if( !testApplication.DGInfoMap.containsKey(imoName)){
             ImoDGs newImoDgs = new ImoDGs(imoName);
             String mainIMODG = imoName + "-0";
             DgService newDgService = createIMODG(mainIMODG, CORE_NODE, type);
@@ -65,13 +65,13 @@ public class RegistrationController {
                 return "Cannot create DGs on core node for this car!";
             }
             newImoDgs.coreDG = newDgService;
-            dgInfoMap.put(imoName, newImoDgs);
+            testApplication.DGInfoMap.put(imoName, newImoDgs);
         }
         // determine the location of the IMO
         String edgeLocation = getLocation(imoLocation);
         //Check whether there is a DG of this IMO  on this edge node
         boolean isExisted = false;
-        for(DgService curDgService : dgInfoMap.get(imoName).edgeDGs){
+        for(DgService curDgService : testApplication.DGInfoMap.get(imoName).edgeDGs){
             if(curDgService.node.equals(edgeLocation)){
                 isExisted = true;
                 System.out.println("There is one DG existed. No need to create a new one!");
@@ -85,13 +85,13 @@ public class RegistrationController {
                 System.out.println(ex.toString());
             }
             System.out.println("Create a new DG on edge node : " + edgeLocation);
-            Integer edgeIndex = dgInfoMap.get(imoName).indexPool.pop();
+            Integer edgeIndex = testApplication.DGInfoMap.get(imoName).indexPool.pop();
             String edgeImoDg = imoName + "-" + Integer.toString(edgeIndex);
             DgService newDgService  = createIMODG(edgeImoDg, edgeLocation, type) ;
             if(newDgService == null){
                 System.out.println("Cannot create DG for " + imoName + " on edge node : " + edgeLocation);
             }else {
-                dgInfoMap.get(imoName).edgeDGs.add(newDgService);
+                testApplication.DGInfoMap.get(imoName).edgeDGs.add(newDgService);
             }
         }
         // Find ou the IP:port of the DGs created on Core and Edge nodes
@@ -111,22 +111,25 @@ public class RegistrationController {
         }
         //TODO: need to valid the srcNode and dstNode
 
-        Map<String, ImoDGs> dgInfoMap = testApplication.DGInfoMap;
+        //Map<String, ImoDGs> dgInfoMap = testApplication.DGInfoMap;
         boolean isExisted = false;
-        for(DgService curDgService : dgInfoMap.get(imoName).edgeDGs){
+        if(!testApplication.DGInfoMap.containsKey(imoName)){
+            return "Cannot find the DGs : " + imoName;
+        }
+        for(DgService curDgService : testApplication.DGInfoMap.get(imoName).edgeDGs){
             if(curDgService.node.equals(destination)){
                 isExisted = true;
                 break;
             }
         }
         if(!isExisted){// create a new one on edge node
-            Integer edgeIndex = dgInfoMap.get(imoName).indexPool.pop();
+            Integer edgeIndex = testApplication.DGInfoMap.get(imoName).indexPool.pop();
             String edgeImoDg = imoName + "-" + Integer.toString(edgeIndex);
             DgService newDgService  = createIMODG(edgeImoDg, destination, type) ;
             if(newDgService == null){
                 System.out.println("Cannot create DG for " + imoName + " on edge node : " + destination);
             }else {
-                dgInfoMap.get(imoName).edgeDGs.add(newDgService);
+                testApplication.DGInfoMap.get(imoName).edgeDGs.add(newDgService);
             }
         }
 
