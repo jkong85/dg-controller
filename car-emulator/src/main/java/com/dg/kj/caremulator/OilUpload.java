@@ -40,7 +40,7 @@ public class OilUpload implements Runnable{
         String name = CarEmulatorApplication.NAME;
         String type = CarEmulatorApplication.TYPE;
 
-        Set<String>[] isSent = new HashSet[DataSync.index+1];
+        Set<String>[] isSent = new HashSet[CarEmulatorApplication.honda_location.length +1];
         for(int i=0; i< isSent.length; i++){
             isSent[i] = new HashSet<>();
         }

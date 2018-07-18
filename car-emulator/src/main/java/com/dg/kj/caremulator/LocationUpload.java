@@ -5,6 +5,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
+import javax.swing.event.CaretEvent;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -42,7 +43,7 @@ public class LocationUpload implements Runnable{
         String name = CarEmulatorApplication.NAME;
         String type = CarEmulatorApplication.TYPE;
 
-        Set<String>[] isSent = new HashSet[DataSync.index+1];
+        Set<String>[] isSent = new HashSet[CarEmulatorApplication.honda_location.length +1];
         for(int i=0; i< isSent.length; i++){
             isSent[i] = new HashSet<>();
         }
