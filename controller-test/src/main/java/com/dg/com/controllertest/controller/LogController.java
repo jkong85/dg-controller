@@ -24,14 +24,25 @@ public class LogController {
             newLog.add(0, log);
             dgLogMap.put(sender, newLog);
         }
-        return null;
+        return "write log successfully!";
     }
+
     @RequestMapping(value = "/logcontroller")
     public String logcontroller(){
         if(logList ==null || logList.size()==0){
             return "No logs";
         }
         return logList.get(logList.size()-1);
+    }
+
+    @RequestMapping(value = "/logmap")
+    public String logEntity(){
+        StringBuilder sb = new StringBuilder();
+        for(Map.Entry entry : dgLogMap.entrySet()){
+            sb.append(entry.getKey());
+            sb.append("\n");
+        }
+        return sb.toString();
     }
     @RequestMapping(value = "/log")
     public String log(@RequestParam String sender){

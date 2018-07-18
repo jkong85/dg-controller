@@ -27,42 +27,6 @@ public class MigrationCopy implements Runnable {
         String curServiceName = System.getenv("SERVICE_LABEL");
         String curNode = System.getenv("CUR_NODE");
         String type = "honda";
-        boolean test = false;
-
-        if(test) { // just of test
-            int cnt = 20;
-            while (cnt-- > 0) {
-                try {
-                    Thread.sleep(2000);
-                } catch (InterruptedException ie) {
-                }
-                System.out.println("Count down " + cnt);
-            }
-            System.out.println("CUR_NODE: " + curNode + " , curServiceName: " + curServiceName);
-            if (curNode.equals(EDGE_NODE1)) {
-                System.out.println("Copy DG from " + EDGE_NODE1 + " to " + EDGE_NODE2);
-                migrate(curServiceName, type, EDGE_NODE1, EDGE_NODE2);
-                isMigrated = true;
-                System.out.println("Copy is done!");
-            }
-
-            try {
-                Thread.sleep(20000);
-            } catch (InterruptedException ie) {
-            }
-
-            System.out.println(" Destroy DGs on " + curNode);
-            if (curNode.equals(EDGE_NODE1)) {
-                destroy(curServiceName, type, curNode);
-                isDestroyed = true;
-                System.out.println("Destroy is done!");
-            }
-
-            try {
-                Thread.sleep(20000);
-            } catch (InterruptedException ie) {
-            }
-        }
 
         while(true){
             //TODO: develop your own migration algorithm
@@ -148,4 +112,5 @@ public class MigrationCopy implements Runnable {
         }
 
     }
+
 }
