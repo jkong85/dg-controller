@@ -24,7 +24,40 @@ public class MigrationCopy implements Runnable {
     }
 
     public void run() {
+        String curServiceName = System.getenv("SERVICE_LABEL");
+        String curNode = System.getenv("CUR_NODE");
+        String type = "honda";
+        int cnt = 20;
+
+        while(cnt-- > 0) {
+            try {
+                Thread.sleep(2000);
+            } catch (InterruptedException ie) {
+            }
+            System.out.println("Count down " + cnt);
+        }
+
+        System.out.println("Copy DG from " + EDGE_NODE1 + " to " + EDGE_NODE2);
+        migrate(curServiceName, type, EDGE_NODE1, EDGE_NODE2);
+        isMigrated = true;
+
+
+        try{
+            Thread.sleep(20000);
+        }catch (InterruptedException ie){
+        }
+
+        System.out.println(" Destroy DGs on " + curNode);
+        destroy(curServiceName, type, curNode);
+        isDestroyed = true;
+
+        try{
+            Thread.sleep(20000);
+        }catch (InterruptedException ie){
+        }
+
         while(true){
+
             // determine whether to migrate to other nodes
             //TODO: develop your own migration algorithm
             if(ImoLocationApplication.locationHistoryData.size()>0) {
@@ -32,9 +65,6 @@ public class MigrationCopy implements Runnable {
                 Integer location = ImoLocationApplication.locationHistoryData.get(0);
                 String migrateInfo = null;
 
-                String curServiceName = System.getenv("SERVICE_LABEL");
-                String curNode = System.getenv("CUR_NODE");
-                String type = "honda";
 
                 if (location >= 10 && (!isMigrated)) {
                     System.out.println(" Migrate to Edge Node 2");
@@ -54,7 +84,6 @@ public class MigrationCopy implements Runnable {
             try{
                 Thread.sleep(1000);
             }catch (InterruptedException ie){
-
             }
         }
     }
