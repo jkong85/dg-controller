@@ -292,7 +292,7 @@ public class RegistrationController {
 
         String nodeIP = testApplication.nodeIpMap.get(node_selector);
 
-        return new DgService(service_label, nodeIP, nodePort_eureka, nodePort_zuul);
+        return new DgService(service_label, node_selector, nodeIP, nodePort_eureka, nodePort_zuul);
     }
 
     private Integer getIMONodePort(){

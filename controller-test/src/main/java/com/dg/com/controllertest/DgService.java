@@ -13,9 +13,10 @@ public class DgService {
     public Integer eureka_node_port;
     public Integer zuul_node_port;
     public Map<String, DgDeployment> deploymentMap;
-    public DgService(String name, String nodeIP, Integer eureka_node_port, Integer zuul_node_port){
+    public DgService(String name, String node, String nodeIP, Integer eureka_node_port, Integer zuul_node_port){
         this.name = name;
         this.nodeIP = nodeIP;
+        this.node = node;
         this.eureka_node_port = eureka_node_port;
         this.zuul_node_port = zuul_node_port;
         this.deploymentMap = new HashMap<>();
