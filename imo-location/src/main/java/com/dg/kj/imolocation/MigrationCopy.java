@@ -94,7 +94,7 @@ public class MigrationCopy implements Runnable {
             t.start ();
         }
     }
-    private void migrate(String name, String type, String src, String dst) throws HttpClientErrorException {
+    private void migrate(String name, String type, String src, String dst){
         RestTemplate template = new RestTemplate();
         MultiValueMap<String, Object> copyParamMap = new LinkedMultiValueMap<String, Object>();
         copyParamMap.add("name", name);
@@ -109,6 +109,7 @@ public class MigrationCopy implements Runnable {
                 retry = false;
             }catch(HttpClientErrorException he) {
                 retry = true;
+                System.out.println(he);
             }
         }
     }
