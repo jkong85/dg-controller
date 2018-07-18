@@ -561,7 +561,7 @@ public class RegistrationController {
     //e.g., name_deploy = "controller-eureka", or "car1-1-eureka"
     private String getDeploymentIPbyRegx(String response, String name_deploy){
         String[] pods_str_array = response.replace("\"", "").replace("{", "").split("metadata:");
-        System.out.println("All pods info: " + response);
+//        System.out.println("All pods info: " + response);
 
         String name_start = "name:";
         //String name_deploy = "controller-eureka";
@@ -574,8 +574,8 @@ public class RegistrationController {
         Pattern pattern_name = Pattern.compile(name_start + name_deploy + ".+?" + name_end);
         Pattern pattern_podIP = Pattern.compile(podIP_start + ".+?" + podIP_end);
         for(int i=0; i<pods_str_array.length; i++){
-            System.out.println("==================================");
-            System.out.println(pods_str_array[i]);
+//            System.out.println("==================================");
+//            System.out.println(pods_str_array[i]);
             matcher = pattern_name.matcher(pods_str_array[i]);
             if(matcher.find()){
                 String nameResult = matcher.group();

@@ -28,63 +28,59 @@ public class MigrationCopy implements Runnable {
         String curServiceName = System.getenv("SERVICE_LABEL");
         String curNode = System.getenv("CUR_NODE");
         String type = "honda";
-        int cnt = 20;
+        boolean test = false;
 
-        while(cnt-- > 0) {
+        if(test) { // just of test
+            int cnt = 20;
+            while (cnt-- > 0) {
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException ie) {
+                }
+                System.out.println("Count down " + cnt);
+            }
+            System.out.println("CUR_NODE: " + curNode + " , curServiceName: " + curServiceName);
+            if (curNode.equals(EDGE_NODE1)) {
+                System.out.println("Copy DG from " + EDGE_NODE1 + " to " + EDGE_NODE2);
+                migrate(curServiceName, type, EDGE_NODE1, EDGE_NODE2);
+                isMigrated = true;
+                System.out.println("Copy is done!");
+            }
+
             try {
-                Thread.sleep(2000);
+                Thread.sleep(20000);
             } catch (InterruptedException ie) {
             }
-            System.out.println("Count down " + cnt);
-        }
 
-        System.out.println("CUR_NODE: " + curNode+ " , curServiceName: " + curServiceName);
-        if(curNode.equals(EDGE_NODE1)) {
-            System.out.println("Copy DG from " + EDGE_NODE1 + " to " + EDGE_NODE2);
-            migrate(curServiceName, type, EDGE_NODE1, EDGE_NODE2);
-            isMigrated = true;
-        }
+            System.out.println(" Destroy DGs on " + curNode);
+            if (curNode.equals(EDGE_NODE1)) {
+                destroy(curServiceName, type, curNode);
+                isDestroyed = true;
+                System.out.println("Destroy is done!");
+            }
 
-
-        try{
-            Thread.sleep(20000);
-        }catch (InterruptedException ie){
-        }
-
-        System.out.println(" Destroy DGs on " + curNode);
-        if(curNode.equals(EDGE_NODE1)) {
-            destroy(curServiceName, type, curNode);
-            isDestroyed = true;
-        }
-
-        try{
-            Thread.sleep(20000);
-        }catch (InterruptedException ie){
+            try {
+                Thread.sleep(20000);
+            } catch (InterruptedException ie) {
+            }
         }
 
         while(true){
-
-            // determine whether to migrate to other nodes
             //TODO: develop your own migration algorithm
             if(ImoLocationApplication.locationHistoryData.size()>0) {
-
                 Integer location = ImoLocationApplication.locationHistoryData.get(0);
-                String migrateInfo = null;
-
 
                 if (location >= 10 && (!isMigrated)) {
                     System.out.println(" Migrate to Edge Node 2");
                     migrate(curServiceName, type, EDGE_NODE1, EDGE_NODE2);
-                    migrateInfo = "Copy DG from " + EDGE_NODE1 + " to " + EDGE_NODE2;
+                    String migrateInfo = "Copy DG from " + EDGE_NODE1 + " to " + EDGE_NODE2;
                     isMigrated = true;
                 }
-                if (!isDestroyed &&
-                        ((location > 20 && curNode.equals(EDGE_NODE1))
+                if (((location > 20 && curNode.equals(EDGE_NODE1))
                                 || (location >= 30 && curNode.equals(EDGE_NODE2)))) {
                     // destroy it's self
                     System.out.println(" Destroy DGs on " + curNode);
                     destroy(curServiceName, type, curNode);
-                    isDestroyed = true;
                 }
             }
             try{
@@ -109,7 +105,8 @@ public class MigrationCopy implements Runnable {
         copyParamMap.add("dstNode", dst);
 
         boolean retry = true;
-        while(retry){
+        int cnt = 5;
+        while(retry && cnt-->0){
             try {
                 String result = template.postForObject(CONTROLLER_COPY_URL, copyParamMap, String.class);
                 retry = false;
@@ -128,15 +125,16 @@ public class MigrationCopy implements Runnable {
         destroyParamMap.add("node", node);
 
         boolean retry = true;
-          while(retry){
-              try {
-                  String result = template.postForObject(CONTROLLER_DESTROY_URL, destroyParamMap, String.class);
-                  retry = false;
-              }catch(RestClientException re) {
-                  retry = true;
-                  System.out.println(re);
-              }
-          }
+        int cnt = 5;
+        while(retry && cnt-->0){
+            try {
+                String result = template.postForObject(CONTROLLER_DESTROY_URL, destroyParamMap, String.class);
+                retry = false;
+            }catch(RestClientException re) {
+                retry = true;
+                System.out.println(re);
+            }
+        }
 
     }
 }
