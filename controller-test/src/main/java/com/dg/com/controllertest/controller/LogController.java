@@ -50,8 +50,7 @@ public class LogController {
         StringBuilder sb = new StringBuilder();
         for(String str : ControllerTestApplication.DGHistoryLogMap.get(sender)){
             sb.append(" From " + sender + " : " + str);
-//            sb.append("<br/>");
-            sb.append("\\n");
+            sb.append("<br/>");
         }
         return sb.toString();
     }

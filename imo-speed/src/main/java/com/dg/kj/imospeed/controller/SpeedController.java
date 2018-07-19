@@ -14,23 +14,18 @@ public class SpeedController {
     public String current(@RequestParam String name,
                         @RequestParam String type,
                         @RequestParam String value){
-        imoSpeedApplication.speedHistoryData.add(0, Integer.valueOf(value));
+        imoSpeedApplication.speedHistoryData.add(0, value);
         imoSpeedApplication.type = type;
-        Integer total = 0;
-        for(int i=0; i<imoSpeedApplication.speedHistoryData.size(); i++){
-            total += imoSpeedApplication.speedHistoryData.get(i);
-        }
-
-        return "cur speed is: " + value + ", total sum is :" + total.toString();
+        return "cur speed is: " + value;
     }
 
     @RequestMapping(value="/history")
     public String history(){
-        String result = "Speed history data is: " + imoSpeedApplication.speedHistoryData.toString();
+        String result = "Speed history data is: " + imoSpeedApplication.speedHistoryData;
         return result;
     }
     @RequestMapping(value="/ready")
     public String ready(){
-        return "ready";
+        return imoSpeedApplication.curServiceName + "is ready";
     }
 }

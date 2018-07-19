@@ -14,20 +14,18 @@ public class LocationController {
     public String current(@RequestParam String name,
                           @RequestParam String type,
                           @RequestParam String value){
-
-        imoLocationApplication.locationHistoryData.add(0, Integer.valueOf(value));
-        imoLocationApplication.logQueue.offer(Integer.valueOf(value));
-
+        imoLocationApplication.locationHistoryData.add(0, value);
+        imoLocationApplication.logQueue.offer(value);
         return "Current location is: " + value;
     }
 
     @RequestMapping(value="/history")
     public String history(){
-        String result = "Location history data is: " + imoLocationApplication.locationHistoryData.toString();
+        String result = "Location history data is: " + imoLocationApplication.locationHistoryData;
         return result;
     }
     @RequestMapping(value="/ready")
     public String ready(){
-        return "ready";
+        return imoLocationApplication.curServiceName + " is ready";
     }
 }

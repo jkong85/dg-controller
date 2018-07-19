@@ -6,7 +6,15 @@
 
     <groupId>com.dg.kj</groupId>
     <artifactId>controller</artifactId>
+    <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
-
-
+    <modules>
+        <module>dg-commons</module>
+        <module>controller-eureka</module>
+        <module>controller-zuul</module>
+        <module>controller-test</module>
+        <module>imo-location</module>
+        <module>imo-oil</module>
+        <module>imo-speed</module>
+    </modules>
 </project>

@@ -1,0 +1,5 @@
+#!/bin/sh
+set -x
+sudo mvn clean install -DskipTests
+
+

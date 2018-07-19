@@ -12,11 +12,18 @@
     <description>Demo project for Spring Boot</description>
 
     <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>1.5.14.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
+        <groupId>com.dg.kj</groupId>
+        <artifactId>controller</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <!--<relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
     </parent>
+
+    <!--<parent>-->
+        <!--<groupId>org.springframework.boot</groupId>-->
+        <!--<artifactId>spring-boot-starter-parent</artifactId>-->
+        <!--<version>1.5.14.RELEASE</version>-->
+        <!--<relativePath/> &lt;!&ndash; lookup parent from repository &ndash;&gt;-->
+    <!--</parent>-->
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -54,6 +61,11 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.dg.kj</groupId>
+            <artifactId>dg-commons</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
 
@@ -66,6 +78,14 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-parent</artifactId>
+                <version>1.5.14.RELEASE</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
         </dependencies>
     </dependencyManagement>
 

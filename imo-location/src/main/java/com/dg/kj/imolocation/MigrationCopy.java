@@ -1,5 +1,6 @@
 package com.dg.kj.imolocation;
 
+import com.dg.kj.dgcommons.Log;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
@@ -39,8 +40,8 @@ public class MigrationCopy implements Runnable {
         while(true){
             //TODO: develop your own migration algorithm
             if(ImoLocationApplication.locationHistoryData.size()>6) {
-                Integer preLocation = ImoLocationApplication.locationHistoryData.get(5);
-                Integer location = ImoLocationApplication.locationHistoryData.get(0);
+                Integer preLocation = Integer.valueOf(ImoLocationApplication.locationHistoryData.get(5));
+                Integer location = Integer.valueOf(ImoLocationApplication.locationHistoryData.get(0));
 
                 if(preLocation < location){ // from left to right
                     if (location >= 40 && (!isLeftRightMigrated) && curNode.equals(EDGE_NODE1)) {
@@ -116,7 +117,8 @@ public class MigrationCopy implements Runnable {
             System.out.println("Cannot migrate successfully!");
         }
 
-        ImoLocationApplication.logUpload(name, "Migrate DG form " + src + " to " + dst, 3);
+        Log log = new Log("location", name, 3 );
+        log.logUpload("Migrate DG form " + src + " to " + dst);
     }
     //destroy the DGs on node
     private void destroy(String name, String type, String node){
@@ -143,7 +145,8 @@ public class MigrationCopy implements Runnable {
             cnt--;
         }
 
-        ImoLocationApplication.logUpload(name, "Destroy DG on " + node, 3);
+        Log log = new Log("location", name, 3 );
+        log.logUpload("Destroy DG on " + node);
     }
 
 }

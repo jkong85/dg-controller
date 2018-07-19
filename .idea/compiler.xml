@@ -7,16 +7,17 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="car-emulator" />
-        <module name="controller" />
         <module name="controller-eureka" />
         <module name="controller-test" />
         <module name="controller-zuul" />
+        <module name="dg-commons" />
         <module name="imo-location" />
         <module name="imo-oil" />
         <module name="imo-speed" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="commons" target="1.8" />
       <module name="controller-kubeclient" target="1.8" />
     </bytecodeTargetLevel>
   </component>

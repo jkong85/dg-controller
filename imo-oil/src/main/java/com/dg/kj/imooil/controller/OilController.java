@@ -14,19 +14,19 @@ public class OilController {
     public String current(@RequestParam String name,
                         @RequestParam String type,
                         @RequestParam String value){
-        imoOilApplication.oilHistoryData.add(0, Integer.valueOf(value));
-
+        imoOilApplication.oilHistoryData.add(0, value);
+        imoOilApplication.logQueue.offer(value);
         return "Current oil is: " + value;
     }
 
     @RequestMapping(value="/history")
     public String history(){
-        String result = "Oil history data is: " + imoOilApplication.oilHistoryData.toString();
+        String result = "Oil history data is: " + imoOilApplication.oilHistoryData;
         return result;
     }
 
     @RequestMapping(value="/ready")
     public String ready(){
-        return "ready";
+        return imoOilApplication.curServiceName + "is ready";
     }
 }
