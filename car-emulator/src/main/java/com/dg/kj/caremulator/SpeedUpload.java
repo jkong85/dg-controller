@@ -41,8 +41,10 @@ public class SpeedUpload implements Runnable{
         String type = CarEmulatorApplication.TYPE;
 
         Set<String>[] isSent = new HashSet[CarEmulatorApplication.honda_location.length +1];
+        boolean[] isPrinted = new boolean[CarEmulatorApplication.honda_location.length + 1];
         for(int i=0; i< isSent.length; i++){
             isSent[i] = new HashSet<>();
+            isPrinted[i] = false;
         }
 //        System.out.println("Running Speed upload of " +  threadName );
         try {
@@ -58,7 +60,10 @@ public class SpeedUpload implements Runnable{
                     Thread.sleep(100);
                     continue;
                 }
-                System.out.println("Upload " + index + " speed data : " + Integer.toString(speed[index]));
+                if(!isPrinted[index]) {
+                    System.out.println("Upload " + index + " speed data : " + Integer.toString(speed[index]));
+                    isPrinted[index] = true;
+                }
                for (int i = 0; i < CarEmulatorApplication.destination.size(); i++) {
                     String dstURL = "http://" + CarEmulatorApplication.destination.get(i);
                     if(isSent[index].contains(dstURL)){// current data have been successsfully sent to DST

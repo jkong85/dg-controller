@@ -121,12 +121,12 @@ public class CarEmulatorApplication {
 
         RestTemplate template = new RestTemplate();
         String result = null;
-        System.out.println("Registering " + name + " to controller");
 
         boolean regResend = true;
         while(regResend) {
             regResend = false;
             try {
+                System.out.println("Registering " + name + " to controller");
                 result = template.postForObject(registerURL, registerParamMap, String.class);
             } catch (RestClientException re) {
 //                System.out.println("Resend register cmd : " + re.toString());
