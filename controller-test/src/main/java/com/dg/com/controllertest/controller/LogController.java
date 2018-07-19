@@ -35,6 +35,19 @@ public class LogController {
         return logList.get(logList.size()-1);
     }
 
+    @RequestMapping(value = "/logcontrollerhistory")
+    public String logcontrollerhistory(){
+        if(logList ==null || logList.size()==0){
+            return "No logs";
+        }
+        StringBuilder sb = new StringBuilder();
+        for(String str : logList){
+            sb.append(str);
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
+
     @RequestMapping(value = "/logmap")
     public String logEntity(){
         StringBuilder sb = new StringBuilder();
@@ -44,12 +57,26 @@ public class LogController {
         }
         return sb.toString();
     }
+
     @RequestMapping(value = "/log")
     public String log(@RequestParam String sender){
         if(!dgLogMap.containsKey(sender) || dgLogMap.get(sender).isEmpty()){
             return "No logs";
         }else{
             return dgLogMap.get(sender).get(0);
+        }
+    }
+    @RequestMapping(value = "/loghistory")
+    public String logHistory(@RequestParam String sender){
+        if(!dgLogMap.containsKey(sender) || dgLogMap.get(sender).isEmpty()){
+            return "No logs";
+        }else{
+            StringBuilder sb = new StringBuilder();
+            for(String str : dgLogMap.get(sender)){
+                sb.append(" From " + sender + " : " + str);
+                sb.append("\n");
+            }
+            return sb.toString();
         }
     }
 }
