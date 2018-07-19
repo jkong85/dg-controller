@@ -551,7 +551,7 @@ public class RegistrationController {
         String urlGetPods = K8sApiServer + K8S_GET_PODS_API;
         String response = httpGet(urlGetPods);
         String[] pods_str_array = response.replace("\"", "").replace("{", "").split("metadata:");
-        System.out.println("All pods info: " + response);
+//        System.out.println("All pods info: " + response);
 
         String name_start = "name:";
         //String name_deploy = "controller-eureka";

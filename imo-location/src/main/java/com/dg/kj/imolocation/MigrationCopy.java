@@ -14,9 +14,11 @@ public class MigrationCopy implements Runnable {
     private static final String EDGE_NODE2 = "node3";
     private static final String CONTROLLER_COPY_URL = "http://172.17.8.101:30002/test/copy";
     private static final String CONTROLLER_DESTROY_URL = "http://172.17.8.101:30002/test/destroy";
-    private static boolean isMigrated = false;
 
-    private static boolean isDestroyed = false;
+    private static boolean isLeftRightMigrated = false;
+    private static boolean isRightLeftMigrated = false;
+    private static boolean isDestoyed = false;
+
 
 
     MigrationCopy(String name){
@@ -27,23 +29,48 @@ public class MigrationCopy implements Runnable {
         String curServiceName = System.getenv("SERVICE_LABEL");
         String curNode = System.getenv("CUR_NODE");
         String type = "honda";
+        //TODO: add type ENV to determine car's type
+        if(curServiceName.substring(0, 1).equals("h")){
+            type = "honda";
+        }else if(curServiceName.substring(0, 1).equals("t")){
+            type = "toyota";
+        }
 
         while(true){
             //TODO: develop your own migration algorithm
-            if(ImoLocationApplication.locationHistoryData.size()>0) {
+            if(ImoLocationApplication.locationHistoryData.size()>6) {
+                Integer preLocation = ImoLocationApplication.locationHistoryData.get(5);
                 Integer location = ImoLocationApplication.locationHistoryData.get(0);
 
-                if (location >= 40 && (!isMigrated)) {
-                    System.out.println(" Migrate to Edge Node 2");
-                    migrate(curServiceName, type, EDGE_NODE1, EDGE_NODE2);
-                    String migrateInfo = "Copy DG from " + EDGE_NODE1 + " to " + EDGE_NODE2;
-                    isMigrated = true;
-                }
-                if (((location > 60 && curNode.equals(EDGE_NODE1))
-                                || (location >= 100 && curNode.equals(EDGE_NODE2)))) {
-                    // destroy it's self
-                    System.out.println(" Destroy DGs on " + curNode);
-                    destroy(curServiceName, type, curNode);
+                if(preLocation < location){ // from left to right
+                    if (location >= 40 && (!isLeftRightMigrated)) {
+                        System.out.println(" Migrate to Edge Node 2");
+                        migrate(curServiceName, type, EDGE_NODE1, EDGE_NODE2);
+                        String migrateInfo = "Copy DG from " + EDGE_NODE1 + " to " + EDGE_NODE2;
+                        isLeftRightMigrated = true;
+                    }
+                    if ((!isDestoyed) && ((location > 60 && curNode.equals(EDGE_NODE1))
+                            || (location >= 100 && curNode.equals(EDGE_NODE2)))) {
+                        // destroy it's self
+                        System.out.println(" Destroy DGs on " + curNode);
+                        destroy(curServiceName, type, curNode);
+                        isDestoyed = true;
+                    }
+
+                } else if(preLocation > location){ // from right to left
+                    if (location <= 60 && (!isRightLeftMigrated)) {
+                        System.out.println(" Migrate to Edge Node 1");
+                        migrate(curServiceName, type, EDGE_NODE2, EDGE_NODE1);
+                        String migrateInfo = "Copy DG from " + EDGE_NODE2 + " to " + EDGE_NODE1;
+                        isRightLeftMigrated = true;
+                    }
+                    if ((!isDestoyed) && ((location < 40 && curNode.equals(EDGE_NODE2))
+                            || (location < 1 && curNode.equals(EDGE_NODE1)))) {
+                        // destroy it's self
+                        System.out.println(" Destroy DGs on " + curNode);
+                        destroy(curServiceName, type, curNode);
+                        isDestoyed = true;
+                    }
                 }
             }
             try{
@@ -73,6 +100,7 @@ public class MigrationCopy implements Runnable {
             System.out.println("Try " + Integer.toString(6-cnt) + " time to migrate the DGs of " + name);
             try {
                 String result = template.postForObject(CONTROLLER_COPY_URL, copyParamMap, String.class);
+                System.out.println("Try to migrate DG form " + src + " to " + dst);
                 retry = false;
             }catch(RestClientException re) {
                 retry = true;
