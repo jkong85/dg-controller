@@ -35,7 +35,8 @@ public class CarEmulatorApplication {
     public static void main(String[] args) {
         //SpringApplication.run(CarEmulatorApplication.class, args);
 
-        if(args == null || args.length < 2 || args.length > 4){
+//        if(args == null || args.length < 2 || args.length > 4){
+        if(args == null || args.length != 2 ){
             System.out.println("Input error! \n java -jar CarEmulator car1 honda|toyota y");
             return;
         }
@@ -50,6 +51,7 @@ public class CarEmulatorApplication {
         }
         // register the care first
         Integer location = type==HONDA? honda_location[0] : toyota_location[0];
+        /*
         if(args.length == 3) {
             if (args[2].equals("y")) {
                 register(name, type, location.toString());
@@ -65,6 +67,9 @@ public class CarEmulatorApplication {
 
             }
         }
+        */
+
+        register(name, type, location.toString());
 
         // pull the destination address per 1 sec
         DestinationUpdate dstThread = new DestinationUpdate(name, type);
