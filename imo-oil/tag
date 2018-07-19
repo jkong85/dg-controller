@@ -1,3 +1,4 @@
+#!/bin/sh
 #sudo docker images | sed -n '2p'
 
 sudo docker tag $1 jkong85/dg-imo-oil:0.1

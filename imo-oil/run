@@ -12,3 +12,6 @@ sleep 2
 
 sudo docker images | sed -n '2p'
 
+NAME="$(sudo docker images | sed -n '2p' | awk '{print $1}')"
+ID="$(sudo docker images | sed -n '2p' | awk '{print $3}')"
+./tag $ID

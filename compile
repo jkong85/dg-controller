@@ -1,0 +1,25 @@
+#!/bin/sh
+set -x
+
+git pull 
+work_path=$(pwd)
+# loop to enumerate the input parameters
+for k in $*
+do
+    if  [ ! "$k" ] ;then
+        echo "Compile end!"
+        exit
+    else
+        echo "Compile $k" 
+        cur_path=$work_path/controller-$k/
+        if [ -d "$cur_path" ]; then
+            cd $cur_path
+            ./run
+        fi
+        cur_path=$work_path/imo-$k/
+        if [ -d "$cur_path" ]; then
+            cd $cur_path
+            ./run
+        fi
+    fi
+done
