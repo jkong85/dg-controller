@@ -246,10 +246,9 @@ public class RegistrationController {
 
     //TODO: override this based on the algorithms
     private String getLocation(String location){
-        if(Integer.valueOf(location) > 10) {
+        if(Integer.valueOf(location) < 60) {
             return EDGE_NODE_1;
-        }
-        else return EDGE_NODE_1;
+        }else return EDGE_NODE_2;
     }
 
     private String deletePod(){
