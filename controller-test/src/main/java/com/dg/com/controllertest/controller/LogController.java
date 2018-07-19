@@ -41,7 +41,7 @@ public class LogController {
     }
     @RequestMapping(value = "/loghistory")
     public String logHistory(@RequestParam String sender){
-        if(ControllerTestApplication.DGHistoryLogMap.containsKey(sender)){
+        if(!ControllerTestApplication.DGHistoryLogMap.containsKey(sender)){
             return "No log for " + sender + ", it is not ready yet!";
         }
         if(ControllerTestApplication.DGHistoryLogMap.get(sender).isEmpty()) {
