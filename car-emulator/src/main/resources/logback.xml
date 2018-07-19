@@ -1,20 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <layout class="ch.qos.logback.classic.PatternLayout">
+
+    <property name="DEV_HOME" value="~/log" />
+
+    <appender name="FILE-AUDIT"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${DEV_HOME}/debug.log</file>
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
             <Pattern>
-                %d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n
+                %d{yyyy-MM-dd HH:mm:ss} - %msg%n
             </Pattern>
-        </layout>
+        </encoder>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- rollover daily -->
+            <fileNamePattern>${DEV_HOME}/archived/debug.%d{yyyy-MM-dd}.%i.log
+            </fileNamePattern>
+            <timeBasedFileNamingAndTriggeringPolicy
+                    class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+
     </appender>
 
-    <logger name="com.dg.kj" level="debug"
+    <logger name="com.mkyong.web" level="debug"
             additivity="false">
-        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE-AUDIT" />
     </logger>
 
     <root level="error">
-        <appender-ref ref="STDOUT" />
+        <appender-ref ref="FILE-AUDIT" />
     </root>
 
 </configuration>

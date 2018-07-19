@@ -2,12 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c4d2589f-d158-4b34-8e3b-fea70abf8fa4" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/CarEmulatorApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/CarEmulatorApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/DestinationUpdate.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/DestinationUpdate.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/LocationUpload.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/LocationUpload.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/OilUpload.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/OilUpload.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/SpeedUpload.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/SpeedUpload.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/case/controller1/rmDGs.sh" beforeDir="false" afterPath="$PROJECT_DIR$/case/controller1/rmDGs.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-emulator/src/main/resources/logback.xml" beforeDir="false" afterPath="$PROJECT_DIR$/car-emulator/src/main/resources/logback.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/controller-eureka/target/" />
@@ -92,11 +87,20 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="rmDGs.sh" pinned="false" current-in-tab="true">
+      <file leaf-file-name="rmDGs.sh" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/case/controller1/rmDGs.sh">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="75">
               <caret line="5" selection-start-line="5" selection-end-line="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="logback.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/car-emulator/src/main/resources/logback.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="390">
+              <caret line="26" column="41" selection-start-line="26" selection-start-column="41" selection-end-line="26" selection-end-column="41" />
             </state>
           </provider>
         </entry>
@@ -108,19 +112,6 @@
               <caret line="117" column="8" selection-start-line="117" selection-start-column="8" selection-end-line="117" selection-end-column="8" />
               <folding>
                 <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SpeedController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/imo-speed/src/main/java/com/dg/kj/imospeed/controller/SpeedController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="510">
-              <caret line="34" column="4" selection-start-line="34" selection-start-column="4" selection-end-line="34" selection-end-column="4" />
-              <folding>
-                <element signature="imports" expanded="true" />
-                <element signature="e#1288#1289#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -198,7 +189,6 @@
         <option value="$PROJECT_DIR$/imo-oil/src/main/java/com/dg/kj/imooil/controller/OilController.java" />
         <option value="$PROJECT_DIR$/imo-speed/src/main/java/com/dg/kj/imospeed/controller/SpeedController.java" />
         <option value="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/logback.xml" />
-        <option value="$PROJECT_DIR$/car-emulator/src/main/resources/logback.xml" />
         <option value="$PROJECT_DIR$/car-emulator/run" />
         <option value="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/DataSync.java" />
         <option value="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/CarEmulatorApplication.java" />
@@ -207,6 +197,7 @@
         <option value="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/OilUpload.java" />
         <option value="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/SpeedUpload.java" />
         <option value="$PROJECT_DIR$/case/controller1/rmDGs.sh" />
+        <option value="$PROJECT_DIR$/car-emulator/src/main/resources/logback.xml" />
       </list>
     </option>
   </component>
@@ -579,12 +570,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1531364423498</updated>
-      <workItem from="1531364425597" duration="158161000" />
+      <workItem from="1531364425597" duration="158312000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="158161000" />
+    <option name="totallyTimeSpent" value="158312000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="989" extended-state="6" />
@@ -989,13 +980,6 @@
     <entry file="file://$PROJECT_DIR$/car-emulator/pom.xml">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/car-emulator/src/main/resources/logback.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="37" lean-forward="true" selection-start-line="10" selection-start-column="37" selection-end-line="10" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/car-emulator/run">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -1065,6 +1049,13 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="5" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/car-emulator/src/main/resources/logback.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="26" column="41" selection-start-line="26" selection-start-column="41" selection-end-line="26" selection-end-column="41" />
         </state>
       </provider>
     </entry>
