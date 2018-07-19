@@ -68,8 +68,8 @@ public class MigrationCopy implements Runnable {
         copyParamMap.add("dstNode", dst);
 
         boolean retry = true;
-        int cnt = 5;
-        while(retry && cnt-->0){
+        int cnt = 1;
+        while(retry && cnt>0){
             System.out.println("Try " + Integer.toString(6-cnt) + " time to migrate the DGs of " + name);
             try {
                 String result = template.postForObject(CONTROLLER_COPY_URL, copyParamMap, String.class);
@@ -82,6 +82,7 @@ public class MigrationCopy implements Runnable {
                 Thread.sleep(1000);
             }catch (InterruptedException ie){
             }
+            cnt--;
         }
         if(retry == true){
             System.out.println("Cannot migrate successfully!");
@@ -98,8 +99,8 @@ public class MigrationCopy implements Runnable {
         destroyParamMap.add("node", node);
 
         boolean retry = true;
-        int cnt = 5;
-        while(retry && cnt-->0){
+        int cnt = 1;
+        while(retry && cnt>0){
             try {
                 String result = template.postForObject(CONTROLLER_DESTROY_URL, destroyParamMap, String.class);
                 retry = false;
@@ -111,6 +112,7 @@ public class MigrationCopy implements Runnable {
                 Thread.sleep(200);
             }catch (InterruptedException ie){
             }
+            cnt--;
         }
 
         ImoLocationApplication.logUpload(name, "Destroy DG on " + node, 3);

@@ -26,4 +26,8 @@ public class LocationController {
         String result = "Location history data is: " + imoLocationApplication.locationHistoryData.toString();
         return result;
     }
+    @RequestMapping(value="/ready")
+    public String ready(){
+        return "ready";
+    }
 }

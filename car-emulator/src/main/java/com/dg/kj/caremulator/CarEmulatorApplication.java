@@ -69,9 +69,22 @@ public class CarEmulatorApplication {
         // pull the destination address per 1 sec
         DestinationUpdate dstThread = new DestinationUpdate(name, type);
         dstThread.start();
-        // upload the info to DGs
-//        InfoUpload infoThread = new InfoUpload(name, type);
-//        infoThread.start();
+
+        String[] url_ready = new String[2];
+        url_ready[0] = "/location/ready";
+        if(type.equals(HONDA)){
+            url_ready[1] = "/speed/ready";
+        }else{
+            url_ready[1] = "/oil/ready";
+        }
+        while(!isReady(url_ready)){
+            try{
+                Thread.sleep(3000);
+                System.out.println("DGs are creating ..." + name);
+                return;
+            }catch(InterruptedException ie){ }
+        }
+        System.out.println("DGs are ready, start to send data");
         // Data index sync thread
         DataSync dataSync = new DataSync(name);
         dataSync.start();
@@ -117,7 +130,22 @@ public class CarEmulatorApplication {
             }
         }
         return result;
-
-
+    }
+    private static boolean isReady(String[] url_ready){
+        if(destination == null || destination.size()==0){
+            return false;
+        }
+        for(int i=0; i<destination.size(); i++){
+            RestTemplate restTemplate = new RestTemplate();
+            for(String url : url_ready) {
+                String dstURL = "http://" + CarEmulatorApplication.destination.get(i) + url;
+                try {
+                    String response = restTemplate.getForObject(dstURL, String.class);
+                } catch (RestClientException re) {
+                    return false;
+                }
+            }
+        }
+        return true;
     }
 }

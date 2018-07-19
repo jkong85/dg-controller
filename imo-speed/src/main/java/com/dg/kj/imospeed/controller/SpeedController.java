@@ -29,4 +29,8 @@ public class SpeedController {
         String result = "Speed history data is: " + imoSpeedApplication.speedHistoryData.toString();
         return result;
     }
+    @RequestMapping(value="/ready")
+    public String ready(){
+        return "ready";
+    }
 }

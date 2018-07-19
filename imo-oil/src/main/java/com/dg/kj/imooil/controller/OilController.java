@@ -24,4 +24,9 @@ public class OilController {
         String result = "Oil history data is: " + imoOilApplication.oilHistoryData.toString();
         return result;
     }
+
+    @RequestMapping(value="/ready")
+    public String ready(){
+        return "ready";
+    }
 }
