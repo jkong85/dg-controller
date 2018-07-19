@@ -31,6 +31,7 @@ public class ControllerTestApplication {
     }
     private static void Initialize(){
         DGInfoMap = new HashMap<>();
+
         DGCurLogMap = new HashMap<>();
         DGHistoryLogMap = new HashMap<>();
 
@@ -55,11 +56,15 @@ public class ControllerTestApplication {
             return;
         }
         if(!DGCurLogMap.containsKey(sender)){
-            DGCurLogMap.put(sender, new ArrayList<>());
+            List<String> logList = new ArrayList<>();
+            logList.add("Start to show log.");
+            DGCurLogMap.put(sender, logList);
         }
 
         if(!DGHistoryLogMap.containsKey(sender)){
-            DGHistoryLogMap.put(sender, new ArrayList<>());
+            List<String> logList = new ArrayList<>();
+            logList.add("Start to show log.");
+            DGHistoryLogMap.put(sender, logList);
         }
 
         DGCurLogMap.get(sender).add(0, log);
