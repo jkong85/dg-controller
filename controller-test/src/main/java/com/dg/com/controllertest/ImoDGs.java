@@ -13,7 +13,7 @@ public class ImoDGs {
     public ImoDGs(String name){
         this.name = name;
         indexPool = new Stack<>();
-        for(int i=CAPACITY; i>0; i--){
+        for(int i=CAPACITY; i>1; i--){
             indexPool.push(i);
         }
         edgeDGs = new ArrayList<>();

@@ -3,7 +3,6 @@ package com.dg.com.controllertest.controller;
 import com.dg.com.controllertest.ControllerTestApplication;
 import com.dg.com.controllertest.DgService;
 import com.dg.com.controllertest.ImoDGs;
-import com.netflix.discovery.converters.Auto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -63,7 +62,7 @@ public class RegistrationController {
         //Map<String, ImoDGs>  dgInfoMap = testApplication.DGInfoMap;
         if( !testApplication.DGInfoMap.containsKey(imoName)){
             ImoDGs newImoDgs = new ImoDGs(imoName);
-            String mainIMODG = imoName + "-0";
+            String mainIMODG = imoName + "-1";
             DgService newDgService = createIMODG(mainIMODG, CORE_NODE, type);
             logController.logList.add(LOG_PREFIX + "create DGs on core cloud node for " + imoName);
             if(newDgService == null){
