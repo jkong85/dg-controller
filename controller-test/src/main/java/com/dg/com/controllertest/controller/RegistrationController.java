@@ -215,7 +215,14 @@ public class RegistrationController {
                 }
             }
         }
+
+        //TODO: move it to a work queue
         // remove the log record of this DG
+        try{
+                Thread.sleep(500);
+            }catch (InterruptedException ex){
+                System.out.println(ex.toString());
+            }
         ControllerTestApplication.DGCurLogMap.get(serviceName).clear();
         ControllerTestApplication.DGCurLogMap.remove(serviceName);
         return "Deleting the DG services";

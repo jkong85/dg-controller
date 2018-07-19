@@ -22,7 +22,7 @@ public class LogController {
         StringBuilder sb = new StringBuilder();
         for(Map.Entry entry : ControllerTestApplication.DGCurLogMap.entrySet()){
             sb.append(entry.getKey());
-            sb.append("\n");
+            sb.append("<br/>");
         }
         return sb.toString();
     }
@@ -49,7 +49,9 @@ public class LogController {
         }
         StringBuilder sb = new StringBuilder();
         for(String str : ControllerTestApplication.DGHistoryLogMap.get(sender)){
-            sb.append(" From " + sender + " : " + str + "\n");
+            sb.append(" From " + sender + " : " + str);
+//            sb.append("<br/>");
+            sb.append("\\n");
         }
         return sb.toString();
     }

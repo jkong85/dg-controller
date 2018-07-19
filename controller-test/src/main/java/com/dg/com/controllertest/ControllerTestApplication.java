@@ -28,6 +28,7 @@ public class ControllerTestApplication {
     public static void main(String[] args) {
         Initialize();
         SpringApplication.run(ControllerTestApplication.class, args);
+        AddLog(CONTROLLER_LOG_NAME, "controller is ready!");
     }
     private static void Initialize(){
         DGInfoMap = new HashMap<>();

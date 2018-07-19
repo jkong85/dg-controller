@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c4d2589f-d158-4b34-8e3b-fea70abf8fa4" name="Default" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/ControllerTestApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/ControllerTestApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/LogController.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/LogController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/controller-eureka/target/" />
@@ -31,11 +34,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="LogController.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="LogController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/LogController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="625">
-              <caret line="46" column="17" selection-start-line="46" selection-start-column="17" selection-end-line="46" selection-end-column="17" />
+            <state relative-caret-position="795">
+              <caret line="53" column="28" selection-start-line="53" selection-start-column="28" selection-end-line="53" selection-end-column="28" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -46,8 +49,8 @@
       <file leaf-file-name="RegistrationController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="600">
-              <caret line="220" selection-start-line="220" selection-end-line="220" />
+            <state relative-caret-position="225">
+              <caret line="221" column="29" lean-forward="true" selection-start-line="221" selection-start-column="29" selection-end-line="221" selection-end-column="29" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -55,11 +58,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ControllerTestApplication.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ControllerTestApplication.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/ControllerTestApplication.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="752">
-              <caret line="65" column="12" selection-start-line="65" selection-start-column="12" selection-end-line="65" selection-end-column="12" />
+            <state relative-caret-position="207">
+              <caret line="30" column="56" selection-start-line="30" selection-start-column="56" selection-end-line="30" selection-end-column="56" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -130,7 +133,6 @@
         <option value="$PROJECT_DIR$/imo-location/src/main/java/com/dg/kj/imolocation/MigrationCopy.java" />
         <option value="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/CarEmulatorApplication.java" />
         <option value="$PROJECT_DIR$/car-emulator/run" />
-        <option value="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java" />
         <option value="$PROJECT_DIR$/case/controller1/rmDGs.sh" />
         <option value="$PROJECT_DIR$/case/controller1/deleteDGs.sh" />
         <option value="$PROJECT_DIR$/controller-test/run" />
@@ -148,8 +150,9 @@
         <option value="$PROJECT_DIR$/compile" />
         <option value="$PROJECT_DIR$/clean_null_images" />
         <option value="$PROJECT_DIR$/clean_null_images.sh" />
-        <option value="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/LogController.java" />
         <option value="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/ControllerTestApplication.java" />
+        <option value="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java" />
+        <option value="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/LogController.java" />
       </list>
     </option>
   </component>
@@ -532,12 +535,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1531364423498</updated>
-      <workItem from="1531364425597" duration="174804000" />
+      <workItem from="1531364425597" duration="175655000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="174804000" />
+    <option name="totallyTimeSpent" value="175655000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="989" extended-state="6" />
@@ -564,7 +567,7 @@
       <window_info anchor="bottom" id="Version Control" />
       <window_info anchor="bottom" id="Spring" />
       <window_info anchor="bottom" id="Terminal" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.27559525" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.22619048" />
       <window_info anchor="right" id="Bean Validation" />
       <window_info id="Web" side_tool="true" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.24590164" />
@@ -988,20 +991,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/LogController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="625">
-          <caret line="46" column="17" selection-start-line="46" selection-start-column="17" selection-end-line="46" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="600">
-          <caret line="220" selection-start-line="220" selection-end-line="220" />
+        <state relative-caret-position="225">
+          <caret line="221" column="29" lean-forward="true" selection-start-line="221" selection-start-column="29" selection-end-line="221" selection-end-column="29" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1010,8 +1003,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/ControllerTestApplication.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="752">
-          <caret line="65" column="12" selection-start-line="65" selection-start-column="12" selection-end-line="65" selection-end-column="12" />
+        <state relative-caret-position="207">
+          <caret line="30" column="56" selection-start-line="30" selection-start-column="56" selection-end-line="30" selection-end-column="56" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/LogController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="795">
+          <caret line="53" column="28" selection-start-line="53" selection-start-column="28" selection-end-line="53" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
