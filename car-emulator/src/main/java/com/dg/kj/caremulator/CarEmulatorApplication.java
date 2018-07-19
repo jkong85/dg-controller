@@ -85,8 +85,7 @@ public class CarEmulatorApplication {
         while(!isReady(url_ready)){
             try{
                 Thread.sleep(3000);
-                System.out.println("DGs are creating ..." + name);
-                return;
+                System.out.println("DGs of " + name +  " are creating ...");
             }catch(InterruptedException ie){ }
         }
         System.out.println("DGs are ready, start to send data");
@@ -147,6 +146,7 @@ public class CarEmulatorApplication {
                 try {
                     String response = restTemplate.getForObject(dstURL, String.class);
                 } catch (RestClientException re) {
+                    System.out.println("No repsonse from DGs, wait...");
                     return false;
                 }
             }
