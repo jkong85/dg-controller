@@ -34,12 +34,18 @@ public class LogController {
         }else if(!ControllerTestApplication.DGCurLogMap.containsKey(sender) && !ControllerTestApplication.DGHistoryLogMap.containsKey(sender)){
             return "No log for " + sender + ", it is not ready yet!";
         }
+        if(ControllerTestApplication.DGCurLogMap.get(sender).isEmpty()) {
+            return "No log";
+        }
         return ControllerTestApplication.DGCurLogMap.get(sender).get(0);
     }
     @RequestMapping(value = "/loghistory")
     public String logHistory(@RequestParam String sender){
         if(ControllerTestApplication.DGHistoryLogMap.containsKey(sender)){
             return "No log for " + sender + ", it is not ready yet!";
+        }
+        if(ControllerTestApplication.DGHistoryLogMap.get(sender).isEmpty()) {
+            return "No log";
         }
         StringBuilder sb = new StringBuilder();
         for(String str : ControllerTestApplication.DGHistoryLogMap.get(sender)){
