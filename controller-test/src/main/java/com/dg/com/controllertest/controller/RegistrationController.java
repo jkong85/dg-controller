@@ -116,9 +116,11 @@ public class RegistrationController {
                        @RequestParam String type,
                        @RequestParam String srcNode,
                        @RequestParam String dstNode) {
-        if(copyRequstSet.contains(name + type + srcNode + dstNode)){
+        String hash = name + type + srcNode + dstNode;
+        if(copyRequstSet.contains(hash)){
             return " Duplicate copy command, ignore it!";
         }
+        copyRequstSet.add(hash);
         String source = srcNode;
         String destination = dstNode;
         String imoName = trimLastOne(name, "-");
@@ -152,7 +154,7 @@ public class RegistrationController {
             }
         }
 
-        copyRequstSet.remove(name + type + srcNode + dstNode);
+        copyRequstSet.remove(hash);
 
         return "DG of " + imoName + " is copied to " + destination;
     }
