@@ -14,10 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -44,6 +41,7 @@ public class RegistrationController {
     private String TOYOTA_TYPE = "toyota";
 
     private String LOG_PREFIX = "From Controller: ";
+    private Set<String> copyRequstSet = new HashSet<>();
 
     @Autowired
     private ControllerTestApplication testApplication;
@@ -111,11 +109,16 @@ public class RegistrationController {
         return dstIPPort;
     }
 
+    // TODO: I use copyRequestSet to avoid the duplicate copy cmd, A better way is to use a work queue
+    // TODO: copy/migration/register : put all command in a work queue, and multi-thread to handle the queue. It also can avoid the time-out HTTP response
     @RequestMapping(value = "/copy")
     public String copy(@RequestParam String name,
                        @RequestParam String type,
                        @RequestParam String srcNode,
                        @RequestParam String dstNode) {
+        if(copyRequstSet.contains(name + type + srcNode + dstNode)){
+            return " Duplicate copy command, ignore it!";
+        }
         String source = srcNode;
         String destination = dstNode;
         String imoName = trimLastOne(name, "-");
@@ -148,6 +151,8 @@ public class RegistrationController {
                 testApplication.DGInfoMap.get(imoName).edgeDGs.add(newDgService);
             }
         }
+
+        copyRequstSet.remove(name + type + srcNode + dstNode);
 
         return "DG of " + imoName + " is copied to " + destination;
     }

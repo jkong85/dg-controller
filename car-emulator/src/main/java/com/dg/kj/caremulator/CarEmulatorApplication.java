@@ -84,7 +84,7 @@ public class CarEmulatorApplication {
         }
         while(!isReady(url_ready)){
             try{
-                Thread.sleep(3000);
+                Thread.sleep(10000);
                 System.out.println("DGs of " + name +  " are creating ...");
             }catch(InterruptedException ie){ }
         }
