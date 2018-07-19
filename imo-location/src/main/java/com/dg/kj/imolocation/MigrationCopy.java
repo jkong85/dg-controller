@@ -43,7 +43,7 @@ public class MigrationCopy implements Runnable {
                 Integer location = ImoLocationApplication.locationHistoryData.get(0);
 
                 if(preLocation < location){ // from left to right
-                    if (location >= 40 && (!isLeftRightMigrated)) {
+                    if (location >= 40 && (!isLeftRightMigrated) && curNode.equals(EDGE_NODE1)) {
                         System.out.println(" Migrate to Edge Node 2");
                         migrate(curServiceName, type, EDGE_NODE1, EDGE_NODE2);
                         String migrateInfo = "Copy DG from " + EDGE_NODE1 + " to " + EDGE_NODE2;
@@ -58,7 +58,7 @@ public class MigrationCopy implements Runnable {
                     }
 
                 } else if(preLocation > location){ // from right to left
-                    if (location <= 60 && (!isRightLeftMigrated)) {
+                    if (location <= 60 && (!isRightLeftMigrated) && curNode.equals(EDGE_NODE2)) {
                         System.out.println(" Migrate to Edge Node 1");
                         migrate(curServiceName, type, EDGE_NODE2, EDGE_NODE1);
                         String migrateInfo = "Copy DG from " + EDGE_NODE2 + " to " + EDGE_NODE1;
