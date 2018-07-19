@@ -47,7 +47,7 @@ public class LocationUpload implements Runnable{
         for(int i=0; i< isSent.length; i++){
             isSent[i] = new HashSet<>();
         }
-        System.out.println("Running Location upload of " +  threadName );
+//        System.out.println("Running Location upload of " +  threadName );
         try {
             RestTemplate template = new RestTemplate();
             while(DataSync.index < CarEmulatorApplication.toyota_location.length) {
@@ -61,7 +61,7 @@ public class LocationUpload implements Runnable{
                     Thread.sleep(100);
                     continue;
                 }
-                System.out.println("Location data : " + index + " : " + Integer.toString(location[index]));
+                System.out.println("upload " + index + " location data : " + Integer.toString(location[index]));
                for (int i = 0; i < CarEmulatorApplication.destination.size(); i++) {
                     String dstURL = "http://" + CarEmulatorApplication.destination.get(i);
                     if(isSent[index].contains(dstURL)){// current data have been successsfully sent to DST
@@ -76,7 +76,7 @@ public class LocationUpload implements Runnable{
                         template.postForObject(dstURL + locationURL, locationParamMap, String.class);
                         isSent[index].add(dstURL);
                     } catch (RestClientException re) {
-                        System.out.println("Resend location data!");
+//                        System.out.println("Resend location data!");
                     }
                 }
                 Thread.sleep(100);
@@ -84,11 +84,11 @@ public class LocationUpload implements Runnable{
         }catch (InterruptedException e) {
             System.out.println("Thread " +  threadName + " interrupted.");
         }
-        System.out.println("Location upload Thread of " +  threadName + " is done.");
+//        System.out.println("Location upload Thread of " +  threadName + " is done.");
     }
 
     public void start () {
-        System.out.println("Starting location upload of " +  threadName );
+//        System.out.println("Starting location upload of " +  threadName );
         if (t == null) {
             t = new Thread (this, threadName);
             t.start ();

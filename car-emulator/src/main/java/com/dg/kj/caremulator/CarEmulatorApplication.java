@@ -88,7 +88,11 @@ public class CarEmulatorApplication {
                 System.out.println("DGs of " + name +  " are creating ...");
             }catch(InterruptedException ie){ }
         }
-        System.out.println("DGs are ready, start to send data");
+        System.out.println("DGs are ready to receive data");
+        System.out.println("DGs IP address: ");
+        for(String dst : destination){
+            System.out.println("   " + dst);
+        }
         // Data index sync thread
         DataSync dataSync = new DataSync(name);
         dataSync.start();
@@ -146,7 +150,6 @@ public class CarEmulatorApplication {
                 try {
                     String response = restTemplate.getForObject(dstURL, String.class);
                 } catch (RestClientException re) {
-                    System.out.println("No repsonse from DGs, wait...");
                     return false;
                 }
             }

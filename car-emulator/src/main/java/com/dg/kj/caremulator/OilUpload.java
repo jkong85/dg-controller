@@ -33,7 +33,6 @@ public class OilUpload implements Runnable{
                 oil[i] = CarEmulatorApplication.toyota_oil[i];
             }
         }
-        System.out.println("Oil uploda initializating " +  threadName );
     }
 
     public void run() {
@@ -44,21 +43,21 @@ public class OilUpload implements Runnable{
         for(int i=0; i< isSent.length; i++){
             isSent[i] = new HashSet<>();
         }
-        System.out.println("Running Oil upload of " +  threadName );
+//        System.out.println("Running Oil upload of " +  threadName );
         try {
             RestTemplate template = new RestTemplate();
             while(DataSync.index < CarEmulatorApplication.toyota_oil.length) {
                 int index = DataSync.index;
                 // simple check, not rigorouse
                 if (CarEmulatorApplication.destination.size() == 0) {
-                    System.out.println("oil Data: no DGs are available, waiting...");
+                    System.out.println("No DGs are available, waiting...");
                 }
 
                 if(CarEmulatorApplication.destination.size() <= isSent[index].size()){
                     Thread.sleep(100);
                     continue;
                 }
-                System.out.println("oil data : " + index + " : " + Integer.toString(oil[index]));
+                System.out.println("UPload " + index + " oil data : " + Integer.toString(oil[index]));
                for (int i = 0; i < CarEmulatorApplication.destination.size(); i++) {
                     String dstURL = "http://" + CarEmulatorApplication.destination.get(i);
                     if(isSent[index].contains(dstURL)){// current data have been successsfully sent to DST
@@ -73,7 +72,7 @@ public class OilUpload implements Runnable{
                         template.postForObject(dstURL + oilURL, oilParamMap, String.class);
                         isSent[index].add(dstURL);
                     } catch (RestClientException re) {
-                        System.out.println("Resend oil data!");
+//                        System.out.println("Resend oil data!");
                     }
                 }
                 Thread.sleep(100);
@@ -81,11 +80,10 @@ public class OilUpload implements Runnable{
         }catch (InterruptedException e) {
             System.out.println("Thread " +  threadName + " interrupted.");
         }
-        System.out.println("Oil upload Thread of " +  threadName + " is done.");
+//        System.out.println("Oil upload Thread of " +  threadName + " is done.");
     }
 
     public void start () {
-        System.out.println("Starting oil upload of " +  threadName );
         if (t == null) {
             t = new Thread (this, threadName);
             t.start ();

@@ -27,7 +27,6 @@ public class DestinationUpdate implements Runnable{
             while(cnt > 0 ) {
                 try {
                     String response = restTemplate.getForObject(urlService, String.class);
-                    //System.out.println("response from INFO cmd: " + response);
                     // shoud return: "IP1:port1, IP2:port2,..."
                     String[] ipPort = response.split(",");
                     boolean isValid = ipPort == null ? false : true;
@@ -58,14 +57,13 @@ public class DestinationUpdate implements Runnable{
     }
 
     public void start () {
-        System.out.println("Starting destinatioUpdat of " +  name );
         if (t == null) {
             t = new Thread (this, name);
             t.start ();
         }
     }
     private boolean isValidIP(String ip){
-        System.out.println("valid IP: " + ip);
+//        System.out.println("valid IP: " + ip);
         if(ip==null || ip.length()<7){
             return false;
         }

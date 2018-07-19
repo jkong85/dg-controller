@@ -33,7 +33,7 @@ public class SpeedUpload implements Runnable{
                 speed[i] = CarEmulatorApplication.toyota_speed[i];
             }
         }
-        System.out.println("Speed uploda initializating " +  threadName );
+//        System.out.println("Speed uploda initializating " +  threadName );
     }
 
     public void run() {
@@ -44,21 +44,21 @@ public class SpeedUpload implements Runnable{
         for(int i=0; i< isSent.length; i++){
             isSent[i] = new HashSet<>();
         }
-        System.out.println("Running Speed upload of " +  threadName );
+//        System.out.println("Running Speed upload of " +  threadName );
         try {
             RestTemplate template = new RestTemplate();
             while(DataSync.index < CarEmulatorApplication.toyota_speed.length) {
                 int index = DataSync.index;
                 // simple check, not rigorouse
                 if (CarEmulatorApplication.destination.size() == 0) {
-                    System.out.println("speed Data: no DGs are available, waiting...");
+                    System.out.println("NO DGs are available, waiting...");
                 }
 
                 if(CarEmulatorApplication.destination.size() <= isSent[index].size()){
                     Thread.sleep(100);
                     continue;
                 }
-                System.out.println("speed data : " + index + " : " + Integer.toString(speed[index]));
+                System.out.println("Upload " + index + " speed data : " + Integer.toString(speed[index]));
                for (int i = 0; i < CarEmulatorApplication.destination.size(); i++) {
                     String dstURL = "http://" + CarEmulatorApplication.destination.get(i);
                     if(isSent[index].contains(dstURL)){// current data have been successsfully sent to DST
@@ -73,19 +73,19 @@ public class SpeedUpload implements Runnable{
                         template.postForObject(dstURL + speedURL, speedParamMap, String.class);
                         isSent[index].add(dstURL);
                     } catch (RestClientException re) {
-                        System.out.println("Resend speed data!");
+//                        System.out.println("Resend speed data!");
                     }
                 }
                 Thread.sleep(100);
             }
         }catch (InterruptedException e) {
-            System.out.println("Thread " +  threadName + " interrupted.");
+//            System.out.println("Thread " +  threadName + " interrupted.");
         }
         System.out.println("Speed upload Thread of " +  threadName + " is done.");
     }
 
     public void start () {
-        System.out.println("Starting speed upload of " +  threadName );
+//        System.out.println("Starting speed upload of " +  threadName );
         if (t == null) {
             t = new Thread (this, threadName);
             t.start ();
