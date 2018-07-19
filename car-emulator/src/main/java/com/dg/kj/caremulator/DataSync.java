@@ -19,7 +19,7 @@ public class DataSync implements Runnable{
             }
         } catch (InterruptedException ie) {
         }
-        System.out.println("InfoUpload Thread of " +  threadName + " is done.");
+        System.out.println("Datasync Thread of " +  threadName + " is done.");
     }
 
     public void start () {
