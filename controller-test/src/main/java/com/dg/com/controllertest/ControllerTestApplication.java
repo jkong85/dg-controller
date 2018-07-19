@@ -20,12 +20,21 @@ public class ControllerTestApplication {
 
     public static Map<String, Integer> ServicePortMap = new HashMap<>();
 
+    public static Map<String, List<String>> DGCurLogMap = new HashMap<>();
+    public static Map<String, List<String>> DGHistoryLogMap = new HashMap<>();
+    // key for the logs on controller
+    public static final String CONTROLLER_LOG_NAME = "controller";
+
     public static void main(String[] args) {
         Initialize();
         SpringApplication.run(ControllerTestApplication.class, args);
     }
     private static void Initialize(){
         DGInfoMap = new HashMap<>();
+        DGCurLogMap = new HashMap<>();
+        DGHistoryLogMap = new HashMap<>();
+
+        AddLog(CONTROLLER_LOG_NAME, "Controller is starting ...");
 
         nodeIpMap = new HashMap<>();
         nodeIpMap.put("node1", "172.17.8.101");
@@ -40,5 +49,20 @@ public class ControllerTestApplication {
 
         DeployPodMap = new HashMap<>();
         PodIPaddressMap = new HashMap<>();
+    }
+    public static void AddLog(String sender, String log){
+        if(sender == null){
+            return;
+        }
+        if(!DGCurLogMap.containsKey(sender)){
+            DGCurLogMap.put(sender, new ArrayList<>());
+        }
+
+        if(!DGHistoryLogMap.containsKey(sender)){
+            DGHistoryLogMap.put(sender, new ArrayList<>());
+        }
+
+        DGCurLogMap.get(sender).add(0, log);
+        DGHistoryLogMap.get(sender).add(log);
     }
 }

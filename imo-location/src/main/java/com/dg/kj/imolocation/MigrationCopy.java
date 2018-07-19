@@ -95,9 +95,9 @@ public class MigrationCopy implements Runnable {
         copyParamMap.add("dstNode", dst);
 
         boolean retry = true;
-        int cnt = 1;
+        int cnt = 5;
         while(retry && cnt>0){
-            System.out.println("Try " + Integer.toString(6-cnt) + " time to migrate the DGs of " + name);
+//            System.out.println("Try " + Integer.toString(6-cnt) + " time to migrate the DGs of " + name);
             try {
                 String result = template.postForObject(CONTROLLER_COPY_URL, copyParamMap, String.class);
                 System.out.println("Try to migrate DG form " + src + " to " + dst);
@@ -127,7 +127,7 @@ public class MigrationCopy implements Runnable {
         destroyParamMap.add("node", node);
 
         boolean retry = true;
-        int cnt = 1;
+        int cnt = 5;
         while(retry && cnt>0){
             try {
                 String result = template.postForObject(CONTROLLER_DESTROY_URL, destroyParamMap, String.class);

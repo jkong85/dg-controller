@@ -215,6 +215,9 @@ public class RegistrationController {
                 }
             }
         }
+        // remove the log record of this DG
+        logController.dgLogMap.get(serviceName).clear();
+        logController.dgLogMap.remove(serviceName);
         return "Deleting the DG services";
     }
 
@@ -250,16 +253,6 @@ public class RegistrationController {
         }else return EDGE_NODE_2;
     }
 
-    private String deletePod(){
-        String response = null;
-
-        return response;
-    }
-    private String deleteDeployment(){
-        String response = null;
-
-        return response;
-    }
     private DgService createIMODG(String service_label, String node_selector, String type){
         //e.g., Car1-0-***, Car1-1-***
 //        String service_label = "Car1-0";

@@ -51,7 +51,7 @@ public class CarEmulatorApplication {
             System.out.println("Car type of " + type + " is not supported!");
         }
         // register the care first
-        Integer location = type==HONDA? honda_location[0] : toyota_location[0];
+        Integer location = type.equals(HONDA) ? honda_location[0] : toyota_location[0];
         /*
         if(args.length == 3) {
             if (args[2].equals("y")) {
@@ -70,6 +70,9 @@ public class CarEmulatorApplication {
         }
         */
 
+        for(int i=0; i<100; i++){
+            System.out.println("   ");
+        }
         register(name, type, location.toString());
 
         // pull the destination address per 1 sec

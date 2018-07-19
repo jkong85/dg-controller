@@ -1,57 +1,26 @@
 package com.dg.com.controllertest.controller;
 
+import com.dg.com.controllertest.ControllerTestApplication;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @RestController
 public class LogController {
-    public static List<String> logList = new ArrayList<>();
-    public static Map<String, List<String>> dgLogMap = new HashMap<>();
 
     @RequestMapping(value = "/logwrite")
     public String logWrite(@RequestParam String sender,
                         @RequestParam String log){
-        if(dgLogMap.containsKey(sender)){
-            dgLogMap.get(sender).add(0, log);
-        }else{
-            List<String> newLog = new ArrayList<>();
-            newLog.add(0, log);
-            dgLogMap.put(sender, newLog);
-        }
+        ControllerTestApplication.AddLog(sender, log);
         return "write log successfully!";
     }
 
-    @RequestMapping(value = "/logcontroller")
-    public String logcontroller(){
-        if(logList ==null || logList.size()==0){
-            return "No logs";
-        }
-        return logList.get(logList.size()-1);
-    }
-
-    @RequestMapping(value = "/logcontrollerhistory")
-    public String logcontrollerhistory(){
-        if(logList ==null || logList.size()==0){
-            return "No logs";
-        }
-        StringBuilder sb = new StringBuilder();
-        for(String str : logList){
-            sb.append(str);
-            sb.append("\n");
-        }
-        return sb.toString();
-    }
-
-    @RequestMapping(value = "/logmap")
+    @RequestMapping(value = "/loginfo")
     public String logEntity(){
         StringBuilder sb = new StringBuilder();
-        for(Map.Entry entry : dgLogMap.entrySet()){
+        for(Map.Entry entry : ControllerTestApplication.DGCurLogMap.entrySet()){
             sb.append(entry.getKey());
             sb.append("\n");
         }
@@ -60,23 +29,22 @@ public class LogController {
 
     @RequestMapping(value = "/log")
     public String log(@RequestParam String sender){
-        if(!dgLogMap.containsKey(sender) || dgLogMap.get(sender).isEmpty()){
-            return "No logs";
-        }else{
-            return dgLogMap.get(sender).get(0);
+        if(!ControllerTestApplication.DGCurLogMap.containsKey(sender) && ControllerTestApplication.DGHistoryLogMap.containsKey(sender)){
+            return "No log for " + sender + ", it is deleted!";
+        }else if(!ControllerTestApplication.DGCurLogMap.containsKey(sender) && !ControllerTestApplication.DGHistoryLogMap.containsKey(sender)){
+            return "No log for " + sender + ", it is not ready yet!";
         }
+        return ControllerTestApplication.DGCurLogMap.get(sender).get(0);
     }
     @RequestMapping(value = "/loghistory")
     public String logHistory(@RequestParam String sender){
-        if(!dgLogMap.containsKey(sender) || dgLogMap.get(sender).isEmpty()){
-            return "No logs";
-        }else{
-            StringBuilder sb = new StringBuilder();
-            for(String str : dgLogMap.get(sender)){
-                sb.append(" From " + sender + " : " + str);
-                sb.append("\n");
-            }
-            return sb.toString();
+        if(ControllerTestApplication.DGHistoryLogMap.containsKey(sender)){
+            return "No log for " + sender + ", it is not ready yet!";
         }
+        StringBuilder sb = new StringBuilder();
+        for(String str : ControllerTestApplication.DGHistoryLogMap.get(sender)){
+            sb.append(" From " + sender + " : " + str + "\n");
+        }
+        return sb.toString();
     }
 }
