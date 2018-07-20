@@ -3,3 +3,5 @@ set -x
 
 sudo mvn clean install -Pdocker-build-image -DskipTests
 
+./compile_module eureka zuu test speed location oil
+
