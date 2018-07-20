@@ -30,7 +30,7 @@ public class LogThread implements Runnable{
         while(true) {
             if(!logQueue.isEmpty()) {
                 String value = logQueue.poll();
-                String log = ">>"+ sender + " " + type + " data : "  + value;
+                String log = sender + " " + type + " data : "  + value;
                 logUpload(log);
             }
             try {

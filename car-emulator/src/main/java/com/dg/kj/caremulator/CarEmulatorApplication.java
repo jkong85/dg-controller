@@ -69,6 +69,11 @@ public class CarEmulatorApplication {
             }
         }
         */
+        try {
+            Thread.sleep(500);
+        }catch(InterruptedException ie){
+
+        }
 
         for(int i=0; i<100; i++){
             System.out.println("   ");

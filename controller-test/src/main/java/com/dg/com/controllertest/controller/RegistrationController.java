@@ -39,7 +39,6 @@ public class RegistrationController {
     private String HONDA_TYPE = "honda";
     private String TOYOTA_TYPE = "toyota";
 
-    private String LOG_PREFIX = "From Controller: ";
     private Set<String> copyRequstSet = new HashSet<>();
 
     @Autowired
@@ -58,13 +57,13 @@ public class RegistrationController {
         String imoName = name;
         //TODO: change here based on the input
         String imoLocation = location;
-        ControllerTestApplication.AddLog(ControllerTestApplication.CONTROLLER_LOG_NAME, LOG_PREFIX + " received register request from " + imoName);
+        ControllerTestApplication.AddLog(ControllerTestApplication.CONTROLLER_LOG_NAME, " received register request from " + imoName);
         //Map<String, ImoDGs>  dgInfoMap = testApplication.DGInfoMap;
         if( !testApplication.DGInfoMap.containsKey(imoName)){
             ImoDGs newImoDgs = new ImoDGs(imoName);
             String mainIMODG = imoName + "-1";
             DgService newDgService = createIMODG(mainIMODG, CORE_NODE, type);
-            ControllerTestApplication.AddLog(ControllerTestApplication.CONTROLLER_LOG_NAME, LOG_PREFIX + "create DGs on core cloud node for " + imoName);
+            ControllerTestApplication.AddLog(ControllerTestApplication.CONTROLLER_LOG_NAME, "create DGs on core cloud node for " + imoName);
             if(newDgService == null){
                 ControllerTestApplication.AddLog(ControllerTestApplication.CONTROLLER_LOG_NAME, "Creating the DG is failed");
                 return "Cannot create DGs on core node for this car!";
@@ -74,13 +73,13 @@ public class RegistrationController {
         }
         // determine the location of the IMO
         String edgeLocation = getLocation(imoLocation);
-        ControllerTestApplication.AddLog(ControllerTestApplication.CONTROLLER_LOG_NAME, LOG_PREFIX + "determine " + imoName + " is in edge node: " + edgeLocation);
+        ControllerTestApplication.AddLog(ControllerTestApplication.CONTROLLER_LOG_NAME, "determine " + imoName + " is in edge node: " + edgeLocation);
         //Check whether there is a DG of this IMO  on this edge node
         boolean isExisted = false;
         for(DgService curDgService : testApplication.DGInfoMap.get(imoName).edgeDGs){
             if(curDgService.node.equals(edgeLocation)){
                 isExisted = true;
-                ControllerTestApplication.AddLog(ControllerTestApplication.CONTROLLER_LOG_NAME, LOG_PREFIX + " DG is existed, no need to create a new one for " + imoName);
+                ControllerTestApplication.AddLog(ControllerTestApplication.CONTROLLER_LOG_NAME, " DG is existed, no need to create a new one for " + imoName);
                 System.out.println("There is one DG existed. No need to create a new one!");
                 break;
             }
@@ -92,7 +91,7 @@ public class RegistrationController {
                 System.out.println(ex.toString());
             }
             System.out.println("Create a new DG on edge node : " + edgeLocation);
-            ControllerTestApplication.AddLog(ControllerTestApplication.CONTROLLER_LOG_NAME, LOG_PREFIX + " create a new DG on edge node: " + edgeLocation + " for " + imoName);
+            ControllerTestApplication.AddLog(ControllerTestApplication.CONTROLLER_LOG_NAME, " create a new DG on edge node: " + edgeLocation + " for " + imoName);
             Integer edgeIndex = testApplication.DGInfoMap.get(imoName).indexPool.pop();
             String edgeImoDg = imoName + "-" + Integer.toString(edgeIndex);
             DgService newDgService  = createIMODG(edgeImoDg, edgeLocation, type) ;
@@ -104,7 +103,7 @@ public class RegistrationController {
         }
         // Find ou the IP:port of the DGs created on Core and Edge nodes
         String dstIPPort = testApplication.DGInfoMap.get(name).getAllDgIpPort();
-        ControllerTestApplication.AddLog(ControllerTestApplication.CONTROLLER_LOG_NAME, LOG_PREFIX + "new DGs on Core and Edge nodes are created suuccessfully, \n       Access address:  " + dstIPPort);
+        ControllerTestApplication.AddLog(ControllerTestApplication.CONTROLLER_LOG_NAME, "new DGs on Core and Edge nodes are created suuccessfully, \n       Access address:  " + dstIPPort);
         return dstIPPort;
     }
 
@@ -124,7 +123,7 @@ public class RegistrationController {
         String destination = dstNode;
         String imoName = trimLastOne(name, "-");
         System.out.println("Receive copy cmd from " + srcNode + " to : " + dstNode + " for IMO: " + imoName);
-        ControllerTestApplication.AddLog(ControllerTestApplication.CONTROLLER_LOG_NAME, LOG_PREFIX + " Copy request from " + srcNode + " to "  + dstNode + " for " + imoName);
+        ControllerTestApplication.AddLog(ControllerTestApplication.CONTROLLER_LOG_NAME, " Copy request from " + srcNode + " to "  + dstNode + " for " + imoName);
 
         if(source.equals(destination)){
             return "New destination of DG is the same with the source, no need to copy it!";
@@ -148,7 +147,7 @@ public class RegistrationController {
             if(newDgService == null){
                 System.out.println("Cannot create DG for " + imoName + " on edge node : " + destination);
             }else {
-                ControllerTestApplication.AddLog(ControllerTestApplication.CONTROLLER_LOG_NAME, LOG_PREFIX + " create a new DG on " + destination);
+                ControllerTestApplication.AddLog(ControllerTestApplication.CONTROLLER_LOG_NAME, " create a new DG on " + destination);
                 testApplication.DGInfoMap.get(imoName).edgeDGs.add(newDgService);
             }
         }
@@ -163,7 +162,7 @@ public class RegistrationController {
                           @RequestParam String type,
                           @RequestParam String node){
         System.out.println("Get the destroy cmd from " + serviceName + " on node : " + node);
-        ControllerTestApplication.AddLog(ControllerTestApplication.CONTROLLER_LOG_NAME, LOG_PREFIX + " delete request from " + serviceName + " on node : " + node);
+        ControllerTestApplication.AddLog(ControllerTestApplication.CONTROLLER_LOG_NAME, " delete request from " + serviceName + " on node : " + node);
         List<String> deployList = new ArrayList<>();
         //basis components
         deployList.add("eureka");
@@ -191,12 +190,12 @@ public class RegistrationController {
             httpDelete(urlRCPrefix + trimLastOne(podName, "-"));
             System.out.println(deployment + " Pod URL is : " + urlPodPrefix + podName);
             httpDelete(urlPodPrefix + podName);
-            ControllerTestApplication.AddLog(ControllerTestApplication.CONTROLLER_LOG_NAME, LOG_PREFIX + " delete the micro-service: " + deployment);
+            ControllerTestApplication.AddLog(ControllerTestApplication.CONTROLLER_LOG_NAME, " delete the micro-service: " + deployment);
         }
         //finally, delete the service
         String urlServcePrefix = K8sApiServer + "api/v1/namespaces/default/services/";
         System.out.println("Delete service: " + urlServcePrefix + serviceName);
-        ControllerTestApplication.AddLog(ControllerTestApplication.CONTROLLER_LOG_NAME, LOG_PREFIX + " delete DG serice : " + serviceName);
+        ControllerTestApplication.AddLog(ControllerTestApplication.CONTROLLER_LOG_NAME, " delete DG serice : " + serviceName);
         if(httpDelete(urlServcePrefix + serviceName)){
             Integer port = testApplication.ServicePortMap.get(serviceName);
             System.out.println("Release the port : " + port.toString());

@@ -19,8 +19,6 @@ public class ImoLocationApplication {
     public static String curServiceName;
     public static String curNode;
 
-    public static final String URL_CONTROLLER_LOG = "http://172.17.8.101:30002/test/logwrite";
-
     public static void main(String[] args) {
         curServiceName = System.getenv("SERVICE_LABEL");
         curNode = System.getenv("CUR_NODE");

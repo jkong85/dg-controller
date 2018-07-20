@@ -26,6 +26,6 @@ public class SpeedController {
     }
     @RequestMapping(value="/ready")
     public String ready(){
-        return imoSpeedApplication.curServiceName + "is ready";
+        return imoSpeedApplication.curServiceName + " is ready";
     }
 }

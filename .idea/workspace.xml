@@ -2,9 +2,16 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c4d2589f-d158-4b34-8e3b-fea70abf8fa4" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/car-emulator/complile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-emulator/run" beforeDir="false" afterPath="$PROJECT_DIR$/car-emulator/run" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/tag.sh" beforeDir="false" afterPath="$PROJECT_DIR$/tag.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/push_to_git" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/CarEmulatorApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/CarEmulatorApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/compile" beforeDir="false" afterPath="$PROJECT_DIR$/compile_module" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/ControllerTestApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/ControllerTestApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dg-commons/src/main/java/com/dg/kj/dgcommons/LogThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/dg-commons/src/main/java/com/dg/kj/dgcommons/LogThread.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imo-location/src/main/java/com/dg/kj/imolocation/ImoLocationApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/imo-location/src/main/java/com/dg/kj/imolocation/ImoLocationApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/imo-speed/src/main/java/com/dg/kj/imospeed/controller/SpeedController.java" beforeDir="false" afterPath="$PROJECT_DIR$/imo-speed/src/main/java/com/dg/kj/imospeed/controller/SpeedController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/run" beforeDir="false" afterPath="$PROJECT_DIR$/compile_all" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/update_git" beforeDir="false" afterPath="$PROJECT_DIR$/push_to_git" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/controller-eureka/target/" />
@@ -26,20 +33,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/imo-oil/pom.xml">
+      <file leaf-file-name="OilController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/imo-oil/src/main/java/com/dg/kj/imooil/controller/OilController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="540">
-              <caret line="36" column="31" selection-start-line="36" selection-start-column="31" selection-end-line="36" selection-end-column="31" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RegistrationController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3315">
-              <caret line="221" column="29" lean-forward="true" selection-start-line="221" selection-start-column="29" selection-end-line="221" selection-end-column="29" />
+            <state relative-caret-position="420">
+              <caret line="29" column="53" selection-start-line="29" selection-start-column="53" selection-end-line="29" selection-end-column="53" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -47,66 +45,69 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="clean_docker_images.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/clean_docker_images.sh">
+      <file leaf-file-name="SpeedController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/imo-speed/src/main/java/com/dg/kj/imospeed/controller/SpeedController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" column="16" selection-start-line="3" selection-start-column="16" selection-end-line="3" selection-end-column="16" />
+            <state relative-caret-position="405">
+              <caret line="28" column="53" selection-start-line="28" selection-start-column="53" selection-end-line="28" selection-end-column="53" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="tag.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/tag.sh">
+      <file leaf-file-name="ImoLocationApplication.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/imo-location/src/main/java/com/dg/kj/imolocation/ImoLocationApplication.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="135">
-              <caret line="9" selection-start-line="9" selection-end-line="9" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="complile" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/car-emulator/complile">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file leaf-file-name="run" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/car-emulator/run">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" selection-start-line="3" selection-end-line="3" />
+            <state relative-caret-position="315">
+              <caret line="21" selection-start-line="21" selection-end-line="21" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="pom.xml" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/imo-speed/pom.xml">
+        <entry file="file://$PROJECT_DIR$/imo-location/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="58" column="33" selection-start-line="58" selection-start-column="33" selection-end-line="58" selection-end-column="33" />
+            <state relative-caret-position="-1940">
+              <caret line="18" column="7" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="run" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/imo-speed/run">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" selection-start-line="14" selection-end-line="14" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="update_git" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/update_git">
+      <file leaf-file-name="compile_module" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/compile_module">
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file leaf-file-name="compile" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/compile">
+      <file leaf-file-name="push_to_git" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/push_to_git">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="LocationController.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/imo-location/src/main/java/com/dg/kj/imolocation/controller/LocationController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="22" column="10" selection-start-line="22" selection-start-column="10" selection-end-line="22" selection-end-column="10" />
+            <state relative-caret-position="270">
+              <caret line="18" column="46" selection-start-line="18" selection-start-column="46" selection-end-line="18" selection-end-column="46" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="MigrationCopy.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/imo-location/src/main/java/com/dg/kj/imolocation/MigrationCopy.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1593">
+              <caret line="112" column="12" selection-start-line="112" selection-start-column="12" selection-end-line="112" selection-end-column="12" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -128,6 +129,9 @@
       <find>Speed</find>
       <find>Location</find>
       <find>logController.logList.add(</find>
+      <find>LOG_PRE</find>
+      <find>controller is re</find>
+      <find>&gt;&gt;</find>
     </findStrings>
     <replaceStrings>
       <replace>speed</replace>
@@ -145,7 +149,6 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/ImoDGs.java" />
-        <option value="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/CarEmulatorApplication.java" />
         <option value="$PROJECT_DIR$/case/controller1/rmDGs.sh" />
         <option value="$PROJECT_DIR$/case/controller1/deleteDGs.sh" />
         <option value="$PROJECT_DIR$/controller-test/run" />
@@ -160,10 +163,7 @@
         <option value="$PROJECT_DIR$/imo-speed/run" />
         <option value="$PROJECT_DIR$/imo-speed/tag" />
         <option value="$PROJECT_DIR$/controller-test/tag" />
-        <option value="$PROJECT_DIR$/compile" />
         <option value="$PROJECT_DIR$/clean_null_images" />
-        <option value="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/ControllerTestApplication.java" />
-        <option value="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java" />
         <option value="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/LogController.java" />
         <option value="$PROJECT_DIR$/commons/src/main/java/LogThread.java" />
         <option value="$PROJECT_DIR$/commons/src/main/java/com/dg/kj/commons/CommonsApplication.java" />
@@ -177,10 +177,8 @@
         <option value="$PROJECT_DIR$/imo-speed/pom.xml" />
         <option value="$PROJECT_DIR$/imo-oil/src/main/java/com/dg/kj/imooil/ImoOilApplication.java" />
         <option value="$PROJECT_DIR$/imo-oil/src/main/java/com/dg/kj/imooil/controller/OilController.java" />
-        <option value="$PROJECT_DIR$/imo-location/src/main/java/com/dg/kj/imolocation/ImoLocationApplication.java" />
         <option value="$PROJECT_DIR$/imo-location/src/main/java/com/dg/kj/imolocation/controller/LocationController.java" />
         <option value="$PROJECT_DIR$/imo-speed/src/main/java/com/dg/kj/imospeed/ImoSpeedApplication.java" />
-        <option value="$PROJECT_DIR$/imo-speed/src/main/java/com/dg/kj/imospeed/controller/SpeedController.java" />
         <option value="$PROJECT_DIR$/dg-commons/run" />
         <option value="$PROJECT_DIR$/dg-commons/src/main/java/com/dg/kj/dgcommons/Log.java" />
         <option value="$PROJECT_DIR$/imo-location/src/main/java/com/dg/kj/imolocation/MigrationCopy.java" />
@@ -188,13 +186,19 @@
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/imo-location/pom.xml" />
         <option value="$PROJECT_DIR$/dg-commons/pom.xml" />
-        <option value="$PROJECT_DIR$/dg-commons/src/main/java/com/dg/kj/dgcommons/LogThread.java" />
         <option value="$PROJECT_DIR$/clean_null_images.sh" />
         <option value="$PROJECT_DIR$/clean_docker_images.sh" />
         <option value="$PROJECT_DIR$/tag_eureka.sh" />
         <option value="$PROJECT_DIR$/tag_zuul.sh" />
         <option value="$PROJECT_DIR$/tag.sh" />
         <option value="$PROJECT_DIR$/car-emulator/run" />
+        <option value="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java" />
+        <option value="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/ControllerTestApplication.java" />
+        <option value="$PROJECT_DIR$/dg-commons/src/main/java/com/dg/kj/dgcommons/LogThread.java" />
+        <option value="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/CarEmulatorApplication.java" />
+        <option value="$PROJECT_DIR$/imo-speed/src/main/java/com/dg/kj/imospeed/controller/SpeedController.java" />
+        <option value="$PROJECT_DIR$/imo-location/src/main/java/com/dg/kj/imolocation/ImoLocationApplication.java" />
+        <option value="$PROJECT_DIR$/compile" />
       </list>
     </option>
   </component>
@@ -238,6 +242,36 @@
               <item name="controller" type="b2602c69:ProjectViewProjectNode" />
               <item name="controller" type="462c0819:PsiDirectoryNode" />
               <item name="car-emulator" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="controller" type="b2602c69:ProjectViewProjectNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+              <item name="car-emulator" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="controller" type="b2602c69:ProjectViewProjectNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+              <item name="car-emulator" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="controller" type="b2602c69:ProjectViewProjectNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+              <item name="car-emulator" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="controller" type="b2602c69:ProjectViewProjectNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+              <item name="car-emulator" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="java" type="462c0819:PsiDirectoryNode" />
+              <item name="caremulator" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="controller" type="b2602c69:ProjectViewProjectNode" />
@@ -500,8 +534,8 @@
       <recent name="com.dg.kj.caremulator" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/car-emulator" />
       <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/car-emulator" />
       <recent name="$PROJECT_DIR$/dg-commons" />
       <recent name="$PROJECT_DIR$/commons" />
       <recent name="$PROJECT_DIR$/case/controller1" />
@@ -576,16 +610,15 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1531364423498</updated>
-      <workItem from="1531364425597" duration="189123000" />
+      <workItem from="1531364425597" duration="190396000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="189123000" />
+    <option name="totallyTimeSpent" value="190396000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="989" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
@@ -609,7 +642,7 @@
       <window_info anchor="bottom" id="Version Control" />
       <window_info anchor="bottom" id="Spring" />
       <window_info anchor="bottom" id="Terminal" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.23035714" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.2452381" />
       <window_info anchor="right" id="Bean Validation" />
       <window_info id="Web" side_tool="true" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.24590164" />
@@ -663,37 +696,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/controller-eureka/tag">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="8" selection-start-column="8" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/clean_null_images">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controller-test/tag">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/imo-location/run">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="3" lean-forward="true" selection-start-line="14" selection-start-column="3" selection-end-line="14" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/imo-location/tag">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="8" selection-start-column="8" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/controller-zuul/run">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="210">
@@ -719,16 +721,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="177">
           <caret line="36" column="20" lean-forward="true" selection-start-line="36" selection-start-column="20" selection-end-line="36" selection-end-column="20" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/ControllerTestApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="207">
-          <caret line="30" column="56" selection-start-line="30" selection-start-column="56" selection-end-line="30" selection-end-column="56" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -807,50 +799,6 @@
     <entry file="file://$PROJECT_DIR$/imo-location/src/main/java/com/dg/kj/imolocation/LogThread.java.bak">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/imo-oil/src/main/java/com/dg/kj/imooil/ImoOilApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="8" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/imo-oil/src/main/java/com/dg/kj/imooil/controller/OilController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="29" column="53" selection-start-line="29" selection-start-column="53" selection-end-line="29" selection-end-column="53" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1011#1012#0" expanded="true" />
-            <element signature="e#1041#1042#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/imo-location/src/main/java/com/dg/kj/imolocation/controller/LocationController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="28" column="59" selection-start-line="28" selection-start-column="59" selection-end-line="28" selection-end-column="59" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1146#1147#0" expanded="true" />
-            <element signature="e#1176#1177#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/imo-location/src/main/java/com/dg/kj/imolocation/ImoLocationApplication.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="435">
-          <caret line="29" selection-start-line="29" selection-end-line="29" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dg-commons/run">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
@@ -865,32 +813,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/imo-speed/src/main/java/com/dg/kj/imospeed/controller/SpeedController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="345">
-          <caret line="23" column="61" selection-start-line="23" selection-start-column="61" selection-end-line="23" selection-end-column="61" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#1247#1248#0" expanded="true" />
-            <element signature="e#1314#1315#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/dg-commons/src/main/java/com/dg/kj/dgcommons/Http.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/imo-location/src/main/java/com/dg/kj/imolocation/MigrationCopy.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="355">
-          <caret line="124" column="23" selection-start-line="124" selection-start-column="23" selection-end-line="124" selection-end-column="23" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -928,24 +854,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dg-commons/src/main/java/com/dg/kj/dgcommons/LogThread.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="19" column="61" lean-forward="true" selection-start-line="19" selection-start-column="61" selection-end-line="19" selection-end-column="61" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#507#515#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/imo-location/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="251">
-          <caret line="18" column="7" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/imo-speed/src/main/java/com/dg/kj/imospeed/ImoSpeedApplication.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
@@ -971,16 +879,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
           <caret line="5" column="17" lean-forward="true" selection-start-line="5" selection-start-column="17" selection-end-line="5" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3315">
-          <caret line="221" column="29" lean-forward="true" selection-start-line="221" selection-start-column="29" selection-end-line="221" selection-end-column="29" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1012,16 +910,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/update_git">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/compile">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="22" column="10" selection-start-line="22" selection-start-column="10" selection-end-line="22" selection-end-column="10" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/clean_docker_images.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
@@ -1039,12 +927,139 @@
     <entry file="file://$PROJECT_DIR$/car-emulator/complile">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/car-emulator/run">
+    <entry file="file://$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" selection-start-line="3" selection-end-line="3" />
+        <state relative-caret-position="435">
+          <caret line="41" selection-start-line="41" selection-end-line="41" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/ControllerTestApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="207">
+          <caret line="30" column="37" selection-start-line="30" selection-start-column="37" selection-end-line="30" selection-end-column="37" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dg-commons/src/main/java/com/dg/kj/dgcommons/LogThread.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="437">
+          <caret line="32" column="29" selection-start-line="32" selection-start-column="29" selection-end-line="32" selection-end-column="29" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#507#515#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/car-emulator/run">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="8" selection-start-line="7" selection-start-column="8" selection-end-line="7" selection-end-column="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/CarEmulatorApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="425">
+          <caret line="72" column="26" selection-start-line="72" selection-start-column="26" selection-end-line="72" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imo-oil/src/main/java/com/dg/kj/imooil/ImoOilApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="345">
+          <caret line="23" column="8" selection-start-line="23" selection-start-column="8" selection-end-line="23" selection-end-column="8" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imo-oil/src/main/java/com/dg/kj/imooil/controller/OilController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="29" column="53" selection-start-line="29" selection-start-column="53" selection-end-line="29" selection-end-column="53" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imo-speed/src/main/java/com/dg/kj/imospeed/controller/SpeedController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="28" column="53" selection-start-line="28" selection-start-column="53" selection-end-line="28" selection-end-column="53" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imo-location/src/main/java/com/dg/kj/imolocation/controller/LocationController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="18" column="46" selection-start-line="18" selection-start-column="46" selection-end-line="18" selection-end-column="46" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imo-location/src/main/java/com/dg/kj/imolocation/MigrationCopy.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1593">
+          <caret line="112" column="12" selection-start-line="112" selection-start-column="12" selection-end-line="112" selection-end-column="12" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imo-location/src/main/java/com/dg/kj/imolocation/ImoLocationApplication.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" selection-start-line="21" selection-end-line="21" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imo-location/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1940">
+          <caret line="18" column="7" selection-start-line="18" selection-start-column="7" selection-end-line="18" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/compile_all">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/run">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/compile">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="330">
+          <caret line="22" selection-start-line="22" selection-end-line="23" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/compile_module">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/update_git">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/push_to_git">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
   </component>
   <component name="masterDetails">
