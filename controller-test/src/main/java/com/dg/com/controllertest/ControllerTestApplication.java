@@ -69,6 +69,6 @@ public class ControllerTestApplication {
         }
 
         DGCurLogMap.get(sender).add(0, log);
-        DGHistoryLogMap.get(sender).add(log);
+        DGHistoryLogMap.get(sender).add(0, log);
     }
 }

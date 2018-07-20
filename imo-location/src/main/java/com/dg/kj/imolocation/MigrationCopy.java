@@ -146,7 +146,7 @@ public class MigrationCopy implements Runnable {
         }
 
         Log log = new Log("location", name, 3 );
-        log.logUpload("Destroy DG on " + node);
+        log.logUpload("Delete myself DG on " + node);
     }
 
 }

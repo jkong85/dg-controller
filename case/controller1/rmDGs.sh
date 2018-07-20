@@ -1,10 +1,19 @@
 #!/bin/sh
 
-echo "Stop and delete $1"
-sudo kubectl delete deployments $1-eureka
-sudo kubectl delete deployments $1-zuul
-sudo kubectl delete deployments $1-speed
-sudo kubectl delete deployments $1-oil
-sudo kubectl delete deployments $1-location
-sudo kubectl delete svc $1
+
+for k in $*
+do
+    if  [ ! "$k" ] ;then
+        echo "Compile end!"
+        exit
+    else
+        echo "Stop and delete $1"
+        sudo kubectl delete deployments $k-eureka
+        sudo kubectl delete deployments $k-zuul
+        sudo kubectl delete deployments $k-speed
+        sudo kubectl delete deployments $k-oil
+        sudo kubectl delete deployments $k-location
+        sudo kubectl delete svc $k
+    fi
+done
 

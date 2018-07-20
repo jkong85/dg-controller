@@ -195,7 +195,7 @@ public class RegistrationController {
         //finally, delete the service
         String urlServcePrefix = K8sApiServer + "api/v1/namespaces/default/services/";
         System.out.println("Delete service: " + urlServcePrefix + serviceName);
-        ControllerTestApplication.AddLog(ControllerTestApplication.CONTROLLER_LOG_NAME, " delete DG serice : " + serviceName);
+        ControllerTestApplication.AddLog(ControllerTestApplication.CONTROLLER_LOG_NAME, " delete DG service : " + serviceName);
         if(httpDelete(urlServcePrefix + serviceName)){
             Integer port = testApplication.ServicePortMap.get(serviceName);
             System.out.println("Release the port : " + port.toString());
