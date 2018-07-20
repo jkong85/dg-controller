@@ -27,7 +27,7 @@ public class ImoSpeedApplication {
 
         SpringApplication.run(ImoSpeedApplication.class, args);
 
-        logQueue.offer(" speed service is up");
+        logQueue.offer(" speed service is starting...");
 
         LogThread logThread = new LogThread("speed", curServiceName, logQueue, 3);
         logThread.start();
