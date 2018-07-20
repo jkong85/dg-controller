@@ -1,6 +1,13 @@
 #!/bin/sh
 set -x
-sudo mvn clean install  -DskipTests
 
-#mvn clean install  -DskipTests
+if [! "$1" ]; then
+    echo "./run car_name car_type(honda|toyota)"
+    exit
+fi
+if [! "$2" ]; then
+    echo "./run car_name car_type(honda|toyota)"
+    exit
+fi
+java -jar target/car-emulator-0.0.1-SNAPSHOT.jar $1 $2
 
