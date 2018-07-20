@@ -28,7 +28,7 @@ public class ImoOilApplication {
 
         SpringApplication.run(ImoOilApplication.class, args);
 
-        logQueue.offer(" Oil service is up");
+        logQueue.offer(" oil service is starting...");
 
         LogThread logThread = new LogThread("oil", curServiceName, logQueue, 3);
         logThread.start();

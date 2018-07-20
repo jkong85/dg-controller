@@ -103,7 +103,7 @@ public class RegistrationController {
         }
         // Find ou the IP:port of the DGs created on Core and Edge nodes
         String dstIPPort = testApplication.DGInfoMap.get(name).getAllDgIpPort();
-        ControllerTestApplication.AddLog(ControllerTestApplication.CONTROLLER_LOG_NAME, "new DGs on Core and Edge nodes are created suuccessfully, \n       Access address:  " + dstIPPort);
+        ControllerTestApplication.AddLog(ControllerTestApplication.CONTROLLER_LOG_NAME, " create DGs on core and edge suuccessfully, access IP:Port  " + dstIPPort);
         return dstIPPort;
     }
 
@@ -123,7 +123,7 @@ public class RegistrationController {
         String destination = dstNode;
         String imoName = trimLastOne(name, "-");
         System.out.println("Receive copy cmd from " + srcNode + " to : " + dstNode + " for IMO: " + imoName);
-        ControllerTestApplication.AddLog(ControllerTestApplication.CONTROLLER_LOG_NAME, " Copy request from " + srcNode + " to "  + dstNode + " for " + imoName);
+        ControllerTestApplication.AddLog(ControllerTestApplication.CONTROLLER_LOG_NAME, " copy request from " + srcNode + " to "  + dstNode + " for " + imoName);
 
         if(source.equals(destination)){
             return "New destination of DG is the same with the source, no need to copy it!";
