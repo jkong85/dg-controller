@@ -4,5 +4,12 @@ set -x
 #sudo mvn clean install -Pdocker-build-image -DskipTests
 sudo mvn clean install -DskipTests
 
-./compile_module eureka zuul test speed location oil
+modules="eureka zuul test speed location oil"
+./compile_module ${modules}
+
+echo "=========================================================="
+echo "=========================================================="
+echo "Compile the modules : ${module}"
+echo "=========================================================="
+sudo docker images
 
