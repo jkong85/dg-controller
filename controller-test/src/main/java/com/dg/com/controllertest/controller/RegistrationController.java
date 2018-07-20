@@ -190,12 +190,12 @@ public class RegistrationController {
             httpDelete(urlRCPrefix + trimLastOne(podName, "-"));
             System.out.println(deployment + " Pod URL is : " + urlPodPrefix + podName);
             httpDelete(urlPodPrefix + podName);
-            ControllerTestApplication.AddLog(ControllerTestApplication.CONTROLLER_LOG_NAME, " delete the micro-service: " + deployment);
+            ControllerTestApplication.AddLog(ControllerTestApplication.CONTROLLER_LOG_NAME, "   ==>delete the micro-service: " + deployment + " on " + node);
         }
         //finally, delete the service
         String urlServcePrefix = K8sApiServer + "api/v1/namespaces/default/services/";
         System.out.println("Delete service: " + urlServcePrefix + serviceName);
-        ControllerTestApplication.AddLog(ControllerTestApplication.CONTROLLER_LOG_NAME, " delete DG service : " + serviceName);
+        ControllerTestApplication.AddLog(ControllerTestApplication.CONTROLLER_LOG_NAME, "   ==>delete the DG of " + serviceName + " on " + node);
         if(httpDelete(urlServcePrefix + serviceName)){
             Integer port = testApplication.ServicePortMap.get(serviceName);
             System.out.println("Release the port : " + port.toString());

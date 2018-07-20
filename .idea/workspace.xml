@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c4d2589f-d158-4b34-8e3b-fea70abf8fa4" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/CarEmulatorApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/CarEmulatorApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/controller-eureka/target/" />
@@ -36,14 +36,23 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RegistrationController.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="RegistrationController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1455">
-              <caret line="197" column="103" selection-start-line="197" selection-start-column="103" selection-end-line="197" selection-end-column="103" />
+            <state relative-caret-position="461">
+              <caret line="197" column="142" selection-start-line="197" selection-start-column="142" selection-end-line="197" selection-end-column="142" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ImoDGs.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/ImoDGs.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="360">
+              <caret line="26" column="3" selection-start-line="26" selection-start-column="3" selection-end-line="26" selection-end-column="3" />
             </state>
           </provider>
         </entry>
@@ -108,20 +117,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="CarEmulatorApplication.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="CarEmulatorApplication.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/CarEmulatorApplication.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="270">
               <caret line="26" selection-start-line="26" selection-end-line="26" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="OilUpload.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/OilUpload.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="355">
-              <caret line="62" column="41" lean-forward="true" selection-start-line="62" selection-start-column="41" selection-end-line="62" selection-end-column="41" />
             </state>
           </provider>
         </entry>
@@ -163,6 +163,7 @@
       <find>seri</find>
       <find>Destroy DG</find>
       <find>Destroy</find>
+      <find>delete the micro</find>
     </findStrings>
     <replaceStrings>
       <replace>speed</replace>
@@ -222,7 +223,6 @@
         <option value="$PROJECT_DIR$/dg-commons/src/main/java/com/dg/kj/dgcommons/LogThread.java" />
         <option value="$PROJECT_DIR$/case/controller1/rmDGs.sh" />
         <option value="$PROJECT_DIR$/imo-location/src/main/java/com/dg/kj/imolocation/ImoLocationApplication.java" />
-        <option value="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java" />
         <option value="$PROJECT_DIR$/imo-location/src/main/java/com/dg/kj/imolocation/MigrationCopy.java" />
         <option value="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/ControllerTestApplication.java" />
         <option value="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/OilUpload.java" />
@@ -230,6 +230,7 @@
         <option value="$PROJECT_DIR$/imo-location/src/main/java/com/dg/kj/imolocation/controller/LocationController.java" />
         <option value="$PROJECT_DIR$/imo-oil/src/main/java/com/dg/kj/imooil/controller/OilController.java" />
         <option value="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/CarEmulatorApplication.java" />
+        <option value="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java" />
       </list>
     </option>
   </component>
@@ -658,12 +659,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1531364423498</updated>
-      <workItem from="1531364425597" duration="196673000" />
+      <workItem from="1531364425597" duration="197411000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="196673000" />
+    <option name="totallyTimeSpent" value="197411000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="989" extended-state="6" />
@@ -691,7 +692,7 @@
       <window_info anchor="bottom" id="Version Control" order="6" />
       <window_info anchor="bottom" id="Spring" order="0" />
       <window_info anchor="bottom" id="Terminal" order="1" />
-      <window_info active="true" content_ui="combo" id="Project" order="5" visible="true" weight="0.20952381" />
+      <window_info active="true" content_ui="combo" id="Project" order="5" visible="true" weight="0.24464285" />
       <window_info anchor="right" id="Bean Validation" order="5" />
       <window_info id="Web" order="4" side_tool="true" />
       <window_info anchor="bottom" id="Find" order="8" weight="0.24590164" />
@@ -711,13 +712,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/commons/src/main/java/com/dg/kj/commons/hello.http">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="135">
-          <caret line="9" column="14" selection-start-line="9" selection-start-column="14" selection-end-line="9" selection-end-column="14" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/commons/src/main/java/com/dg/kj/commons/LogThread.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="255">
@@ -1015,16 +1009,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1455">
-          <caret line="197" column="103" selection-start-line="197" selection-start-column="103" selection-end-line="197" selection-end-column="103" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/LogController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="145">
@@ -1069,6 +1053,23 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="270">
           <caret line="26" selection-start-line="26" selection-end-line="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/ImoDGs.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="360">
+          <caret line="26" column="3" selection-start-line="26" selection-start-column="3" selection-end-line="26" selection-end-column="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="461">
+          <caret line="197" column="142" selection-start-line="197" selection-start-column="142" selection-end-line="197" selection-end-column="142" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
