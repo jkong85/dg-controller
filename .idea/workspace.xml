@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c4d2589f-d158-4b34-8e3b-fea70abf8fa4" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/case/controller1/start_honda.sh" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/case/controller1/start_toyota.sh" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/case/case1/checkDGs.sh" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/controller-eureka/target/" />
@@ -73,40 +72,16 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="run.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/case/controller1/run.sh">
+      <file leaf-file-name="stop.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/case/case1/stop.sh">
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file leaf-file-name="rmDGs.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/case/controller1/rmDGs.sh">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file leaf-file-name="prepare.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/case/controller1/prepare.sh">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file leaf-file-name="deleteDGs.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/case/controller1/deleteDGs.sh">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file leaf-file-name="start_honda.sh" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/case/controller1/start_honda.sh">
+      <file leaf-file-name="checkDGs.sh" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/case/case1/checkDGs.sh">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="2" selection-start-line="2" selection-end-line="2" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="start_toyota.sh" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/case/controller1/start_toyota.sh">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="45">
-              <caret line="3" column="75" selection-start-line="3" selection-start-column="75" selection-end-line="3" selection-end-column="75" />
+            <state relative-caret-position="75">
+              <caret line="5" column="19" selection-start-line="5" selection-start-column="19" selection-end-line="5" selection-end-column="19" />
             </state>
           </provider>
         </entry>
@@ -153,7 +128,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/controller-zuul/run" />
         <option value="$PROJECT_DIR$/controller-zuul/tag" />
         <option value="$PROJECT_DIR$/imo-location/run" />
         <option value="$PROJECT_DIR$/imo-location/tag" />
@@ -204,6 +178,7 @@
         <option value="$PROJECT_DIR$/case/controller1/deleteDGs.sh" />
         <option value="$PROJECT_DIR$/case/controller1/start_honda.sh" />
         <option value="$PROJECT_DIR$/case/controller1/start_toyota.sh" />
+        <option value="$PROJECT_DIR$/case/case1/checkDGs.sh" />
       </list>
     </option>
   </component>
@@ -287,13 +262,7 @@
               <item name="controller" type="b2602c69:ProjectViewProjectNode" />
               <item name="controller" type="462c0819:PsiDirectoryNode" />
               <item name="case" type="462c0819:PsiDirectoryNode" />
-              <item name="controller1" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="controller" type="b2602c69:ProjectViewProjectNode" />
-              <item name="controller" type="462c0819:PsiDirectoryNode" />
-              <item name="case" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="case1" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="controller" type="b2602c69:ProjectViewProjectNode" />
@@ -556,11 +525,11 @@
       <recent name="com.dg.kj.caremulator" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/case/case1" />
       <recent name="$PROJECT_DIR$/case/controller1" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/car-emulator" />
       <recent name="$PROJECT_DIR$/dg-commons" />
-      <recent name="$PROJECT_DIR$/commons" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -632,12 +601,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1531364423498</updated>
-      <workItem from="1531364425597" duration="197723000" />
+      <workItem from="1531364425597" duration="197996000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="197723000" />
+    <option name="totallyTimeSpent" value="197996000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="989" extended-state="6" />
@@ -685,16 +654,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/imo-location/src/main/java/com/dg/kj/imolocation/LogThread.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="118" selection-start-line="17" selection-start-column="118" selection-end-line="17" selection-end-column="118" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/imo-location/src/main/java/com/dg/kj/imolocation/LogThread.java.bak">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/dg-commons/run">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
@@ -999,16 +958,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/imo-speed/src/main/java/com/dg/kj/imospeed/controller/SpeedController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="375">
-          <caret line="25" column="52" selection-start-line="25" selection-start-column="52" selection-end-line="25" selection-end-column="52" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/case/controller1/run.sh">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1032,6 +981,26 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="45">
           <caret line="3" column="75" selection-start-line="3" selection-start-column="75" selection-end-line="3" selection-end-column="75" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imo-speed/src/main/java/com/dg/kj/imospeed/controller/SpeedController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" column="52" selection-start-line="25" selection-start-column="52" selection-end-line="25" selection-end-column="52" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/case/case1/stop.sh">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/case/case1/checkDGs.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" column="19" selection-start-line="5" selection-start-column="19" selection-end-line="5" selection-end-column="19" />
         </state>
       </provider>
     </entry>
