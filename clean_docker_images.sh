@@ -1,9 +1,6 @@
 #!/bin/sh
-
-#set -x
-
-result="$(sudo docker images | awk '{print $1 $3}')"
-
+set -x
+echo "please first save the images info to file "all""
 cat all | awk '{print $3}' >> id
 
 result="$(cat id)"
