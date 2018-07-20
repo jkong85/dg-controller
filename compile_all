@@ -1,7 +1,8 @@
 #!/bin/sh
 set -x
 
-sudo mvn clean install -Pdocker-build-image -DskipTests
+#sudo mvn clean install -Pdocker-build-image -DskipTests
+sudo mvn clean install -DskipTests
 
-./compile_module eureka zuu test speed location oil
+./compile_module eureka zuul test speed location oil
 
