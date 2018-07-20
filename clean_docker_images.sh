@@ -13,4 +13,6 @@ done
 rm $1
 rm id
 
+sudo docker images
+
 

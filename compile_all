@@ -1,4 +1,5 @@
 #!/bin/sh
 set -x
 
-sudo mvn clean install -Ddocker-build-image -DskipTests
+sudo mvn clean install -Pdocker-build-image -DskipTests
+

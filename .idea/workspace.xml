@@ -2,16 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="c4d2589f-d158-4b34-8e3b-fea70abf8fa4" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/push_to_git" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/CarEmulatorApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/CarEmulatorApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/compile" beforeDir="false" afterPath="$PROJECT_DIR$/compile_module" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/ControllerTestApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/ControllerTestApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dg-commons/src/main/java/com/dg/kj/dgcommons/LogThread.java" beforeDir="false" afterPath="$PROJECT_DIR$/dg-commons/src/main/java/com/dg/kj/dgcommons/LogThread.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imo-location/src/main/java/com/dg/kj/imolocation/ImoLocationApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/imo-location/src/main/java/com/dg/kj/imolocation/ImoLocationApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/imo-speed/src/main/java/com/dg/kj/imospeed/controller/SpeedController.java" beforeDir="false" afterPath="$PROJECT_DIR$/imo-speed/src/main/java/com/dg/kj/imospeed/controller/SpeedController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/run" beforeDir="false" afterPath="$PROJECT_DIR$/compile_all" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/update_git" beforeDir="false" afterPath="$PROJECT_DIR$/push_to_git" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/case/controller1/rmDGs.sh" beforeDir="false" afterPath="$PROJECT_DIR$/case/controller1/rmDGs.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/clean_docker_images.sh" beforeDir="false" afterPath="$PROJECT_DIR$/clean_docker_images.sh" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/compile_all" beforeDir="false" afterPath="$PROJECT_DIR$/compile_all" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/controller-eureka/target/" />
@@ -33,30 +26,6 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="OilController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/imo-oil/src/main/java/com/dg/kj/imooil/controller/OilController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="29" column="53" selection-start-line="29" selection-start-column="53" selection-end-line="29" selection-end-column="53" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SpeedController.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/imo-speed/src/main/java/com/dg/kj/imospeed/controller/SpeedController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="405">
-              <caret line="28" column="53" selection-start-line="28" selection-start-column="53" selection-end-line="28" selection-end-column="53" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="ImoLocationApplication.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/imo-location/src/main/java/com/dg/kj/imolocation/ImoLocationApplication.java">
           <provider selected="true" editor-type-id="text-editor">
@@ -83,9 +52,45 @@
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
-      <file leaf-file-name="push_to_git" pinned="false" current-in-tab="true">
+      <file leaf-file-name="run" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/imo-speed/run">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="14" selection-start-line="14" selection-end-line="14" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="push_to_git" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/push_to_git">
           <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file leaf-file-name="clean_docker_images.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/clean_docker_images.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="225">
+              <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="rmDGs.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/case/controller1/rmDGs.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="120">
+              <caret line="8" column="25" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="compile_all" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/compile_all">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="45">
+              <caret line="3" column="24" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
+            </state>
+          </provider>
         </entry>
       </file>
       <file leaf-file-name="LocationController.java" pinned="false" current-in-tab="false">
@@ -148,8 +153,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/ImoDGs.java" />
-        <option value="$PROJECT_DIR$/case/controller1/rmDGs.sh" />
         <option value="$PROJECT_DIR$/case/controller1/deleteDGs.sh" />
         <option value="$PROJECT_DIR$/controller-test/run" />
         <option value="$PROJECT_DIR$/controller-eureka/run" />
@@ -187,7 +190,6 @@
         <option value="$PROJECT_DIR$/imo-location/pom.xml" />
         <option value="$PROJECT_DIR$/dg-commons/pom.xml" />
         <option value="$PROJECT_DIR$/clean_null_images.sh" />
-        <option value="$PROJECT_DIR$/clean_docker_images.sh" />
         <option value="$PROJECT_DIR$/tag_eureka.sh" />
         <option value="$PROJECT_DIR$/tag_zuul.sh" />
         <option value="$PROJECT_DIR$/tag.sh" />
@@ -199,6 +201,9 @@
         <option value="$PROJECT_DIR$/imo-speed/src/main/java/com/dg/kj/imospeed/controller/SpeedController.java" />
         <option value="$PROJECT_DIR$/imo-location/src/main/java/com/dg/kj/imolocation/ImoLocationApplication.java" />
         <option value="$PROJECT_DIR$/compile" />
+        <option value="$PROJECT_DIR$/clean_docker_images.sh" />
+        <option value="$PROJECT_DIR$/case/controller1/rmDGs.sh" />
+        <option value="$PROJECT_DIR$/compile_all" />
       </list>
     </option>
   </component>
@@ -272,6 +277,17 @@
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="java" type="462c0819:PsiDirectoryNode" />
               <item name="caremulator" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="controller" type="b2602c69:ProjectViewProjectNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+              <item name="case" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="controller" type="b2602c69:ProjectViewProjectNode" />
+              <item name="controller" type="462c0819:PsiDirectoryNode" />
+              <item name="case" type="462c0819:PsiDirectoryNode" />
+              <item name="controller1" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="controller" type="b2602c69:ProjectViewProjectNode" />
@@ -610,15 +626,16 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1531364423498</updated>
-      <workItem from="1531364425597" duration="190396000" />
+      <workItem from="1531364425597" duration="190912000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="190396000" />
+    <option name="totallyTimeSpent" value="190912000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="989" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info anchor="right" id="Palette" />
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
@@ -696,13 +713,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/controller-zuul/run">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="47" selection-start-line="14" selection-start-column="47" selection-end-line="14" selection-end-column="47" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/controller-zuul/tag">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -903,20 +913,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/imo-speed/run">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" selection-start-line="14" selection-end-line="14" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/clean_docker_images.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="45">
-          <caret line="3" column="16" selection-start-line="3" selection-start-column="16" selection-end-line="3" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/tag.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
@@ -1039,9 +1035,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/compile_all">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/run">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -1052,14 +1045,42 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/compile_module">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/update_git">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/push_to_git">
       <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/clean_docker_images.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="17" selection-start-line="15" selection-start-column="17" selection-end-line="15" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/case/controller1/rmDGs.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="25" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/compile_all">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="24" selection-start-line="3" selection-start-column="24" selection-end-line="3" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/compile_module">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/imo-speed/run">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="14" selection-start-line="14" selection-end-line="14" />
+        </state>
+      </provider>
     </entry>
   </component>
   <component name="masterDetails">
