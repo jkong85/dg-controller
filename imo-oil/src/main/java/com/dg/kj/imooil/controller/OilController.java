@@ -15,13 +15,13 @@ public class OilController {
                         @RequestParam String type,
                         @RequestParam String value){
         imoOilApplication.oilHistoryData.add(0, value);
-        imoOilApplication.logQueue.offer(value);
+        imoOilApplication.logQueue.offer("receive oil data: " + value);
         return "Current oil is: " + value;
     }
 
     @RequestMapping(value="/history")
     public String history(){
-        String result = "Oil history data is: " + imoOilApplication.oilHistoryData;
+        String result = "Oil history data is: <br/>" + imoOilApplication.oilHistoryData;
         return result;
     }
 

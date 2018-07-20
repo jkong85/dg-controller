@@ -15,13 +15,13 @@ public class LocationController {
                           @RequestParam String type,
                           @RequestParam String value){
         imoLocationApplication.locationHistoryData.add(0, value);
-        imoLocationApplication.logQueue.offer(value);
+        imoLocationApplication.logQueue.offer("receive location data: " + value);
         return "Current location is: " + value;
     }
 
     @RequestMapping(value="/history")
     public String history(){
-        String result = "Location history data is: " + imoLocationApplication.locationHistoryData;
+        String result = "Location history data is: <br/>" + imoLocationApplication.locationHistoryData;
         return result;
     }
     @RequestMapping(value="/ready")

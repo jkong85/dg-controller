@@ -35,8 +35,6 @@ public class CarEmulatorApplication {
 
     public static void main(String[] args) {
         //SpringApplication.run(CarEmulatorApplication.class, args);
-
-//        if(args == null || args.length < 2 || args.length > 4){
         if(args == null || args.length != 2 ){
             System.out.println("Input error! \n java -jar CarEmulator car1 honda|toyota y");
             return;
@@ -52,29 +50,12 @@ public class CarEmulatorApplication {
         }
         // register the care first
         Integer location = type.equals(HONDA) ? honda_location[0] : toyota_location[0];
-        /*
-        if(args.length == 3) {
-            if (args[2].equals("y")) {
-                register(name, type, location.toString());
-            }else{
-                System.out.println("Incorrect input");
-                return;
-            }
-            try{
-                Thread.sleep(10000);
-                System.out.println("Create the DGs for : " + name);
-                return;
-            }catch(InterruptedException ie){
 
-            }
-        }
-        */
         try {
             Thread.sleep(500);
         }catch(InterruptedException ie){
 
         }
-
         for(int i=0; i<100; i++){
             System.out.println("   ");
         }

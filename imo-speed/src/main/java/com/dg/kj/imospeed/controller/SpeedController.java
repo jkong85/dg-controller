@@ -15,13 +15,15 @@ public class SpeedController {
                         @RequestParam String type,
                         @RequestParam String value){
         imoSpeedApplication.speedHistoryData.add(0, value);
+
+        imoSpeedApplication.logQueue.offer("receive speed data: " + value);
         imoSpeedApplication.type = type;
         return "cur speed is: " + value;
     }
 
     @RequestMapping(value="/history")
     public String history(){
-        String result = "Speed history data is: " + imoSpeedApplication.speedHistoryData;
+        String result = "Speed history data is: <br/>" + imoSpeedApplication.speedHistoryData;
         return result;
     }
     @RequestMapping(value="/ready")

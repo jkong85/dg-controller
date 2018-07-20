@@ -60,7 +60,7 @@ public class OilUpload implements Runnable{
                     continue;
                 }
                 if(!isPrinted[index]) {
-                    System.out.println("UPload " + index + " oil data : " + Integer.toString(oil[index]));
+                    System.out.println("Upload " + index + " oil data : " + Integer.toString(oil[index]));
                     isPrinted[index] = true;
                 }
                for (int i = 0; i < CarEmulatorApplication.destination.size(); i++) {
