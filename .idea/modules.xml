@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/car-emulator/car-emulator.iml" filepath="$PROJECT_DIR$/car-emulator/car-emulator.iml" />
+      <module fileurl="file://$PROJECT_DIR$/controller.iml" filepath="$PROJECT_DIR$/controller.iml" />
+      <module fileurl="file://$PROJECT_DIR$/controller-eureka/controller-eureka.iml" filepath="$PROJECT_DIR$/controller-eureka/controller-eureka.iml" />
+      <module fileurl="file://$PROJECT_DIR$/controller-test/controller-test.iml" filepath="$PROJECT_DIR$/controller-test/controller-test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/controller-zuul/controller-zuul.iml" filepath="$PROJECT_DIR$/controller-zuul/controller-zuul.iml" />
+      <module fileurl="file://$PROJECT_DIR$/dg-commons/dg-commons.iml" filepath="$PROJECT_DIR$/dg-commons/dg-commons.iml" />
+      <module fileurl="file://$PROJECT_DIR$/imo-location/imo-location.iml" filepath="$PROJECT_DIR$/imo-location/imo-location.iml" />
+      <module fileurl="file://$PROJECT_DIR$/imo-oil/imo-oil.iml" filepath="$PROJECT_DIR$/imo-oil/imo-oil.iml" />
+      <module fileurl="file://$PROJECT_DIR$/imo-speed/imo-speed.iml" filepath="$PROJECT_DIR$/imo-speed/imo-speed.iml" />
+    </modules>
+  </component>
+</project>
