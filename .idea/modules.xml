@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/car-emulator/car-emulator.iml" filepath="$PROJECT_DIR$/car-emulator/car-emulator.iml" />
       <module fileurl="file://$PROJECT_DIR$/controller.iml" filepath="$PROJECT_DIR$/controller.iml" />
+      <module fileurl="file://$PROJECT_DIR$/controller-core/controller-core.iml" filepath="$PROJECT_DIR$/controller-core/controller-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/controller-eureka/controller-eureka.iml" filepath="$PROJECT_DIR$/controller-eureka/controller-eureka.iml" />
       <module fileurl="file://$PROJECT_DIR$/controller-test/controller-test.iml" filepath="$PROJECT_DIR$/controller-test/controller-test.iml" />
       <module fileurl="file://$PROJECT_DIR$/controller-zuul/controller-zuul.iml" filepath="$PROJECT_DIR$/controller-zuul/controller-zuul.iml" />

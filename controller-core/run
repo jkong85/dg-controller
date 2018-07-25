@@ -1,0 +1,16 @@
+#!/bin/sh
+set -x
+sudo docker rm -f dg-controller-core
+sleep 2
+sudo mvn clean install -Pdocker-build-image -DskipTests
+sleep 2
+#sudo docker run -it --name dg-controller-core dg-controller-core:latest
+
+#sudo mvn clean install -Pdocker-push-image
+#mvn -Ddocker.username=jkong85 -Ddocker.password=19851208 docker:push
+
+sudo docker images | sed -n '2p'
+NAME="$(sudo docker images | sed -n '2p' | awk '{print $1}')"
+ID="$(sudo docker images | sed -n '2p' | awk '{print $3}')"
+./tag $ID
+

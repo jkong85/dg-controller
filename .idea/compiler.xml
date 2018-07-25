@@ -23,6 +23,7 @@
         <outputRelativeToContentRoot value="true" />
         <processorPath useClasspath="true" />
         <module name="car-emulator" />
+        <module name="controller-core" />
         <module name="controller-eureka" />
         <module name="controller-test" />
         <module name="controller-zuul" />
@@ -36,6 +37,7 @@
       <module name="car-emulator" target="1.8" />
       <module name="commons" target="1.8" />
       <module name="controller" target="1.5" />
+      <module name="controller-core" target="1.8" />
       <module name="controller-eureka" target="1.8" />
       <module name="controller-kubeclient" target="1.8" />
       <module name="controller-test" target="1.8" />

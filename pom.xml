@@ -16,5 +16,6 @@
         <module>imo-location</module>
         <module>imo-oil</module>
         <module>imo-speed</module>
+        <module>controller-core</module>
     </modules>
 </project>
