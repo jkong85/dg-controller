@@ -19,7 +19,8 @@ echo ">>>> clean previous running..."
 rm *.ymal
 rm eureka_server_ip
 
-NODE="docker-for-desktop"
+#NODE="docker-for-desktop"
+NODE="node1"
 
 echo ">>>> Start the eureka server"
 cp template/eureka.yaml.template eureka.yaml
