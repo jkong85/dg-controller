@@ -35,7 +35,12 @@ public class MongoController {
     @RequestMapping("/speedlog")
     public String speedlog(){
         Set<String> result  = mongoTemplate.getCollectionNames();
-        return result.toString();
+        StringBuilder sb = new StringBuilder();
+        for(String str : result ){
+            sb.append(str);
+            sb.append(" ");
+        }
+        return sb.toString();
     }
 
     private class logData{
