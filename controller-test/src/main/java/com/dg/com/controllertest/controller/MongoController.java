@@ -55,7 +55,7 @@ public class MongoController {
     }
     @RequestMapping("/speedlog2")
     public String speedlog2(){
-        return mongoTemplate.findAll(logData2.class, "log").toString();
+        return mongoTemplate.findAll(logData2.class, "log2").toString();
         /*
         Set<String> result  = mongoTemplate.getCollectionNames();
         StringBuilder sb = new StringBuilder();
