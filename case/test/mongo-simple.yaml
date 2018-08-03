@@ -1,16 +1,16 @@
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: mongo-simple
+  name: mongokj
 spec:
   template:
     metadata:
       labels:
-        app: mongo-simple
+        app: mongokj
     spec:
       containers:
-      - name: mongodb-simple
-        image: docker.io/mongo:3.4
+      - name: mongokj
+        image: mongokj:1.0
         command:
           - mongod
         ports:
@@ -20,5 +20,3 @@ spec:
           value: root
         - name: MONGO_INITDB_ROOT_PASSWORD
           value: rootPass
-        volumes:
-          - "$PWD/mongo-entrypoint/:/docker-entrypoint-initdb.d/"
