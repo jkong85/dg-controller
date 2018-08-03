@@ -10,7 +10,7 @@ spec:
     spec:
       containers:
       - name: mongokj
-        image: mongokj:1.0
+        image: jkong85/mongokj:1.0
         command:
           - mongod
         ports:
