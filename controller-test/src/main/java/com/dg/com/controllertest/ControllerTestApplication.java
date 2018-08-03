@@ -1,14 +1,17 @@
 package com.dg.com.controllertest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.data.mongodb.core.MongoTemplate;
 
 import java.util.*;
 
 @SpringBootApplication
 @EnableDiscoveryClient
 public class ControllerTestApplication {
+
     public static Map<String, String> nodeIpMap = new HashMap<>();
     // Stack to store all available node port (3000 ~ 4000)
     public static Stack<Integer> nodePortsPool = new Stack<>();
@@ -30,6 +33,7 @@ public class ControllerTestApplication {
         SpringApplication.run(ControllerTestApplication.class, args);
         AddLog(CONTROLLER_LOG_NAME, "Controller is ready!");
     }
+
     private static void Initialize(){
         DGInfoMap = new HashMap<>();
 

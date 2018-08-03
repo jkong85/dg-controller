@@ -17,7 +17,7 @@ spec:
         image: jkong85/dg-controller-zuul:0.1
         env:
         - name: EUREKA_SERVER_IP
-          value: 10.1.0.154
+          value: 10.1.0.206
         ports:
         - containerPort: 8889
       nodeSelector:
