@@ -1,0 +1,16 @@
+apiVersion: v1  
+kind: Service  
+metadata:  
+  labels:  
+    app: mongoauto
+  name: mongoauto
+  namespace: default  
+spec:  
+  type: NodePort  
+  ports:  
+  - port: 8080
+    name: mongoauto
+    targetPort: 27017 
+    nodePort: 31002
+  selector: 
+    app: mongoauto

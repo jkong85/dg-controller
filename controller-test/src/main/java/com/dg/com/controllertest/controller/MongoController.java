@@ -7,8 +7,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-import java.util.Set;
 
 /**
  * Created by jkong on 8/2/18.
@@ -70,19 +68,19 @@ public class MongoController {
     }
 
     private class logData2{
-        String timeStamp;
+        String time;
         String value;
         logData2(String time, String value){
-            this.timeStamp = time;
+            this.time= time;
             this.value = value;
         }
     }
 
     private class logData{
-        String timeStamp;
+        String time;
         String value;
         logData(String time, String value){
-            this.timeStamp = time;
+            this.time= time;
             this.value = value;
         }
     }
