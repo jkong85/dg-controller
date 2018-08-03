@@ -28,3 +28,5 @@ spec:
           value: "dg"
         - name: "MONGODB_APPLICATION_PASS"
           value: "dg"
+      nodeSelector:
+        kubernetes.io/hostname: node1
