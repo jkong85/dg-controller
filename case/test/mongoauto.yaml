@@ -17,7 +17,7 @@ spec:
           - containerPort: 27017
         env:
         - name: AUTH
-          value: yes
+          value: "yes"
         - name: MONGODB_ADMIN_USER
           value: admin
         - name: MONGODB_ADMIN_PASS
