@@ -29,17 +29,19 @@ public class MongoController {
     @RequestMapping("/speed")
     public String speed(@RequestParam String time,
                         @RequestParam String log ){
-        mongoTemplate.insert(new logData(time, log));
+        mongoTemplate.save(new logData(time, log), "log");
         return "insert to DB";
     }
     @RequestMapping("/speed2")
     public String speed2(@RequestParam String time,
                         @RequestParam String log ){
-        mongoTemplate.insert(new logData2(time, log));
+        mongoTemplate.save(new logData2(time, log), "log2");
         return "insert to DB";
     }
     @RequestMapping("/speedlog")
     public String speedlog(){
+        return mongoTemplate.findAll(logData.class, "log").toString();
+        /*
         Set<String> result  = mongoTemplate.getCollectionNames();
         StringBuilder sb = new StringBuilder();
         for(String str : result ){
@@ -49,9 +51,12 @@ public class MongoController {
             }
         }
         return sb.toString();
+        */
     }
     @RequestMapping("/speedlog2")
     public String speedlog2(){
+        return mongoTemplate.findAll(logData2.class, "log").toString();
+        /*
         Set<String> result  = mongoTemplate.getCollectionNames();
         StringBuilder sb = new StringBuilder();
         for(String str : result ){
@@ -61,6 +66,7 @@ public class MongoController {
             }
         }
         return sb.toString();
+        */
     }
 
     private class logData2{
