@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -42,8 +43,22 @@ public class MongoController {
         Set<String> result  = mongoTemplate.getCollectionNames();
         StringBuilder sb = new StringBuilder();
         for(String str : result ){
-            sb.append(str);
-            sb.append(" ");
+            if(str.equals("logData")){
+                List<logData> logdata = mongoTemplate.findAll(logData.class, str);
+                sb.append(logdata.toString());
+            }
+        }
+        return sb.toString();
+    }
+    @RequestMapping("/speedlog2")
+    public String speedlog2(){
+        Set<String> result  = mongoTemplate.getCollectionNames();
+        StringBuilder sb = new StringBuilder();
+        for(String str : result ){
+            if(str.equals("logData2")){
+                List<logData> logdata = mongoTemplate.findAll(logData.class, str);
+                sb.append(logdata.toString());
+            }
         }
         return sb.toString();
     }
