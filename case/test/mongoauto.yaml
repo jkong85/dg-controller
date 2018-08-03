@@ -16,17 +16,17 @@ spec:
         ports:
           - containerPort: 27017
         env:
-        - name: "AUTH"
-          value: "yes"
-        - name: "MONGODB_ADMIN_USER"
-          value: "admin"
-        - name: "MONGODB_ADMIN_PASS"
-          value: "admin123"
-        - name: "MONGODB_APPLICATION_DATABASE"
-          value: "dg"
-        - name: "MONGODB_APPLICATION_USER"
-          value: "dg"
-        - name: "MONGODB_APPLICATION_PASS"
-          value: "dg"
+        - name: AUTH
+          value: yes
+        - name: MONGODB_ADMIN_USER
+          value: admin
+        - name: MONGODB_ADMIN_PASS
+          value: admin
+        - name: MONGODB_APPLICATION_DATABASE
+          value: dg
+        - name: MONGODB_APPLICATION_USER
+          value: dg
+        - name: MONGODB_APPLICATION_PASS
+          value: dg
       nodeSelector:
         kubernetes.io/hostname: node1
