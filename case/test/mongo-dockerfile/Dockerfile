@@ -13,7 +13,7 @@ MAINTAINER <Jian Kong> aashreysh@gmail.com
 #ENV MONGODB_APPLICATION_PASS password
 
 EXPOSE 27017 27017
- 
+CMD ["mongod"]
 #ADD run.sh /run.sh
 #ADD set_mongodb_password.sh /set_mongodb_password.sh
 #
@@ -27,5 +27,5 @@ ENV MONGO_INITDB_ROOT_USERNAME root
 ENV MONGO_INITDB_ROOT_PASSWORD rootPass
 
 ADD run.sh /run.sh
-RUN chmod +x /run.sh
+RUN chmod u+x /run.sh
 CMD ["/run.sh"]
