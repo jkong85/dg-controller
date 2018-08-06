@@ -168,7 +168,6 @@ public class RegistrationController {
         return "DG of " + imoName + " is copied to " + destination;
     }
 
-
     @RequestMapping(value = "/destroy")
     public String destroy(@RequestParam String serviceName,
                           @RequestParam String type,
@@ -748,6 +747,8 @@ public class RegistrationController {
         POST https://172.17.8.101:6443/api/v1/namespaces/default/pods/mongodb-864d5b7498-sjw7g/exec?command=%2Fopt%2Fmongoclone.sh&command=172.33.95.3&container=mongodb&container=mongodb&stderr=true&stdout=true
          */
         // find out the container's name, IP address
+
+
         String mongoPrefix = "mongo";
         String srcDeployment = srcService + "-" + mongoPrefix;
         String dstDeployment = dstService + "-" + mongoPrefix;
@@ -758,6 +759,12 @@ public class RegistrationController {
         String dstIPaddress = getDeploymentIPaddress(dstDeployment);
 
         System.out.println("Copy from src " + srcPodName + " : " + srcIPaddress + " to " + dstPodName + " : " + dstIPaddress);
+        try{
+            System.out.println("Wait for 20 seconds");
+            Thread.sleep(2000);
+        }catch (InterruptedException ex){
+            System.out.println(ex.toString());
+        }
 
         String url =  K8sApiServer + "/api/v1/namespaces/default/pods/" + dstPodName + "/exec";
         MultiValueMap<String, Object> cloneParamMap = new LinkedMultiValueMap<String, Object>();

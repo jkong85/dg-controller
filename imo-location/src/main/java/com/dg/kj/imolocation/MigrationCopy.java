@@ -20,8 +20,6 @@ public class MigrationCopy implements Runnable {
     private static boolean isRightLeftMigrated = false;
     private static boolean isDestoyed = false;
 
-
-
     MigrationCopy(String name){
         threadName = name;
     }
