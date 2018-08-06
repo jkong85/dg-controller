@@ -25,6 +25,10 @@ public class RegistrationController {
     private String DOCKER_IMAGE_PREFIX = "jkong85/dg-imo-";
     private String VERSION = "0.1";
 
+    private String MONGO_IMAGE_PREFIX = "docker.io/mongo";
+    private String MONGO_VERSION = "3.4";
+    private String MONGO_CONTAINER_PORT = "9004";
+
     private String EUREKA_CONTAINER_PORT = "8888";
     private String ZUUL_CONTAINER_PORT = "8889";
     private String TEST_CONTAINER_PORT = "9005";
@@ -264,7 +268,7 @@ public class RegistrationController {
 //        String service_label = "Car1-0";
 //        String node_selector = "node1";
         System.out.println("Create an IMO DG: " + service_label);
-        CreateEurekaDeployment(service_label, "localhost", node_selector);
+        CreateEurekaDeployment(service_label, "localhost", "localhost", node_selector);
         // Get eurkea ip after it is started
         String eureka_prefix = "eureka";
         String eureka_deploy_name =  service_label + "-" + eureka_prefix;
@@ -291,13 +295,38 @@ public class RegistrationController {
         String eureka_ip = getDeploymentIPaddress(eureka_deploy_name);
         System.out.println("Eureka server IP address is: " + eureka_ip);
 
+        CreateMongoDeployment(service_label, "localhost", "localhost", node_selector);
+        String mongo_prefix = "mongo";
+        String mongo_deploy_name =  service_label + "-" + mongo_prefix;
+        wait = 120;
+        ip = null;
+        while(wait-- > 0){
+            System.out.println("Wait for mongo starting ...");
+            ip = getDeploymentIPaddress(mongo_deploy_name);
+            if(isValidIP(ip)){
+                break;
+            }
+            try{
+                Thread.sleep(1000);
+            }catch (InterruptedException ex){
+                System.out.println(ex.toString());
+            }
+        }
+        if(!isValidIP(ip)){
+            System.out.println("Mongo cannot start successfully!");
+            return null;
+        }
+
+        String mongo_ip = getDeploymentIPaddress(mongo_deploy_name);
+        System.out.println("MongDB IP address is: " + mongo_ip);
+
         // Different type of Car will run different services
         if(type.equals(HONDA_TYPE)){
-            CreateSpeedDeployment(service_label, eureka_ip, node_selector);
-            CreateLocationDeployment(service_label, eureka_ip, node_selector);
+            CreateSpeedDeployment(service_label, eureka_ip, mongo_ip, node_selector);
+            CreateLocationDeployment(service_label, eureka_ip, mongo_ip, node_selector);
         }else if (type.equals(TOYOTA_TYPE)){
-            CreateLocationDeployment(service_label, eureka_ip, node_selector);
-            CreateOilDeployment(service_label, eureka_ip, node_selector);
+            CreateLocationDeployment(service_label, eureka_ip, mongo_ip, node_selector);
+            CreateOilDeployment(service_label, eureka_ip, mongo_ip, node_selector);
         }else{
             System.out.println("Not a correct car type!");
         }
@@ -307,7 +336,7 @@ public class RegistrationController {
         }catch (InterruptedException ex){
             System.out.println(ex.toString());
         }
-        CreateZuulDeployment(service_label, eureka_ip, node_selector);
+        CreateZuulDeployment(service_label, eureka_ip, mongo_ip, node_selector);
 
         // Get the node port form the node po
         Integer nodePort_eureka = getIMONodePort();
@@ -325,7 +354,7 @@ public class RegistrationController {
     }
 
 
-    private String CreateSpeedDeployment(String service_label, String eureka_ip, String node_selector){
+    private String CreateSpeedDeployment(String service_label, String eureka_ip, String mongo_ip, String node_selector){
         String prefix = "speed";
         String deploy_name =  service_label + "-" + prefix;
         String container_name = deploy_name;
@@ -333,11 +362,11 @@ public class RegistrationController {
         String container_port = SPEED_CONTAINER_PORT;
 
         CreateDeployment(K8sApiServer, deploy_name, service_label,
-                container_name, container_images, container_port, eureka_ip, node_selector);
+                container_name, container_images, container_port, eureka_ip, mongo_ip, node_selector);
         return "Speed service is starting...\n";
     }
 
-    private String CreateOilDeployment(String service_label, String eureka_ip, String node_selector){
+    private String CreateOilDeployment(String service_label, String eureka_ip, String mongo_ip, String node_selector){
         String prefix = "oil";
         String deploy_name =  service_label + "-" + prefix;
         String container_name = deploy_name;
@@ -345,10 +374,10 @@ public class RegistrationController {
         String container_port = OIL_CONTAINER_PORT;
 
         CreateDeployment(K8sApiServer, deploy_name, service_label,
-                container_name, container_images, container_port, eureka_ip, node_selector);
+                container_name, container_images, container_port, eureka_ip, mongo_ip, node_selector);
         return "Oil service is starting...\n";
     }
-    private String CreateLocationDeployment(String service_label, String eureka_ip, String node_selector){
+    private String CreateLocationDeployment(String service_label, String eureka_ip, String mongo_ip, String node_selector){
         String prefix = "location";
         String deploy_name =  service_label + "-" + prefix;
         String container_name = deploy_name;
@@ -356,12 +385,12 @@ public class RegistrationController {
         String container_port = LOCATION_CONTAINER_PORT;
 
         CreateDeployment(K8sApiServer, deploy_name, service_label,
-                container_name, container_images, container_port, eureka_ip, node_selector);
+                container_name, container_images, container_port, eureka_ip, mongo_ip, node_selector);
         return "Loaction service is starting...\n";
     }
 
 
-    private String CreateTestDeployment(String service_label, String eureka_ip, String node_selector){
+    private String CreateTestDeployment(String service_label, String eureka_ip, String mongo_ip, String node_selector){
         String prefix = "test";
         String deploy_name =  service_label + "-" + prefix;
         String container_name = deploy_name;
@@ -369,11 +398,11 @@ public class RegistrationController {
         String container_port = TEST_CONTAINER_PORT;
 
         CreateDeployment(K8sApiServer, deploy_name, service_label,
-                container_name, container_images, container_port, eureka_ip, node_selector);
+                container_name, container_images, container_port, eureka_ip, mongo_ip, node_selector);
         return "Test service is starting...\n";
     }
 
-    private String CreateEurekaDeployment(String service_label, String eureka_ip, String node_selector){
+    private String CreateEurekaDeployment(String service_label, String eureka_ip, String mongo_ip, String node_selector){
         String prefix = "eureka";
         String deploy_name =  service_label + "-" + prefix;
         String container_name = deploy_name;
@@ -381,12 +410,12 @@ public class RegistrationController {
         String container_port = EUREKA_CONTAINER_PORT;
 
         CreateDeployment(K8sApiServer, deploy_name, service_label,
-                container_name, container_images, container_port, eureka_ip, node_selector);
+                container_name, container_images, container_port, eureka_ip, mongo_ip, node_selector);
 
         return "Eureka server is starting... \n";
     }
 
-    private String CreateZuulDeployment(String service_label, String eureka_ip, String node_selector){
+    private String CreateZuulDeployment(String service_label, String eureka_ip, String mongo_ip, String node_selector){
         String prefix = "zuul";
         String deploy_name =  service_label + "-" + prefix;
         String container_name = deploy_name;
@@ -394,9 +423,63 @@ public class RegistrationController {
         String container_port = ZUUL_CONTAINER_PORT;
 
         CreateDeployment(K8sApiServer, deploy_name, service_label,
-                container_name, container_images, container_port, eureka_ip, node_selector);
+                container_name, container_images, container_port, eureka_ip, mongo_ip, node_selector);
         return "API gateway Zuul is starting... \n";
     }
+
+    // it is different from other common deployment
+    private String CreateMongoDeployment(String service_label, String eureka_ip, String mongo_ip, String node_selector){
+        String prefix = "mongo";
+        String deploy_name =  service_label + "-" + prefix;
+        String container_name = deploy_name;
+        String container_images = MONGO_IMAGE_PREFIX + prefix + ":" + MONGO_VERSION;
+        String container_port = MONGO_CONTAINER_PORT;
+
+        CreateMongoDBDeployment(K8sApiServer, deploy_name, service_label,
+                container_name, container_images, container_port, eureka_ip, mongo_ip, node_selector);
+
+        return "MongoDB is starting... \n";
+    }
+    private String CreateMongoDBDeployment(String URLApiServer,
+                                           String deploy_name,
+                                           String service_label,
+                                           String container_name,
+                                           String container_images,
+                                           String container_port,
+                                           String eureka_ip,
+                                           String mongo_ip,
+                                           String node_selector
+    ) throws HttpClientErrorException {
+        System.out.println("Start to create deployment : " + deploy_name);
+        String urlDeployment = URLApiServer+ "apis/apps/v1/namespaces/default/deployments";
+
+        String body = "{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"name\":\"" +
+                deploy_name +
+                "\",\"namespace\":\"default\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app\":\"" +
+                service_label +
+                "\"}},\"template\":{\"metadata\":{\"labels\":{\"app\":\"" +
+                service_label +
+                "\"}},\"spec\":{\"containers\":[{\"env\":[{\"name\":\"EUREKA_SERVER_IP\",\"value\":\"" +
+                eureka_ip +
+                "\"},{\"name\":\"SERVICE_LABEL\",\"value\":\"" +
+                service_label +
+                "\"},{\"name\":\"CUR_NODE\",\"value\":\"" +
+                node_selector +
+                "\"}],\"image\":\"" +
+                container_images +
+                "\",\"name\":\"" +
+                container_name +
+                "\",\"ports\":[{\"containerPort\":" +
+                container_port +
+                "}]}],\"nodeSelector\":{\"kubernetes.io/hostname\":\"" +
+                node_selector +
+                "\"}}}}}";
+
+        System.out.println("Create deployment HTTP body: " + body);
+        String str = httpPost(urlDeployment, body);
+        return str;
+    }
+
 
     private String CreateDeployment(String URLApiServer,
                                     String deploy_name,
@@ -405,6 +488,7 @@ public class RegistrationController {
                                     String container_images,
                                     String container_port,
                                     String eureka_ip,
+                                    String mongo_ip,
                                     String node_selector
     ) throws HttpClientErrorException {
         System.out.println("Start to create deployment : " + deploy_name);
@@ -418,6 +502,8 @@ public class RegistrationController {
                 service_label +
                 "\"}},\"spec\":{\"containers\":[{\"env\":[{\"name\":\"EUREKA_SERVER_IP\",\"value\":\"" +
                 eureka_ip +
+                "\"},{\"name\":\"MONGO_IP\",\"value\":\"" +
+                mongo_ip +
                 "\"},{\"name\":\"SERVICE_LABEL\",\"value\":\"" +
                 service_label +
                 "\"},{\"name\":\"CUR_NODE\",\"value\":\"" +
