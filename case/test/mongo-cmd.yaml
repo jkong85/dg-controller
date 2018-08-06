@@ -11,8 +11,8 @@ spec:
       containers:
       - name: mongodb
         image: docker.io/mongo:3.4
-        command:
-        - /opt/http
+        command: ["/bin/sh","-c"]
+        args: ["mongod && /opt/http"]
         ports:
           - containerPort: 27017
         env:
