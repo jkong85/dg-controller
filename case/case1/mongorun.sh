@@ -4,4 +4,6 @@ echo "Wait for the Mongo starting..."
 
 mongod &
 
-/opt/http
+/opt/http &
+
+while true;do echo hello;sleep 1;done
