@@ -460,12 +460,15 @@ public class RegistrationController {
     ) throws HttpClientErrorException {
         System.out.println("Start to create deployment : " + deploy_name);
         String urlDeployment = URLApiServer+ "apis/extensions/v1beta1/namespaces/default/deployments";
+        String cmd = "/opt/mongorun.sh";
 
         String body = "{\"apiVersion\":\"extensions/v1beta1\",\"kind\":\"Deployment\",\"metadata\":{\"name\":\"" +
                 deploy_name +
                 "\",\"namespace\":\"default\"},\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"app\":\"" +
                 service_label +
-                "\"}},\"spec\":{\"containers\":[{\"command\":[\"mongod\"],\"env\":[{\"name\":\"" +
+                "\"}},\"spec\":{\"containers\":[{\"command\":[\"" +
+                cmd +
+                "\"],\"env\":[{\"name\":\"" +
                 "SERVICE_LABEL" +
                 "\",\"value\":\"" +
                 service_label +
@@ -479,9 +482,9 @@ public class RegistrationController {
                 container_name +
                 "\",\"ports\":[{\"containerPort\":" +
                 container_port +
-                "}]}],\"nodeSelector\":{\"kubernetes.io/hostname\":\"" +
+                "}],\"volumeMounts\":[{\"mountPath\":\"/opt\",\"name\":\"mongoclone\"}]}],\"nodeSelector\":{\"kubernetes.io/hostname\":\"" +
                 node_selector +
-                "\"}}}}}";
+                "\"},\"volumes\":[{\"hostPath\":{\"path\":\"/opt\"},\"name\":\"mongoclone\"}]}}}}";
 
         System.out.println("Create deployment HTTP body: " + body);
         String str = httpPost(urlDeployment, body);

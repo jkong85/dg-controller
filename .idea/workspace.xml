@@ -3,7 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="c4d2589f-d158-4b34-8e3b-fea70abf8fa4" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/case/case1/mongorun.sh" afterPath="$PROJECT_DIR$/case/case1/mongorun.sh" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java" afterPath="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <ignored path="$PROJECT_DIR$/controller-eureka/target/" />
@@ -33,14 +33,14 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="RegistrationController.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="RegistrationController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="394">
-              <caret line="469" column="34" selection-start-line="469" selection-start-column="34" selection-end-line="469" selection-end-column="34" />
+            <state relative-caret-position="559">
+              <caret line="485" column="29" selection-start-line="485" selection-start-column="29" selection-end-line="485" selection-end-column="29" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#36693#36709#0" expanded="true" />
+                <element signature="e#36912#36928#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -49,8 +49,8 @@
       <file leaf-file-name="mongo.yaml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/case/test/mongo.yaml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="22" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
+            <state relative-caret-position="420">
+              <caret line="28" column="21" selection-start-line="28" selection-start-column="21" selection-end-line="28" selection-end-column="21" />
               <folding />
             </state>
           </provider>
@@ -78,7 +78,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mongorun.sh" pinned="false" current-in-tab="true">
+      <file leaf-file-name="mongorun.sh" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/case/case1/mongorun.sh">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="120">
@@ -221,11 +221,11 @@
         <option value="$PROJECT_DIR$/case/case1/mongo_clone.sh" />
         <option value="$PROJECT_DIR$/car-emulator/src/main/java/com/dg/kj/caremulator/LocationUpload.java" />
         <option value="$PROJECT_DIR$/imo-location/src/main/java/com/dg/kj/imolocation/MigrationCopy.java" />
-        <option value="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java" />
         <option value="$PROJECT_DIR$/imo-location/src/main/java/com/dg/kj/imolocation/controller/LocationController.java" />
         <option value="$PROJECT_DIR$/case/case1/http.go" />
         <option value="$PROJECT_DIR$/case/test/mongo.yaml" />
         <option value="$PROJECT_DIR$/case/case1/mongorun.sh" />
+        <option value="$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java" />
       </list>
     </option>
   </component>
@@ -1513,7 +1513,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1680" height="989" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -1914,17 +1914,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="394">
-          <caret line="469" column="34" selection-start-line="469" selection-start-column="34" selection-end-line="469" selection-end-column="34" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#36693#36709#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/case/case1/http.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="510">
@@ -1959,14 +1948,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/case/test/mongo.yaml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="22" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/case/case1/mongoclone.sh">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1980,6 +1961,25 @@
         <state relative-caret-position="120">
           <caret line="8" column="10" selection-start-line="8" selection-start-column="10" selection-end-line="8" selection-end-column="10" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/case/test/mongo.yaml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="420">
+          <caret line="28" column="21" selection-start-line="28" selection-start-column="21" selection-end-line="28" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="559">
+          <caret line="485" column="29" selection-start-line="485" selection-start-column="29" selection-end-line="485" selection-end-column="29" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#36912#36928#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
