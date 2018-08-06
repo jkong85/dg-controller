@@ -158,6 +158,8 @@ public class RegistrationController {
 
         copyRequstSet.remove(hash);
 
+        //Clone Data 
+
         return "DG of " + imoName + " is copied to " + destination;
     }
 
