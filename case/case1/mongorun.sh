@@ -4,4 +4,4 @@ echo "Wait for the Mongo starting..."
 
 mongod &
 
-/opt/http &
+/opt/http
