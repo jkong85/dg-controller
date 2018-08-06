@@ -26,7 +26,6 @@ spec:
       volumes:
       - name: mongo_clone
         hostPath:
-        path: "/opt"
-        type: Directory
+          path: "/opt"
       nodeSelector:
         kubernetes.io/hostname: node1
