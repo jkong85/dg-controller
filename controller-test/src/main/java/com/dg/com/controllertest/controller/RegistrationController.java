@@ -25,7 +25,7 @@ public class RegistrationController {
     private String DOCKER_IMAGE_PREFIX = "jkong85/dg-imo-";
     private String VERSION = "0.1";
 
-    private String MONGO_IMAGE_PREFIX = "docker.io/mongo";
+    private String MONGO_IMAGE_PREFIX = "docker.io/";
     private String MONGO_VERSION = "3.4";
     private String MONGO_CONTAINER_PORT = "27017";
 
