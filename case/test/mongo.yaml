@@ -20,5 +20,13 @@ spec:
           value: Car1
         - name: CUR_NODE
           value: node1
+        volumeMounts:
+        - name: mongo_clone
+          mountPath: /opt
+      volumes:
+      - name: mongo_clone
+        hostPath:
+        path: "/opt"
+        type: Directory
       nodeSelector:
         kubernetes.io/hostname: node1
