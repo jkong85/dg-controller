@@ -7,10 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.*;
@@ -143,10 +146,11 @@ public class RegistrationController {
                 break;
             }
         }
+        String edgeImoDg = null;
         if(!isExisted){// create a new one on edge node
             System.out.println("Create a new one on Node : " + destination);
             Integer edgeIndex = testApplication.DGInfoMap.get(imoName).indexPool.pop();
-            String edgeImoDg = imoName + "-" + Integer.toString(edgeIndex);
+            edgeImoDg = imoName + "-" + Integer.toString(edgeIndex);
             DgService newDgService  = createIMODG(edgeImoDg, destination, type) ;
             if(newDgService == null){
                 System.out.println("Cannot create DG for " + imoName + " on edge node : " + destination);
@@ -159,9 +163,11 @@ public class RegistrationController {
         copyRequstSet.remove(hash);
 
         //Clone Data
+        cloneMongoDB(name, edgeImoDg);
 
         return "DG of " + imoName + " is copied to " + destination;
     }
+
 
     @RequestMapping(value = "/destroy")
     public String destroy(@RequestParam String serviceName,
@@ -663,16 +669,23 @@ public class RegistrationController {
             }
         }
     }
+    private String getDeploymentPodName(String name_deploy){
+        //String urlGetPods = K8sApiServer + "/api/v1/namespaces/default/pods?limit=500";
+        String urlGetPods = K8sApiServer + K8S_GET_PODS_API;
+        String response = httpGet(urlGetPods);
+        return getDeploymentIPbyRegx(response, name_deploy)[0];
+    }
 
     private String getDeploymentIPaddress(String name_deploy){
         //String urlGetPods = K8sApiServer + "/api/v1/namespaces/default/pods?limit=500";
         String urlGetPods = K8sApiServer + K8S_GET_PODS_API;
         String response = httpGet(urlGetPods);
-        return getDeploymentIPbyRegx(response, name_deploy);
+        return getDeploymentIPbyRegx(response, name_deploy)[1];
     }
 
     //e.g., name_deploy = "controller-eureka", or "car1-1-eureka"
-    private String getDeploymentIPbyRegx(String response, String name_deploy){
+    private String[] getDeploymentIPbyRegx(String response, String name_deploy){
+        String[] deploymentInfo = new String[2];
         String[] pods_str_array = response.replace("\"", "").replace("{", "").split("metadata:");
 //        System.out.println("All pods info: " + response);
 
@@ -692,13 +705,16 @@ public class RegistrationController {
             matcher = pattern_name.matcher(pods_str_array[i]);
             if(matcher.find()){
                 String nameResult = matcher.group();
-                System.out.println("Pod name is : " + nameResult.substring(name_start.length(), nameResult.length() - name_end.length()));
+                String podName = nameResult.substring(name_start.length(), nameResult.length() - name_end.length());
+                System.out.println("Pod name is : " + podName);
                 matcher = pattern_podIP.matcher(pods_str_array[i]);
                 if(matcher.find()){
                     String ipResult = matcher.group();
                     String podIP = ipResult.substring(podIP_start.length(), ipResult.length() - podIP_end.length());
                     System.out.println("Pod IP is : " +podIP);
-                    return podIP;
+                    deploymentInfo[0] = podName;
+                    deploymentInfo[1] = podIP;
+                    return deploymentInfo;
                 }
             }
         }
@@ -715,4 +731,60 @@ public class RegistrationController {
 
         return "0.0.0.0";
     }
+
+    private String cloneMongoDB(String srcService, String dstService){
+        /*
+        curl -k -v -XPOST  -H "User-Agent: kubectl/v1.9.3 (linux/amd64) kubernetes/d283541" -H "X-Stream-Protocol-Version: v4.channel.k8s.io" -H "X-Stream-Protocol-Version: v3.channel.k8s.io" -H "X-Stream-Protocol-Version: v2.channel.k8s.io" -H "X-Stream-Protocol-Version: channel.k8s.io" https://172.17.8.101:6443/api/v1/namespaces/default/pods/mongodb-864d5b7498-sjw7g/exec?command=%2Fopt%2Fmongoclone.sh&command=172.33.95.3&container=mongodb&container=mongodb&stderr=true&stdout=true
+        POST https://172.17.8.101:6443/api/v1/namespaces/default/pods/mongodb-864d5b7498-sjw7g/exec?command=%2Fopt%2Fmongoclone.sh&command=172.33.95.3&container=mongodb&container=mongodb&stderr=true&stdout=true
+         */
+        // find out the container's name, IP address
+        String mongoPrefix = "mongo";
+        String srcDeployment = srcService + "-" + mongoPrefix;
+        String dstDeployment = dstService + "-" + mongoPrefix;
+
+        String srcPodName = getDeploymentPodName(srcDeployment);
+        String srcIPaddress = getDeploymentIPaddress(srcDeployment);
+        String dstPodName = getDeploymentPodName(dstDeployment);
+        String dstIPaddress = getDeploymentIPaddress(dstDeployment);
+
+        System.out.println("Copy from src " + srcPodName + " : " + srcIPaddress + " to " + dstPodName + " : " + dstIPaddress);
+
+        String url =  K8sApiServer + "/api/v1/namespaces/default/pods/" + dstPodName + "/exec";
+        MultiValueMap<String, Object> cloneParamMap = new LinkedMultiValueMap<String, Object>();
+        cloneParamMap.add("command", "/opt/mongoclone.sh");
+        cloneParamMap.add("command", srcIPaddress);
+        cloneParamMap.add("container", dstDeployment);
+        cloneParamMap.add("container", dstDeployment);
+        cloneParamMap.add("stderr", "true");
+        cloneParamMap.add("stdout", "true");
+
+        String accessToken = "/var/run/secrets/kubernetes.io/serviceaccount/token";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-Stream-Protocol-Version", "v4.channel.k8s.io,v3.channel.k8s.io,v2.channel.k8s.io,channel.k8s.io");
+        headers.set("Authorization","Bearer "+accessToken);
+
+        HttpEntity<MultiValueMap> httpEntity = new HttpEntity<>(cloneParamMap, headers);
+        try {
+            RestTemplate restTemplate = new RestTemplate();
+            String str = restTemplate.postForObject(url, httpEntity, String.class);
+            return str;
+        } catch (HttpClientErrorException he){
+            System.out.println(he.toString());
+        }
+        return null;
+    }
+     private static String httpPostForMongoDB(String urlService, String body) throws HttpClientErrorException{
+        String accessToken = "/var/run/secrets/kubernetes.io/serviceaccount/token";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("X-Stream-Protocol-Version", "v4.channel.k8s.io,v3.channel.k8s.io,v2.channel.k8s.io,channel.k8s.io");
+        headers.set("Authorization","Bearer "+accessToken);
+
+        HttpEntity<String> httpEntity = new HttpEntity<>(body, headers);
+        RestTemplate restTemplate = new RestTemplate();
+        String str = restTemplate.postForObject(urlService, httpEntity, String.class);
+        return str;
+    }
+
 }
