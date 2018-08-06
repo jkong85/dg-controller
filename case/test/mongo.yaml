@@ -21,10 +21,10 @@ spec:
         - name: CUR_NODE
           value: node1
         volumeMounts:
-        - name: mongo_clone
+        - name: mongoclone
           mountPath: /opt
       volumes:
-      - name: mongo_clone
+      - name: mongoclone
         hostPath:
           path: "/opt"
       nodeSelector:
