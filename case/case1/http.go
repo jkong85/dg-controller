@@ -8,6 +8,11 @@ import (
 	//"strings"
 )
 
+/*
+To cross-compile and run on Container:
+	env GOOS=linux GOARCH=amd64 go build  http.go
+*/
+
 func exec_shell(s string) {
 	cmd := exec.Command("/bin/bash", "-c", s)
 	err := cmd.Run()
