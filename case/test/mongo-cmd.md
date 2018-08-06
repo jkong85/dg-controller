@@ -13,3 +13,7 @@ db.createUser({ user: 'kj', pwd: 'some-initial-password', roles: [ { role: "root
 
 db.dg.insert({"name":"kj"})
 
+use test
+db.logData.find().pretty()
+db.logData.findOne().pretty()
+
