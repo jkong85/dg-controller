@@ -36,11 +36,11 @@
       <file leaf-file-name="RegistrationController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="514">
-              <caret line="749" column="62" selection-start-line="749" selection-start-column="62" selection-end-line="749" selection-end-column="62" />
+            <state relative-caret-position="469">
+              <caret line="687" column="43" selection-start-line="687" selection-start-column="43" selection-end-line="687" selection-end-column="43" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#36123#36139#0" expanded="true" />
+                <element signature="e#36491#36507#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1962,11 +1962,11 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/controller-test/src/main/java/com/dg/com/controllertest/controller/RegistrationController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="514">
-          <caret line="749" column="62" selection-start-line="749" selection-start-column="62" selection-end-line="749" selection-end-column="62" />
+        <state relative-caret-position="469">
+          <caret line="687" column="43" selection-start-line="687" selection-start-column="43" selection-end-line="687" selection-end-column="43" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#36123#36139#0" expanded="true" />
+            <element signature="e#36491#36507#0" expanded="true" />
           </folding>
         </state>
       </provider>

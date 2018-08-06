@@ -673,6 +673,10 @@ public class RegistrationController {
         //String urlGetPods = K8sApiServer + "/api/v1/namespaces/default/pods?limit=500";
         String urlGetPods = K8sApiServer + K8S_GET_PODS_API;
         String response = httpGet(urlGetPods);
+        String[] info = getDeploymentIPbyRegx(response, name_deploy);
+        if(info == null || info[0] == null){
+            return null;
+        }
         return getDeploymentIPbyRegx(response, name_deploy)[0];
     }
 
@@ -680,12 +684,18 @@ public class RegistrationController {
         //String urlGetPods = K8sApiServer + "/api/v1/namespaces/default/pods?limit=500";
         String urlGetPods = K8sApiServer + K8S_GET_PODS_API;
         String response = httpGet(urlGetPods);
+        String[] info = getDeploymentIPbyRegx(response, name_deploy);
+        if(info == null || info[0] == null){
+            return null;
+        }
         return getDeploymentIPbyRegx(response, name_deploy)[1];
     }
 
     //e.g., name_deploy = "controller-eureka", or "car1-1-eureka"
     private String[] getDeploymentIPbyRegx(String response, String name_deploy){
         String[] deploymentInfo = new String[2];
+        deploymentInfo[0] = null;
+        deploymentInfo[1] = null;
         String[] pods_str_array = response.replace("\"", "").replace("{", "").split("metadata:");
 //        System.out.println("All pods info: " + response);
 
