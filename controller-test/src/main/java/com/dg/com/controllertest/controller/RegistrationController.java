@@ -451,7 +451,7 @@ public class RegistrationController {
                                            String node_selector
     ) throws HttpClientErrorException {
         System.out.println("Start to create deployment : " + deploy_name);
-        String urlDeployment = URLApiServer+ "apis/apps/v1/namespaces/default/deployments";
+        String urlDeployment = URLApiServer+ "apis/extensions/v1beta1/namespaces/default/deployments";
 
         String body = "{\"apiVersion\":\"extensions/v1beta1\",\"kind\":\"Deployment\",\"metadata\":{\"name\":\"" +
                 deploy_name +
