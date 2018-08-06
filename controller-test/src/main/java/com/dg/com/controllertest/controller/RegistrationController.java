@@ -170,6 +170,7 @@ public class RegistrationController {
         List<String> deployList = new ArrayList<>();
         //basis components
         deployList.add("eureka");
+        deployList.add("mongo");
         deployList.add("zuul");
         if(type.equals(HONDA_TYPE)){
             deployList.add("speed");
