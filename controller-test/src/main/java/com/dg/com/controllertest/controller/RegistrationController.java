@@ -257,7 +257,7 @@ public class RegistrationController {
 
     @RequestMapping(value = "/info")
     public String getInfo(@RequestParam String value){
-        System.out.println("get the IP:port for core DG, and edge DG ");
+        //System.out.println("get the IP:port for core DG, and edge DG ");
         if(testApplication.DGInfoMap==null || !testApplication.DGInfoMap.containsKey(value)){
             return null;
         }
