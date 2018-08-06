@@ -27,7 +27,7 @@ public class RegistrationController {
 
     private String MONGO_IMAGE_PREFIX = "docker.io/mongo";
     private String MONGO_VERSION = "3.4";
-    private String MONGO_CONTAINER_PORT = "9004";
+    private String MONGO_CONTAINER_PORT = "27017";
 
     private String EUREKA_CONTAINER_PORT = "8888";
     private String ZUUL_CONTAINER_PORT = "8889";
@@ -453,17 +453,17 @@ public class RegistrationController {
         System.out.println("Start to create deployment : " + deploy_name);
         String urlDeployment = URLApiServer+ "apis/apps/v1/namespaces/default/deployments";
 
-        String body = "{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"name\":\"" +
+        String body = "{\"apiVersion\":\"extensions/v1beta1\",\"kind\":\"Deployment\",\"metadata\":{\"name\":\"" +
                 deploy_name +
-                "\",\"namespace\":\"default\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app\":\"" +
+                "\",\"namespace\":\"default\"},\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"app\":\"" +
                 service_label +
-                "\"}},\"template\":{\"metadata\":{\"labels\":{\"app\":\"" +
+                "\"}},\"spec\":{\"containers\":[{\"command\":[\"mongod\"],\"env\":[{\"name\":\"" +
+                "SERVICE_LABEL" +
+                "\",\"value\":\"" +
                 service_label +
-                "\"}},\"spec\":{\"containers\":[{\"env\":[{\"name\":\"EUREKA_SERVER_IP\",\"value\":\"" +
-                eureka_ip +
-                "\"},{\"name\":\"SERVICE_LABEL\",\"value\":\"" +
-                service_label +
-                "\"},{\"name\":\"CUR_NODE\",\"value\":\"" +
+                "\"},{\"name\":\"" +
+                "CUR_NODE" +
+                "\",\"value\":\"" +
                 node_selector +
                 "\"}],\"image\":\"" +
                 container_images +
@@ -479,7 +479,6 @@ public class RegistrationController {
         String str = httpPost(urlDeployment, body);
         return str;
     }
-
 
     private String CreateDeployment(String URLApiServer,
                                     String deploy_name,
@@ -502,7 +501,7 @@ public class RegistrationController {
                 service_label +
                 "\"}},\"spec\":{\"containers\":[{\"env\":[{\"name\":\"EUREKA_SERVER_IP\",\"value\":\"" +
                 eureka_ip +
-                "\"},{\"name\":\"MONGO_IP\",\"value\":\"" +
+                "\"},{\"name\":\"MONGODB_IP\",\"value\":\"" +
                 mongo_ip +
                 "\"},{\"name\":\"SERVICE_LABEL\",\"value\":\"" +
                 service_label +
