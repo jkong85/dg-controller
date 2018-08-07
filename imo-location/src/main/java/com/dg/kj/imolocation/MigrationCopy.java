@@ -122,7 +122,12 @@ public class MigrationCopy implements Runnable {
         }
         //Get the ip address of dgService
         RestTemplate restTemplate = new RestTemplate();
-        String dgIpURL = restTemplate.getForObject(CONTROLLER_DGIP_URL, String.class);
+        String dgIpURL = null;
+        try {
+            dgIpURL = restTemplate.getForObject(CONTROLLER_DGIP_URL, String.class);
+        } catch (RestClientException re) {
+            return false;
+        }
         if(dgIpURL == null) return false;
         for(String url : url_ready) {
             String dstURL = "http://" + dgIpURL+ url;
