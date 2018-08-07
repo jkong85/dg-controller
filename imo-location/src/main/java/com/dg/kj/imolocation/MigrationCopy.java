@@ -45,7 +45,7 @@ public class MigrationCopy implements Runnable {
 
                 if(preLocation < location){ // from left to right
                     //if (location >= 40 && (!isLeftRightMigrated) && curNode.equals(EDGE_NODE1)) {
-                    if (location >= 5 && (!isLeftRightMigrated) && curNode.equals(EDGE_NODE1)) {
+                    if (location >= 10 && (!isLeftRightMigrated) && curNode.equals(EDGE_NODE1)) {
                         System.out.println(" Migrate to Edge Node 2");
                         migrate(curServiceName, type, EDGE_NODE1, EDGE_NODE2);
                         String migrateInfo = "Copy DG from " + EDGE_NODE1 + " to " + EDGE_NODE2;
