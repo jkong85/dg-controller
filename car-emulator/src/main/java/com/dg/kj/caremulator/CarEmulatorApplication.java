@@ -140,7 +140,7 @@ public class CarEmulatorApplication {
                 String dstURL = "http://" + CarEmulatorApplication.destination.get(i) + url;
                 System.out.print("Check ready URL: " + dstURL + "   ===> ");
                 boolean flag = false;
-                for(int i=0; i<5; i++) {
+                for(int j=0; j<5; j++) {
                     try {
                         String response = restTemplate.getForObject(dstURL, String.class);
                         System.out.println(" Ready");
