@@ -35,10 +35,13 @@ public class ImoDGs {
         return sb.toString();
     }
     public String getDgIpPort(String dg){
+        System.out.println("getDgIpPort : find ip for dg : " + dg);
         for(int i=0; i<edgeDGs.size(); i++){
+            System.out.println("getDgIpPort : current dg name: " + edgeDGs.get(i).name);
             if(edgeDGs.get(i).name.equals(dg)) {
                 return edgeDGs.get(i).nodeIP.toString() + ":" + edgeDGs.get(i).zuul_node_port.toString();
             }
+            System.out.println("Cannot find Dg of " + dg);
         }
         return null;
     }

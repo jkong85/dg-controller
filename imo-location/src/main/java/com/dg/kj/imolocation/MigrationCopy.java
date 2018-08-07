@@ -2,6 +2,7 @@ package com.dg.kj.imolocation;
 
 import com.dg.kj.dgcommons.Http;
 import com.dg.kj.dgcommons.Log;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
@@ -124,8 +125,11 @@ public class MigrationCopy implements Runnable {
         RestTemplate restTemplate = new RestTemplate();
         String dgIpURL = null;
         try {
-            dgIpURL = restTemplate.getForObject(CONTROLLER_DGIP_URL, String.class);
+            ResponseEntity<String> responseEntity = restTemplate.getForEntity(CONTROLLER_DGIP_URL+"?name={1}", String.class, dgService);
+            dgIpURL = responseEntity.getBody();
+            System.out.println("The new DG IP is : " + dgIpURL);
         } catch (RestClientException re) {
+            System.out.println("Cannot get new DG ip");
             return false;
         }
         if(dgIpURL == null) return false;

@@ -749,6 +749,7 @@ public class RegistrationController {
     @RequestMapping(value = "/dgip")
     public String dgip(@RequestParam String name) {
         if(testApplication.DGInfoMap==null || !testApplication.DGInfoMap.containsKey(name)){
+            System.out.println("No register info for DG " + name);
             return null;
         }
         return testApplication.DGInfoMap.get(name).getDgIpPort(name);
