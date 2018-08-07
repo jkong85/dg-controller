@@ -748,11 +748,12 @@ public class RegistrationController {
     // GET the IP address for one dg
     @RequestMapping(value = "/dgip")
     public String dgip(@RequestParam String name) {
-        if(testApplication.DGInfoMap==null || !testApplication.DGInfoMap.containsKey(name)){
-            System.out.println("No register info for DG " + name);
+        String imoName = trimLastOne(name, "-");
+        if(testApplication.DGInfoMap==null || !testApplication.DGInfoMap.containsKey(imoName)){
+            System.out.println("No register info for DG " + imoName);
             return null;
         }
-        return testApplication.DGInfoMap.get(name).getDgIpPort(name);
+        return testApplication.DGInfoMap.get(imoName).getDgIpPort(name);
     }
 
 
