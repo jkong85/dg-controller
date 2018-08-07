@@ -106,7 +106,7 @@
                 <groupId>io.fabric8</groupId>
                 <artifactId>docker-maven-plugin</artifactId>
                 <configuration>
-                    <autoPull>always</autoPull> <!-- always pull latest BaseImage -->
+                    <autoPull>off</autoPull> <!-- always pull latest BaseImage -->
                     <!--<registry>docker.io</registry>-->
                     <pushRegistry>docker.io</pushRegistry>
                     <images>
