@@ -1,5 +1,6 @@
 package com.dg.kj.imolocation;
 
+import com.dg.kj.dgcommons.Http;
 import com.dg.kj.dgcommons.Log;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
@@ -14,6 +15,7 @@ public class MigrationCopy implements Runnable {
     private static final String EDGE_NODE1 = "node2";
     private static final String EDGE_NODE2 = "node3";
     private static final String CONTROLLER_COPY_URL = "http://172.17.8.101:30002/test/copy";
+    private static final String CONTROLLER_DGIP_URL = "http://172.17.8.101:30002/test/dgip";
     private static final String CONTROLLER_CLONE_MONGODB_URL = "http://172.17.8.101:30002/test/clonedb";
     private static final String CONTROLLER_DESTROY_URL = "http://172.17.8.101:30002/test/destroy";
 
@@ -95,11 +97,44 @@ public class MigrationCopy implements Runnable {
         String newDGService = createNewDG(name, type, src, dst);
         if(newDGService != null) {
             System.out.println("The new DG name is: " + newDGService);
+            // wait for new DG service is ready
+            while(!isReady(newDGService, type)){
+                try{
+                    Thread.sleep(3000);
+                    System.out.println("DGs of " + name +  " are still creating ...");
+                }catch(InterruptedException ie){ }
+            }
             cloneMongoData(name, type, name, newDGService);
         }
         Log log = new Log("location", name, 3 );
         log.logUpload("Migrate DG from " + src + " to " + dst);
     }
+
+    private boolean isReady(String dgService, String type){
+        String[] url_ready = new String[2];
+        url_ready[0] = "/location/ready";
+        if(type.equals("honda")){
+            url_ready[1] = "/speed/ready";
+        }else if(type.equals("toyota")){
+            url_ready[1] = "/oil/ready";
+        }else{
+            System.out.println("Not a correct car type!");
+        }
+        //Get the ip address of dgService
+        RestTemplate restTemplate = new RestTemplate();
+        String dgIpURL = restTemplate.getForObject(CONTROLLER_DGIP_URL, String.class);
+        if(dgIpURL == null) return false;
+        for(String url : url_ready) {
+            String dstURL = "http://" + dgIpURL+ url;
+            try {
+                String response = restTemplate.getForObject(dstURL, String.class);
+            } catch (RestClientException re) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     private String createNewDG(String name, String type, String src, String dst){
         RestTemplate template = new RestTemplate();
         MultiValueMap<String, Object> copyParamMap = new LinkedMultiValueMap<String, Object>();

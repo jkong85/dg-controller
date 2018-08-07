@@ -34,4 +34,12 @@ public class ImoDGs {
         }
         return sb.toString();
     }
+    public String getDgIpPort(String dg){
+        for(int i=0; i<edgeDGs.size(); i++){
+            if(edgeDGs.get(i).name.equals(dg)) {
+                return edgeDGs.get(i).nodeIP.toString() + ":" + edgeDGs.get(i).zuul_node_port.toString();
+            }
+        }
+        return null;
+    }
 }

@@ -745,6 +745,15 @@ public class RegistrationController {
 
         return "0.0.0.0";
     }
+    // GET the IP address for one dg
+    @RequestMapping(value = "/dgip")
+    public String dgip(@RequestParam String name) {
+        if(testApplication.DGInfoMap==null || !testApplication.DGInfoMap.containsKey(name)){
+            return null;
+        }
+        return testApplication.DGInfoMap.get(name).getDgIpPort(name);
+    }
+
 
     @RequestMapping(value = "/clonedb")
     public String register(@RequestParam String name,
