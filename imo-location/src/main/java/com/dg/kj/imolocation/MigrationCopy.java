@@ -101,7 +101,7 @@ public class MigrationCopy implements Runnable {
             // wait for new DG service is ready
             while(!isReady(newDGService, type)){
                 try{
-                    Thread.sleep(3000);
+                    Thread.sleep(2000);
                     System.out.println("DGs of " + name +  " are still creating ...");
                 }catch(InterruptedException ie){ }
             }
@@ -132,12 +132,24 @@ public class MigrationCopy implements Runnable {
             System.out.println("Cannot get new DG ip");
             return false;
         }
+
         if(dgIpURL == null) return false;
         for(String url : url_ready) {
             String dstURL = "http://" + dgIpURL+ url;
-            try {
-                String response = restTemplate.getForObject(dstURL, String.class);
-            } catch (RestClientException re) {
+
+            System.out.print("Check ready URL: " + dstURL + "   ===> ");
+            boolean flag = false;
+            for(int j=0; j<5; j++) {
+                try {
+                    String response = restTemplate.getForObject(dstURL, String.class);
+                    System.out.println(" Ready");
+                    flag = true;
+                    break;
+                } catch (RestClientException re) {
+                    System.out.println(" Not ready");
+                }
+            }
+            if(!flag){
                 return false;
             }
         }

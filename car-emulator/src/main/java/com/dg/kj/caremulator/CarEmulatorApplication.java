@@ -122,7 +122,7 @@ public class CarEmulatorApplication {
 //                System.out.println("Resend register cmd : " + re.toString());
                 regResend = true;
                 try {
-                    Thread.sleep(5000);
+                    Thread.sleep(2000);
                 }catch(InterruptedException ie){
 
                 }
