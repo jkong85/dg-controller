@@ -94,6 +94,7 @@ public class MigrationCopy implements Runnable {
         System.out.println("Migrate DG from " + src + " to " + dst);
         String newDGService = createNewDG(name, type, src, dst);
         if(newDGService != null) {
+            System.out.println("The new DG name is: " + newDGService);
             cloneMongoData(name, type, name, newDGService);
         }
         Log log = new Log("location", name, 3 );
@@ -139,8 +140,8 @@ public class MigrationCopy implements Runnable {
         MultiValueMap<String, Object> copyParamMap = new LinkedMultiValueMap<String, Object>();
         copyParamMap.add("name", name);
         copyParamMap.add("type", type);
-        copyParamMap.add("srcNode", src);
-        copyParamMap.add("dstNode", dst);
+        copyParamMap.add("srcService", src);
+        copyParamMap.add("dstService", dst);
 
         boolean retry = true;
         int cnt = 5;
@@ -161,7 +162,7 @@ public class MigrationCopy implements Runnable {
             cnt--;
         }
         if(retry == true){
-            System.out.println("Cannot clone data successfully!");
+            System.out.println("Cannot clone data after try 5 time!");
         }
 
         Log log = new Log("location", name, 3 );

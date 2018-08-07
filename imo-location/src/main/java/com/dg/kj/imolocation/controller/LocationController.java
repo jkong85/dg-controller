@@ -21,7 +21,6 @@ public class LocationController {
                           @RequestParam String value){
         imoLocationApplication.locationHistoryData.add(0, value);
         imoLocationApplication.logQueue.offer("receive location data: " + value);
-        System.out.println("Insert to mongoDB");
         mongoTemplate.save(new SpeedData(imoLocationApplication.locationHistoryData.size(), value), "SpeedData");
         return "Current location is: " + value;
     }
