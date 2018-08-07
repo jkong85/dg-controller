@@ -31,7 +31,7 @@ public class ControllerTestApplication {
     public static void main(String[] args) {
         Initialize();
         SpringApplication.run(ControllerTestApplication.class, args);
-        AddLog(CONTROLLER_LOG_NAME, "Controller is ready!");
+        //AddLog(CONTROLLER_LOG_NAME, "Controller is starting!");
     }
 
     private static void Initialize(){
