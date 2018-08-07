@@ -91,12 +91,15 @@ public class MigrationCopy implements Runnable {
         }
     }
     private void migrate(String name, String type, String src, String dst){
+        System.out.println("Migrate DG from " + src + " to " + dst);
+        String newDGService = createNewDG(name, type, src, dst);
+        if(newDGService != null) {
+            cloneMongoData(name, type, name, newDGService);
+        }
         Log log = new Log("location", name, 3 );
         log.logUpload("Migrate DG from " + src + " to " + dst);
-        createNewDG(name, type, src, dst);
-        cloneMongoData(name, type, src, dst);
     }
-    private void createNewDG(String name, String type, String src, String dst){
+    private String createNewDG(String name, String type, String src, String dst){
         RestTemplate template = new RestTemplate();
         MultiValueMap<String, Object> copyParamMap = new LinkedMultiValueMap<String, Object>();
         copyParamMap.add("name", name);
@@ -112,6 +115,7 @@ public class MigrationCopy implements Runnable {
                 String result = template.postForObject(CONTROLLER_COPY_URL, copyParamMap, String.class);
                 System.out.println("Try to migrate DG form " + src + " to " + dst);
                 retry = false;
+                return result;
             }catch(RestClientException re) {
                 retry = true;
                 System.out.println(re);
@@ -128,6 +132,7 @@ public class MigrationCopy implements Runnable {
 
         Log log = new Log("location", name, 3 );
         log.logUpload(" ==> Create new DG " + " on " + dst);
+        return null;
     }
     private void cloneMongoData(String name, String type, String src, String dst){
         RestTemplate template = new RestTemplate();
