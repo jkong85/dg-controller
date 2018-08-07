@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 	"os/exec"
-	//"strings"
+	"strings"
 )
 
 /*
@@ -19,8 +19,18 @@ func exec_shell(s string) {
 	fmt.Println(err)
 }
 
-func sayhelloName(w http.ResponseWriter, r *http.Request) {
+func cloneMongo(w http.ResponseWriter, r *http.Request) {
 	exec_shell("./opt/mongoclone.sh")
+	r.ParseForm()
+	for k, v := range r.Form {
+		fmt.Println("key:", k)
+		fmt.Println("val:", strings.Join(v, ""))
+		if k == "ip" {
+			ipaddress := strings.Join(v, "")
+			exec_shell("./opt/mongoclone.sh " + ipaddress)
+		}
+	}
+
 	/*
 		r.ParseForm()
 		fmt.Println(r.Form)
@@ -32,10 +42,10 @@ func sayhelloName(w http.ResponseWriter, r *http.Request) {
 			fmt.Println("val:", strings.Join(v, ""))
 		}
 	*/
-	fmt.Fprintf(w, "run mongoclone")
+	fmt.Fprintf(w, "Run mongoclone ...")
 }
 func main() {
-	http.HandleFunc("/hello", sayhelloName)
+	http.HandleFunc("/hello", cloneMongo)
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)

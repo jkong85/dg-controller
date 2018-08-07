@@ -14,6 +14,7 @@ public class MigrationCopy implements Runnable {
     private static final String EDGE_NODE1 = "node2";
     private static final String EDGE_NODE2 = "node3";
     private static final String CONTROLLER_COPY_URL = "http://172.17.8.101:30002/test/copy";
+    private static final String CONTROLLER_CLONE_MONGODB_URL = "http://172.17.8.101:30002/test/clonedb";
     private static final String CONTROLLER_DESTROY_URL = "http://172.17.8.101:30002/test/destroy";
 
     private static boolean isLeftRightMigrated = false;
@@ -86,6 +87,12 @@ public class MigrationCopy implements Runnable {
         }
     }
     private void migrate(String name, String type, String src, String dst){
+        Log log = new Log("location", name, 3 );
+        log.logUpload("Migrate DG from " + src + " to " + dst);
+        createNewDG(name, type, src, dst);
+        cloneMongoData(name, type, src, dst);
+    }
+    private void createNewDG(String name, String type, String src, String dst){
         RestTemplate template = new RestTemplate();
         MultiValueMap<String, Object> copyParamMap = new LinkedMultiValueMap<String, Object>();
         copyParamMap.add("name", name);
@@ -112,12 +119,46 @@ public class MigrationCopy implements Runnable {
             cnt--;
         }
         if(retry == true){
-            System.out.println("Cannot migrate successfully!");
+            System.out.println("Cannot create new DG successfully!");
         }
 
         Log log = new Log("location", name, 3 );
-        log.logUpload("Migrate DG form " + src + " to " + dst);
+        log.logUpload(" ==> Create new DG " + " on " + dst);
     }
+    private void cloneMongoData(String name, String type, String src, String dst){
+        RestTemplate template = new RestTemplate();
+        MultiValueMap<String, Object> copyParamMap = new LinkedMultiValueMap<String, Object>();
+        copyParamMap.add("name", name);
+        copyParamMap.add("type", type);
+        copyParamMap.add("srcNode", src);
+        copyParamMap.add("dstNode", dst);
+
+        boolean retry = true;
+        int cnt = 5;
+        while(retry && cnt>0){
+//            System.out.println("Try " + Integer.toString(6-cnt) + " time to migrate the DGs of " + name);
+            try {
+                String result = template.postForObject(CONTROLLER_CLONE_MONGODB_URL, copyParamMap, String.class);
+                System.out.println("Try to clone data from DGs on " + src + " to " + dst);
+                retry = false;
+            }catch(RestClientException re) {
+                retry = true;
+                System.out.println(re);
+            }
+            try{
+                Thread.sleep(1000);
+            }catch (InterruptedException ie){
+            }
+            cnt--;
+        }
+        if(retry == true){
+            System.out.println("Cannot clone data successfully!");
+        }
+
+        Log log = new Log("location", name, 3 );
+        log.logUpload(" ==> Clone data from " + src + " to " + dst);
+    }
+
     //destroy the DGs on node
     private void destroy(String name, String type, String node){
         RestTemplate template = new RestTemplate();

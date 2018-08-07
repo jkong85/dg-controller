@@ -3,6 +3,7 @@ package com.dg.com.controllertest.controller;
 import com.dg.com.controllertest.ControllerTestApplication;
 import com.dg.com.controllertest.DgService;
 import com.dg.com.controllertest.ImoDGs;
+import org.springframework.beans.factory.ObjectFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -163,9 +164,10 @@ public class RegistrationController {
         copyRequstSet.remove(hash);
 
         //Clone Data
-        cloneMongoDB(name, edgeImoDg);
+        //cloneMongoDB(name, edgeImoDg);
 
-        return "DG of " + imoName + " is copied to " + destination;
+        // return the new DG name in order to migrate data
+        return edgeImoDg;
     }
 
     @RequestMapping(value = "/destroy")
@@ -744,14 +746,47 @@ public class RegistrationController {
         return "0.0.0.0";
     }
 
+    @RequestMapping(value = "/clonedb")
+    public String register(@RequestParam String name,
+                           @RequestParam String type,
+                           @RequestParam String srcService,
+                           @RequestParam String dstService) {
+        String mongoPrefix = "mongo";
+        String srcDeployment = srcService + "-" + mongoPrefix;
+        String dstDeployment = dstService + "-" + mongoPrefix;
+
+        String srcPodName = getDeploymentPodName(srcDeployment);
+        String srcIPaddress = getDeploymentIPaddress(srcDeployment);
+        String dstPodName = getDeploymentPodName(dstDeployment);
+        String dstIPaddress = getDeploymentIPaddress(dstDeployment);
+
+        System.out.println("clone MongoDB from src " + srcPodName + " : " + srcIPaddress + " to " + dstPodName + " : " + dstIPaddress);
+        try{
+            System.out.println("clone MongoDB data : wait for 20 seconds");
+            Thread.sleep(2000);
+        }catch (InterruptedException ex){
+            System.out.println(ex.toString());
+        }
+
+        String urlMongo = "http://" + dstIPaddress + ":8080/hello";
+
+        MultiValueMap<String, Object> cloneParamMap = new LinkedMultiValueMap<String, Object>();
+        cloneParamMap.add("ip", srcIPaddress);
+
+        HttpHeaders headers = new HttpHeaders();
+
+        HttpEntity<MultiValueMap<String, Object>> httpEntity = new HttpEntity<>(cloneParamMap, headers);
+        RestTemplate restTemplate = new RestTemplate();
+        String str = restTemplate.postForObject(urlMongo, httpEntity, String.class);
+        return str;
+    }
+    // Does NOT work, deprecate it
     private String cloneMongoDB(String srcService, String dstService){
         /*
         curl -k -v -XPOST  -H "User-Agent: kubectl/v1.9.3 (linux/amd64) kubernetes/d283541" -H "X-Stream-Protocol-Version: v4.channel.k8s.io" -H "X-Stream-Protocol-Version: v3.channel.k8s.io" -H "X-Stream-Protocol-Version: v2.channel.k8s.io" -H "X-Stream-Protocol-Version: channel.k8s.io" https://172.17.8.101:6443/api/v1/namespaces/default/pods/mongodb-864d5b7498-sjw7g/exec?command=%2Fopt%2Fmongoclone.sh&command=172.33.95.3&container=mongodb&container=mongodb&stderr=true&stdout=true
         POST https://172.17.8.101:6443/api/v1/namespaces/default/pods/mongodb-864d5b7498-sjw7g/exec?command=%2Fopt%2Fmongoclone.sh&command=172.33.95.3&container=mongodb&container=mongodb&stderr=true&stdout=true
          */
         // find out the container's name, IP address
-
-
         String mongoPrefix = "mongo";
         String srcDeployment = srcService + "-" + mongoPrefix;
         String dstDeployment = dstService + "-" + mongoPrefix;
@@ -794,6 +829,7 @@ public class RegistrationController {
         }
         return null;
     }
+    // Does NOT work, deprecated
      private static String httpPostForMongoDB(String urlService, String body) throws HttpClientErrorException{
         String accessToken = "/var/run/secrets/kubernetes.io/serviceaccount/token";
 
