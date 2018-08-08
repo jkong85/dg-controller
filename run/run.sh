@@ -5,9 +5,9 @@ echo "**************************************************"
 echo " Label the VM node with core/edge1/edge2"
 echo "**************************************************"
 
-sudo kubectl label nodes node1 cloud.name=core --overwrite
-sudo kubectl label nodes node2 cloud.name=edge1 --overwrite
-sudo kubectl label nodes node3 cloud.name=edge2 --overwrite
+sudo kubectl label nodes node1 cloud.node=core --overwrite
+sudo kubectl label nodes node2 cloud.node=edge1 --overwrite
+sudo kubectl label nodes node3 cloud.node=edge2 --overwrite
 
 function checkIP()
 {
