@@ -42,6 +42,7 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
                         logger.debug("The new BackupService : " + backupService.toString() + " is ready now!");
                         logger.debug("Before moving the new bkService,  bkServiceNotReadyPoolMap of " + nodetype + " is: " + ControllerCoreApplication.bkServiceNotReadyPoolMap.get(nodetype).toString());
                         logger.debug("Before moving the new bkService,  bkServiceReadyPoolMap of " + nodetype + " is: " + ControllerCoreApplication.bkServiceReadyPoolMap.get(nodetype).toString());
+                        //TODO: lock here?
                         ControllerCoreApplication.bkServiceNotReadyPoolMap.get(nodetype).remove(0);
                         backupService.status = ControllerCoreApplication.BK_SERVICE_STATUS_AVAILABLE;
                         ControllerCoreApplication.bkServiceReadyPoolMap.get(nodetype).add(backupService);
@@ -49,6 +50,10 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
                         logger.debug("After moving the new bkService,  bkServiceReadyPoolMap of " + nodetype + " is: " + ControllerCoreApplication.bkServiceReadyPoolMap.get(nodetype).toString());
                     }else{
                         logger.debug("The new BackupService : " + backupService.toString() + " is not ready yet!");
+                        //TODO: lock here?
+                        //move it to the end
+                        BackupService tmpBkService = ControllerCoreApplication.bkServiceNotReadyPoolMap.get(nodetype).remove(0);
+                        ControllerCoreApplication.bkServiceNotReadyPoolMap.get(nodetype).add(tmpBkService);
                     }
                 }
             }
@@ -69,7 +74,10 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
             logger.warn("Test service is not existed, ignore it!");
         }
         apiServerCmd.CreateService(k8sServiceName, backupService.selector, node_port_eureka.toString(), node_port_zuul.toString());
+
         String nodeIP = ControllerCoreApplication.nodeIpMap.get(backupService.node);
+        logger.info("curr node is: " + backupService.node + " it is ip is: " + nodeIP + " nodeIPmap is : " + ControllerCoreApplication.nodeIpMap.toString());
+
         String[] urlList = new String[backupService.deploymentsList.size()];
         String ipPrefix = "http://" + nodeIP + ":" + node_port_zuul + "/";
         String ipPostfix = "/ready";
