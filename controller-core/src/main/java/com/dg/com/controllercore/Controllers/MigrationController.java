@@ -40,7 +40,7 @@ public class MigrationController {
             return "There is an existing DG on node " + dstNode + " ! No need to create a new one";
         }
         // find out an availale backup service
-        BackupService edgeBackupService = ControllerCoreApplication.bkServicePoolMap.get(dstNode).get(type).pop();
+        BackupService edgeBackupService = ControllerCoreApplication.bkServiceReadyPoolMap.get(dstNode).get(type).pop();
         if(edgeBackupService == null){
             return "No available DGs on edge cloud node, wait!";
         }

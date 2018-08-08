@@ -19,7 +19,9 @@ public class BackupServiceCheckThread implements Runnable{
             //public static Map<String, Map<String, Stack<BackupService>>> bkServicePoolMap;
             for(String node : ControllerCoreApplication.NODE_LIST){
                 for(String type : ControllerCoreApplication.IMO_TYPE){
-                    if(ControllerCoreApplication.bkServicePoolMap.get(node).get(type).size() < ControllerCoreApplication.BACKUP_LIMIT){
+                    int totalBkServiceNumber = ControllerCoreApplication.bkServiceNotReadyPoolMap.get(node).get(type).size() +
+                            ControllerCoreApplication.bkServiceReadyPoolMap.get(node).get(type).size();
+                    if( totalBkServiceNumber < ControllerCoreApplication.BACKUP_LIMIT){
                         ControllerCoreApplication.bkServiceRequestQueue.offer(new BackupServiceRequest(node, type));
                     }
                 }

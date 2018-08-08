@@ -11,11 +11,11 @@
     <modules>
         <module>dg-commons</module>
         <module>controller-eureka</module>
+        <module>controller-core</module>
         <module>controller-zuul</module>
         <module>controller-test</module>
         <module>imo-location</module>
         <module>imo-oil</module>
         <module>imo-speed</module>
-        <module>controller-core</module>
     </modules>
 </project>

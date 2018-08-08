@@ -27,7 +27,7 @@ public class BackupServiceMaintainThread implements Runnable{
                 Integer port_zuul = port_eureka + 1;
                 BackupService backupService = apiServerCmd.createBackupService(request, index, port_eureka, port_zuul);
                 if(backupService != null){
-                    ControllerCoreApplication.bkServicePoolMap.get(node).get(type).push(backupService);
+                    ControllerCoreApplication.bkServiceNotReadyPoolMap.get(node).get(type).push(backupService);
                 }else{
                     // restore all things
                     ControllerCoreApplication.bkServiceIndexPoolStack.push(index);
