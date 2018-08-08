@@ -27,7 +27,10 @@ public class BkServiceCheckAvailNumberThread implements Runnable{
                     int notReadyNumber = ControllerCoreApplication.bkServiceNotReadyPoolMap.get(nodetype).size();
                     int readyNumber = ControllerCoreApplication.bkServiceReadyPoolMap.get(nodetype).size();
                     if( notReadyNumber + readyNumber < ControllerCoreApplication.BACKUP_LIMIT){
+                        logger.info("For BkService  (" + "node: " + node + "type" + type +  ") Number of Not Ready BK is :" + notReadyNumber+ ", Number of Ready BK is : " + type);
+                        logger.info("Add a new requst to bkServiceRequestQueue");
                         ControllerCoreApplication.bkServiceRequestQueue.offer(new BackupServiceRequest(node, type));
+                        logger.info("current bkServiceRequestQueue is : " + ControllerCoreApplication.bkServiceRequestQueue.toString());
                     }
                 }
             }

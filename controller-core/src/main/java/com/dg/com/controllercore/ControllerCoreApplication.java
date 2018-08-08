@@ -4,6 +4,7 @@ import com.dg.com.controllercore.IMOs.BackupService;
 import com.dg.com.controllercore.IMOs.BackupServiceRequest;
 import com.dg.com.controllercore.IMOs.IMO;
 import com.dg.com.controllercore.Tasks.BkServiceCheckAvailNumberThread;
+import com.dg.com.controllercore.Tasks.BkServiceCheckDeployReadyThread;
 import com.dg.com.controllercore.Tasks.BkServiceCreateThread;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -76,6 +77,9 @@ public class ControllerCoreApplication {
 
         BkServiceCheckAvailNumberThread bkServiceCheckAvailNumberThread = new BkServiceCheckAvailNumberThread();
         bkServiceCheckAvailNumberThread.start();
+
+        BkServiceCheckDeployReadyThread bkServiceCheckDeployReadyThread = new BkServiceCheckDeployReadyThread();
+        bkServiceCheckDeployReadyThread.start();
 
     }
     private static void Initialize(){
