@@ -202,6 +202,7 @@ public class ApiServerCmd {
     }
 
     public String deleteService(String serviceName, Integer port){
+        logger.debug("delete k8sservice " + serviceName + " with port : " + port);
         if(Http.httpDelete(URL_K8S_DELETE_SERVICE + serviceName)){
             ControllerCoreApplication.nodePortsPool.push(port);
         }

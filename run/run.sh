@@ -1,6 +1,14 @@
 #!/bin/bash
 #set -x
 
+echo "**************************************************"
+echo " Label the VM node with core/edge1/edge2"
+echo "**************************************************"
+
+sudo kubectl label nodes node1 cloud.name=core --overwrite
+sudo kubectl label nodes node2 cloud.name=edge1 --overwrite
+sudo kubectl label nodes node3 cloud.name=edge2 --overwrite
+
 function checkIP()
 {
     IPADDR=$1
@@ -78,5 +86,9 @@ kubectl create -f zuul.yaml
 
 echo " clean the tmp file"
 rm eureka_server_ip
+
+
+echo "Show label information of VM nodes"
+sudo kubectl get node --show-labels
 echo "end of staring all thing!"
 

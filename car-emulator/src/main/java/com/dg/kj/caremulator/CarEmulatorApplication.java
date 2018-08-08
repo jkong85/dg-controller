@@ -130,6 +130,7 @@ public class CarEmulatorApplication {
         }
         return result;
     }
+
     private static boolean isReady(String[] url_ready){
         if(destination == null || destination.size()==0){
             return false;
@@ -138,9 +139,19 @@ public class CarEmulatorApplication {
             RestTemplate restTemplate = new RestTemplate();
             for(String url : url_ready) {
                 String dstURL = "http://" + CarEmulatorApplication.destination.get(i) + url;
-                try {
-                    String response = restTemplate.getForObject(dstURL, String.class);
-                } catch (RestClientException re) {
+                System.out.print("Check ready URL: " + dstURL + "   ===> ");
+                boolean flag = false;
+                for(int j=0; j<5; j++) {
+                    try {
+                        String response = restTemplate.getForObject(dstURL, String.class);
+                        System.out.println(" Ready");
+                        flag = true;
+                        break;
+                    } catch (RestClientException re) {
+                        System.out.println(" Not ready");
+                    }
+                }
+                if(!flag){
                     return false;
                 }
             }
