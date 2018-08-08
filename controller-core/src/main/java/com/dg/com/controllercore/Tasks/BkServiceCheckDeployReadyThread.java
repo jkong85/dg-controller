@@ -8,6 +8,9 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 
+import java.util.HashSet;
+import java.util.Set;
+
 //Check whether the new created BkService is ready
 // By send API request to each deployment's API : /ready
 public class BkServiceCheckDeployReadyThread implements Runnable{
@@ -60,7 +63,7 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
         Integer node_port_zuul = PORT_ZUUL_CHECK_SERVICE;
         ApiServerCmd apiServerCmd = new ApiServerCmd();
         try {
-            logger.info("Delete the test service if existed!");
+            logger.info("try to delete the test service if existed!");
             apiServerCmd.deleteService(k8sServiceName, node_port_eureka);
         }catch (HttpClientErrorException e){
             logger.warn("Test service is not existed, ignore it!");
@@ -70,8 +73,14 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
         String[] urlList = new String[backupService.deploymentsList.size()];
         String ipPrefix = "http://" + nodeIP + ":" + node_port_zuul + "/";
         String ipPostfix = "/ready";
+        Set<String> basicDeploySet = new HashSet<>();
+        basicDeploySet.add("eureka");
+        basicDeploySet.add("zuul");
         for(int i=0; i<urlList.length; i++){
-            urlList[i] = ipPrefix + backupService.deploymentsList.get(i).serviceType + ipPostfix;
+            String curDeploy = backupService.deploymentsList.get(i).serviceType;
+            if(!basicDeploySet.contains(curDeploy)) {
+                urlList[i] = ipPrefix + curDeploy + ipPostfix;
+            }
         }
 
         if(isAllDeploymentReady(urlList)){
@@ -79,12 +88,14 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
             apiServerCmd.deleteService(k8sServiceName, node_port_eureka);
             return true;
         }
+        logger.info("The backup service is Not ready, delete the k8sService test service : " + k8sServiceName);
         apiServerCmd.deleteService(k8sServiceName, node_port_eureka);
         return false;
     }
 
     private static boolean isAllDeploymentReady(String[] urlList){
         for(String url : urlList){
+            logger.info("ready check URLs are: " + url );
             boolean flag = false;
             int i = 5;
             while(i-- > 0){
@@ -93,13 +104,14 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
                     flag = true;
                     break;
                 } catch (RestClientException re) {
-                    logger.info("Not ready of deployments with URL: " + url);
+                    logger.info("Deployment is Not ready! ");
                 }
             }
             if(!flag){
                 return false;
             }
         }
+        logger.info("All deployment is ready! ");
         return true;
     }
 
