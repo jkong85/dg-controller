@@ -58,8 +58,14 @@ public class ControllerCoreApplication {
 
         SpringApplication.run(ControllerCoreApplication.class, args);
 
-        try { Thread.sleep(1000);
-        } catch (InterruptedException ie) { }
+        Integer wait = 2;
+        while(wait-- > 0) {
+            logger.info("Wait for" + wait.toString() + " seconds");
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ie) {
+            }
+        }
 
         BkServiceCreateThread bkServiceCreateThread = new BkServiceCreateThread();
         bkServiceCreateThread.start();
