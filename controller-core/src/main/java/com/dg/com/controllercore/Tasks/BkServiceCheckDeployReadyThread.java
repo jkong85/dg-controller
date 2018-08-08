@@ -5,6 +5,7 @@ import com.dg.com.controllercore.IMOs.BackupService;
 import com.dg.kj.dgcommons.Http;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 
 //Check whether the new created BkService is ready
@@ -51,21 +52,26 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
         }
     }
     private boolean isReady(BackupService backupService){
+        logger.info("Check the BackupService ready: " + backupService.toString());
         String k8sServiceName = "it-is-a-test-service-to-check-deployment-ready-make-it-unique";
-        //TODO: lock it???
         //Integer node_port_eureka = ControllerCoreApplication.nodePortsPool.pop();
         //Integer node_port_zuul = node_port_eureka + 1;
         Integer node_port_eureka = PORT_EUREKA_CHECK_SERVICE;
         Integer node_port_zuul = PORT_ZUUL_CHECK_SERVICE;
-
         ApiServerCmd apiServerCmd = new ApiServerCmd();
+        try {
+            logger.info("Delete the test service if existed!");
+            apiServerCmd.deleteService(k8sServiceName, node_port_eureka);
+        }catch (HttpClientErrorException e){
+            logger.warn("Test service is not existed, ignore it!");
+        }
         apiServerCmd.CreateService(k8sServiceName, backupService.selector, node_port_eureka.toString(), node_port_zuul.toString());
         String nodeIP = ControllerCoreApplication.nodeIPMap.get(backupService.node);
         String[] urlList = new String[backupService.deploymentsList.size()];
-        String ipPrefix = "http://" + nodeIP + ":" + node_port_zuul;
+        String ipPrefix = "http://" + nodeIP + ":" + node_port_zuul + "/";
         String ipPostfix = "/ready";
         for(int i=0; i<urlList.length; i++){
-            urlList[i] = ipPrefix + backupService.deploymentsList.get(i).name + ipPostfix;
+            urlList[i] = ipPrefix + backupService.deploymentsList.get(i).serviceType + ipPostfix;
         }
 
         if(isAllDeploymentReady(urlList)){
@@ -87,7 +93,7 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
                     flag = true;
                     break;
                 } catch (RestClientException re) {
-                    logger.info("Not ready of deployments of " + url);
+                    logger.info("Not ready of deployments with URL: " + url);
                 }
             }
             if(!flag){

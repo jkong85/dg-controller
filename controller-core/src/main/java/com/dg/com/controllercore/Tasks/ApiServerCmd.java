@@ -50,7 +50,7 @@ public class ApiServerCmd {
         logger.info("Create an backupService and its deployments: " + service_label);
         BackupService backupService = new BackupService(service_label, type, service_label, node_selector);
 
-        Deployment eurekaDeployment = new Deployment(service_label, node_selector);
+        Deployment eurekaDeployment = new Deployment();
         try {
             eurekaDeployment = CreateEurekaDeployment(service_label, "localhost", node_selector);
         }catch (HttpClientErrorException he){
@@ -115,7 +115,7 @@ public class ApiServerCmd {
 
         CreateDeployment(deploy_name, service_label,
                 container_name, container_images, container_port, eureka_ip, node_selector);
-        return new Deployment(deploy_name, node_selector);
+        return new Deployment(deploy_name, node_selector, prefix);
     }
 
     private Deployment CreateOilDeployment(String service_label, String eureka_ip, String node_selector){
@@ -127,7 +127,7 @@ public class ApiServerCmd {
 
         CreateDeployment(deploy_name, service_label,
                 container_name, container_images, container_port, eureka_ip, node_selector);
-        return new Deployment(deploy_name, node_selector);
+        return new Deployment(deploy_name, node_selector, prefix);
     }
     private Deployment CreateLocationDeployment(String service_label, String eureka_ip, String node_selector){
         String prefix = "location";
@@ -138,7 +138,7 @@ public class ApiServerCmd {
 
         CreateDeployment(deploy_name, service_label,
                 container_name, container_images, container_port, eureka_ip, node_selector);
-        return new Deployment(deploy_name, node_selector);
+        return new Deployment(deploy_name, node_selector, prefix);
     }
 
 
@@ -151,7 +151,7 @@ public class ApiServerCmd {
 
         CreateDeployment(deploy_name, service_label,
                 container_name, container_images, container_port, eureka_ip, node_selector);
-        return new Deployment(deploy_name, node_selector);
+        return new Deployment(deploy_name, node_selector, prefix);
     }
 
     private Deployment CreateEurekaDeployment(String service_label, String eureka_ip, String node_selector) throws HttpClientErrorException{
@@ -164,7 +164,7 @@ public class ApiServerCmd {
         CreateDeployment(deploy_name, service_label,
                 container_name, container_images, container_port, eureka_ip, node_selector);
 
-        return new Deployment(deploy_name, node_selector);
+        return new Deployment(deploy_name, node_selector, prefix);
     }
 
     private Deployment CreateZuulDeployment(String service_label, String eureka_ip, String node_selector){
@@ -176,7 +176,7 @@ public class ApiServerCmd {
 
         CreateDeployment(deploy_name, service_label,
                 container_name, container_images, container_port, eureka_ip, node_selector);
-        return new Deployment(deploy_name, node_selector);
+        return new Deployment(deploy_name, node_selector, prefix);
     }
 
     public String CreateService( String name,
@@ -208,9 +208,8 @@ public class ApiServerCmd {
         return str;
     }
 
-    public String deleteService(String serviceName, Integer port){
-        logger.info("delete check service " + serviceName + " with port : " + port);
-        logger.info("delete url is: " + URL_K8S_DELETE_SERVICE + serviceName);
+    public String deleteService(String serviceName, Integer port) throws  HttpClientErrorException {
+        logger.info("delete check service " + serviceName + " with port : " + port + ", URL: " + URL_K8S_DELETE_SERVICE + serviceName);
         if(Http.httpDelete(URL_K8S_DELETE_SERVICE + serviceName)){
             ControllerCoreApplication.nodePortsPool.push(port);
         }

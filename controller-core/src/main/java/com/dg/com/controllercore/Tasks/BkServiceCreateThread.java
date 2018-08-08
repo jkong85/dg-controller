@@ -24,7 +24,7 @@ public class BkServiceCreateThread implements Runnable{
                 String node = request.node;
                 String type = request.type;
                 Integer port_eureka = ControllerCoreApplication.nodePortsPool.pop();
-                //e.g. eureak_port is allocted to 30006, then zuul_port is 30007
+                //e.g. eureak_port is allocted to 30016, then zuul_port is 30017
                 Integer port_zuul = port_eureka + 1;
                 BackupService backupService = apiServerCmd.createBackupService(request, index, port_eureka, port_zuul);
                 if(backupService != null){
