@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: controller-kubeclient
+  name: controller-core
 spec:
   selector:
     matchLabels:
@@ -13,12 +13,12 @@ spec:
         app: controller 
     spec:
       containers:
-      - name: controller-kubeclient
-        image: jkong85/dg-controller-kubeclient:0.1
+      - name: controller-core
+        image: jkong85/dg-controller-core:0.1
         env:
         - name: EUREKA_SERVER_IP
           VALUE_EUREKA_SERVER_IP
         ports:
-        - containerPort: 9006
+        - containerPort: 9004
       nodeSelector:
         kubernetes.io/hostname: NODE

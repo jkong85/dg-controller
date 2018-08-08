@@ -5,6 +5,8 @@ import com.dg.com.controllercore.IMOs.BackupService;
 import com.dg.com.controllercore.IMOs.DG;
 import com.dg.com.controllercore.IMOs.IMO;
 import com.dg.com.controllercore.Tasks.ApiServerCmd;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class RegistrationController {
+    private static final Logger logger = LogManager.getLogger(RegistrationController.class);
     @Autowired
     private ControllerCoreApplication controllerCoreApplication;
 
@@ -27,7 +30,8 @@ public class RegistrationController {
         // register on core cloud node
         if(ControllerCoreApplication.IMOMap.containsKey(name)){
             // return the IP address directly!
-            return "It is already registerred!";
+            logger.debug(name + " is already registered!");
+            return "It is already registered!";
         }
 
         ApiServerCmd apiServerCmd = new ApiServerCmd();
@@ -38,6 +42,7 @@ public class RegistrationController {
         String coreServiceName = name + "-" + coreNode;
         BackupService coreBackupService = ControllerCoreApplication.bkServicePoolMap.get(coreNode).get(type).pop();
         if(coreBackupService == null){
+            logger.debug("No available DG on core cloud, just wait!");
             return "No available DG on core cloud, wait!";
         }
         Integer core_node_port_eureka = ControllerCoreApplication.nodePortsPool.pop();

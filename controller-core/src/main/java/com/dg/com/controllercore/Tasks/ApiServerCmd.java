@@ -5,6 +5,8 @@ import com.dg.com.controllercore.IMOs.BackupService;
 import com.dg.com.controllercore.IMOs.BackupServiceRequest;
 import com.dg.com.controllercore.IMOs.Deployment;
 import com.dg.kj.dgcommons.Http;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.regex.Matcher;
@@ -14,6 +16,8 @@ import java.util.regex.Pattern;
  * Created by jkong on 7/25/18.
  */
 public class ApiServerCmd {
+    private static final Logger logger = LogManager.getLogger(ApiServerCmd.class);
+
     private String K8SApiServer = "http://172.17.8.101:8080/";
     private String URL_K8S_CREATE_SERVICE =  K8SApiServer + "api/v1/namespaces/default/services";
     private String URL_K8S_CREATE_DEPLOYMENT = K8SApiServer + "apis/apps/v1/namespaces/default/deployments";
@@ -44,10 +48,10 @@ public class ApiServerCmd {
         return createBackupServiceDeployments(service_label, request.node, request.type);
     }
     public BackupService createBackupServiceDeployments(String service_label, String node_selector, String type){
-        //e.g., Car1-0-***, Car1-1-***
+//        e.g., Car1-0-***, Car1-1-***
 //        String service_label = "Car1-0";
 //        String node_selector = "node1";
-        System.out.println("Create an IMO DG: " + service_label);
+        logger.debug("Create an IMO DG: " + service_label);
         BackupService backupService = new BackupService(service_label, type, service_label, node_selector);
 
         backupService.deploymentsList.add(CreateEurekaDeployment(service_label, "localhost", node_selector));
@@ -58,7 +62,7 @@ public class ApiServerCmd {
         int wait = 120;
         String ip = null;
         while(wait-- > 0){
-            System.out.println("Wait for Eureka starting ...");
+            logger.debug("Wait for Eureka starting ...");
             ip = getDeploymentIPaddress(eureka_deploy_name);
             if(isValidIP(ip)){
                 break;
@@ -66,17 +70,17 @@ public class ApiServerCmd {
             try{
                 Thread.sleep(1000);
             }catch (InterruptedException ex){
-                System.out.println(ex.toString());
+                logger.debug(ex.toString());
             }
         }
         if(!isValidIP(ip)){
-            System.out.println("Eureka cannot start successfully!");
+            logger.debug("Eureka cannot start successfully !");
             backupService.deploymentsList.clear();
             return null;
         }
 
         String eureka_ip = getDeploymentIPaddress(eureka_deploy_name);
-        System.out.println("Eureka server IP address is: " + eureka_ip);
+        logger.debug("Eureka service IP address : " + eureka_ip);
 
         // Different type of Car will run different services
         if(type.equals(ControllerCoreApplication.HONDA)){
@@ -86,13 +90,13 @@ public class ApiServerCmd {
             backupService.deploymentsList.add(CreateLocationDeployment(service_label, eureka_ip, node_selector));
             backupService.deploymentsList.add(CreateOilDeployment(service_label, eureka_ip, node_selector));
         }else{
-            System.out.println("The type of car is not supported!");
+            logger.debug("Car type : " + type + " is not supported ! ");
         }
 
         try{
             Thread.sleep(1000);
         }catch (InterruptedException ex){
-            System.out.println(ex.toString());
+            logger.debug(ex.toString());
         }
         backupService.deploymentsList.add(CreateZuulDeployment(service_label, eureka_ip, node_selector));
 
@@ -178,7 +182,7 @@ public class ApiServerCmd {
                                         String nodePort_eureka,
                                         String nodePort_zuul
     ) throws HttpClientErrorException{
-        System.out.println("Start to create service : " + name);
+        logger.debug("Start to create service : " + name);
         String urlService = URL_K8S_CREATE_SERVICE;
         String body = "{\"apiVersion\":\"v1\",\"kind\":\"Service\",\"metadata\":{\"labels\":{\"app\":\"" +
                 selector +
@@ -196,7 +200,7 @@ public class ApiServerCmd {
                 selector +
                 "\"},\"type\":\"" + "NodePort" + "\"}}";
 
-        System.out.println("Create Service HTTP body: " + body);
+        logger.debug("Create Service HTTP body: " + body);
 
         String str = Http.httpPost(urlService, body);
         return str;
@@ -209,7 +213,7 @@ public class ApiServerCmd {
                                     String eureka_ip,
                                     String node_selector
     ) throws HttpClientErrorException {
-        System.out.println("Start to create deployment : " + deploy_name);
+        logger.debug("Start to create deployment : " + deploy_name);
         String urlDeployment = URL_K8S_CREATE_SERVICE;
 
         String body = "{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"name\":\"" +
@@ -234,7 +238,7 @@ public class ApiServerCmd {
                 node_selector +
                 "\"}}}}}";
 
-        System.out.println("Create deployment HTTP body: " + body);
+        logger.debug("Create deployment HTTP body: " + body);
         String str = Http.httpPost(urlDeployment, body);
         return str;
     }
@@ -260,17 +264,17 @@ public class ApiServerCmd {
         Pattern pattern_name = Pattern.compile(name_start + name_deploy + ".+?" + name_end);
         Pattern pattern_podIP = Pattern.compile(podIP_start + ".+?" + podIP_end);
         for(int i=0; i<pods_str_array.length; i++){
-//            System.out.println("==================================");
-//            System.out.println(pods_str_array[i]);
+//            logger.debug("==================================");
+//            logger.debug(pods_str_array[i]);
             matcher = pattern_name.matcher(pods_str_array[i]);
             if(matcher.find()){
                 String nameResult = matcher.group();
-                System.out.println("Pod name is : " + nameResult.substring(name_start.length(), nameResult.length() - name_end.length()));
+                logger.debug("Pod name is : " + nameResult.substring(name_start.length(), nameResult.length() - name_end.length()));
                 matcher = pattern_podIP.matcher(pods_str_array[i]);
                 if(matcher.find()){
                     String ipResult = matcher.group();
                     String podIP = ipResult.substring(podIP_start.length(), ipResult.length() - podIP_end.length());
-                    System.out.println("Pod IP is : " +podIP);
+                    logger.debug("Pod IP is : " +podIP);
                     return podIP;
                 }
             }

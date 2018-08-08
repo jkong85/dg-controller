@@ -62,14 +62,18 @@ echo ">>>> Config the YAML based on template"
 cp template/zuul.yaml.template zuul.yaml
 sed -i .tmp -e "s/NODE/${NODE}/g" zuul.yaml
 sed -i .tmp -e "s/VALUE_EUREKA_SERVER_IP/value: ${EUREKA_SERVER_IP}/g" zuul.yaml
-cp template/test.yaml.template test.yaml
-sed -i .tmp -e "s/NODE/${NODE}/g" test.yaml
-sed -i .tmp -e "s/VALUE_EUREKA_SERVER_IP/value: ${EUREKA_SERVER_IP}/g" test.yaml
+#cp template/test.yaml.template test.yaml
+#sed -i .tmp -e "s/NODE/${NODE}/g" test.yaml
+#sed -i .tmp -e "s/VALUE_EUREKA_SERVER_IP/value: ${EUREKA_SERVER_IP}/g" test.yaml
+cp template/core.yaml.template core.yaml
+sed -i .tmp -e "s/NODE/${NODE}/g" core.yaml
+sed -i .tmp -e "s/VALUE_EUREKA_SERVER_IP/value: ${EUREKA_SERVER_IP}/g" core.yaml
 rm *.tmp
 
 echo ">>>> Create the microservices"
-kubectl create -f test.yaml
-sleep 3
+#kubectl create -f test.yaml
+kubectl create -f core.yaml
+sleep 1
 kubectl create -f zuul.yaml
 
 echo " clean the tmp file"

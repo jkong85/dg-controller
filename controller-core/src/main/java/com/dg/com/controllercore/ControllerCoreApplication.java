@@ -5,6 +5,8 @@ import com.dg.com.controllercore.IMOs.BackupServiceRequest;
 import com.dg.com.controllercore.IMOs.IMO;
 import com.dg.com.controllercore.Tasks.BackupServiceCheckThread;
 import com.dg.com.controllercore.Tasks.BackupServiceMaintainThread;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.integration.IntegrationAutoConfiguration;
@@ -42,6 +44,8 @@ public class ControllerCoreApplication {
     // Global info of car's DGS
     public static Map<String, IMO> IMOMap = new HashMap<>();
 
+    private static final Logger logger = LogManager.getLogger(ControllerCoreApplication.class);
+
     public static void main(String[] args) {
         Initialize();
 
@@ -53,6 +57,7 @@ public class ControllerCoreApplication {
         backupServiceCheckThread.start();
     }
     private static void Initialize(){
+        logger.debug("Start initialize ...");
         bkServiceRequestQueue = new LinkedList<>();
         bkServiceIndexPoolStack = new Stack<>();
         nodePortsPool = new Stack<>();
@@ -81,9 +86,7 @@ public class ControllerCoreApplication {
         nodeIpMap.put(EDGE_NODE_1, "172.17.8.102");
         nodeIpMap.put(EDGE_NODE_2, "172.17.8.103");
 
-
         IMOMap = new HashMap<>();
-
     }
     public static void AddLog(String sender, String log){
 
