@@ -48,14 +48,10 @@ public class ApiServerCmd {
         return createBackupServiceDeployments(service_label, request.node, request.type);
     }
     public BackupService createBackupServiceDeployments(String service_label, String node_selector, String type){
-//        e.g., Car1-0-***, Car1-1-***
-//        String service_label = "Car1-0";
-//        String node_selector = "node1";
         logger.debug("Create an IMO DG: " + service_label);
         BackupService backupService = new BackupService(service_label, type, service_label, node_selector);
 
         backupService.deploymentsList.add(CreateEurekaDeployment(service_label, "localhost", node_selector));
-        // Get eurkea ip after it is started
         String eureka_prefix = "eureka";
         String eureka_deploy_name =  service_label + "-" + eureka_prefix;
         // Wait for 2 min
@@ -178,13 +174,13 @@ public class ApiServerCmd {
 
 
     public String CreateService( String name,
-                                        String selector,
-                                        String nodePort_eureka,
-                                        String nodePort_zuul
+                                 String selector,
+                                 String nodePort_eureka,
+                                 String nodePort_zuul
     ) throws HttpClientErrorException{
         logger.debug("Start to create service : " + name);
         String urlService = URL_K8S_CREATE_SERVICE;
-        String body = "{\"apiVersion\":\"v1\",\"kind\":\"Service\",\"metadata\":{\"labels\":{\"app\":\"" +
+        String body = "{\"apiVersion\":\"v1\",\"kind\":\"Service\",\"metadata\":{\"labels\":{\"dg\":\"" +
                 selector +
                 "\"},\"name\":\"" +
                 name +
@@ -196,7 +192,7 @@ public class ApiServerCmd {
                 nodePort_zuul +
                 ",\"port\":8080,\"targetPort\":" +
                 ZUUL_CONTAINER_PORT +
-                "}],\"selector\":{\"app\":\"" +
+                "}],\"selector\":{\"dg\":\"" +
                 selector +
                 "\"},\"type\":\"" + "NodePort" + "\"}}";
 
@@ -218,9 +214,9 @@ public class ApiServerCmd {
 
         String body = "{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"name\":\"" +
                 deploy_name +
-                "\",\"namespace\":\"default\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"app\":\"" +
+                "\",\"namespace\":\"default\"},\"spec\":{\"replicas\":1,\"selector\":{\"matchLabels\":{\"dg\":\"" +
                 service_label +
-                "\"}},\"template\":{\"metadata\":{\"labels\":{\"app\":\"" +
+                "\"}},\"template\":{\"metadata\":{\"labels\":{\"dg\":\"" +
                 service_label +
                 "\"}},\"spec\":{\"containers\":[{\"env\":[{\"name\":\"EUREKA_SERVER_IP\",\"value\":\"" +
                 eureka_ip +
@@ -238,7 +234,7 @@ public class ApiServerCmd {
                 node_selector +
                 "\"}}}}}";
 
-        logger.debug("Create deployment HTTP body: " + body);
+        logger.trace("Create deployment HTTP body: " + body);
         String str = Http.httpPost(urlDeployment, body);
         return str;
     }
@@ -264,8 +260,7 @@ public class ApiServerCmd {
         Pattern pattern_name = Pattern.compile(name_start + name_deploy + ".+?" + name_end);
         Pattern pattern_podIP = Pattern.compile(podIP_start + ".+?" + podIP_end);
         for(int i=0; i<pods_str_array.length; i++){
-//            logger.debug("==================================");
-//            logger.debug(pods_str_array[i]);
+            logger.trace(pods_str_array[i]);
             matcher = pattern_name.matcher(pods_str_array[i]);
             if(matcher.find()){
                 String nameResult = matcher.group();

@@ -20,16 +20,21 @@ public class ControllerCoreApplication {
     public static final String CORE_NODE = "core";
     public static final String EDGE_NODE_1 = "edge1";
     public static final String EDGE_NODE_2 = "edge2";
-    public static final String[] NODE_LIST = {CORE_NODE, EDGE_NODE_1, EDGE_NODE_2};
+    public static final String[] NODE_LIST = {"core", "edge1", "edge2"};
 
     public static final Map<String, String>  nodeIPMap = new HashMap<>();
 
     public static final String FORD = "ford";
     public static final String HONDA = "honda";
     public static final String TOYOTA = "toyota";
-    public static final String[] IMO_TYPE = {FORD, HONDA, TOYOTA};
+    public static final String[] IMO_TYPE = {"ford", "honda", "toyota"};
 
     public static final Integer BACKUP_LIMIT = 2;
+
+    //Status of the backup service
+    public static final Integer BK_SERVICE_STATUS_NOT_READY = 0;
+    public static final Integer BK_SERVICE_STATUS_AVAILABLE = 1;
+    public static final Integer BK_SERVICE_STATUS_USED = 2;
 
     public static Stack<Integer> bkServiceIndexPoolStack;
 
@@ -38,7 +43,9 @@ public class ControllerCoreApplication {
     public static Stack<Integer> nodePortsPool = new Stack<>();
 
     // Map<node, Map<car_type, Stack<BackupService>>>
-    public static Map<String, Map<String, Stack<BackupService>>> bkServicePoolMap;
+    public static Map<String, Map<String, Stack<BackupService>>> bkServiceReadyPoolMap;
+    public static Map<String, Map<String, Stack<BackupService>>> bkServiceNotReadyPoolMap;
+
     public static Queue<BackupServiceRequest> bkServiceRequestQueue;
 
     // Global info of car's DGS
@@ -74,12 +81,21 @@ public class ControllerCoreApplication {
                 Stack<BackupService> bkServiceStack = new Stack<>();
                 Map<String, Stack<BackupService>> car_service_map = new HashMap<>();
                 car_service_map.put(type, bkServiceStack);
-                bkServicePoolMap.put(node, car_service_map);
+                bkServiceNotReadyPoolMap.put(node, car_service_map);
                 for(int i=0; i<BACKUP_LIMIT; i++){
                     bkServiceRequestQueue.offer(new BackupServiceRequest(node, type));
                 }
             }
         }
+        for(String node: NODE_LIST){
+            for(String type: IMO_TYPE){
+                Stack<BackupService> bkServiceStack = new Stack<>();
+                Map<String, Stack<BackupService>> car_service_map = new HashMap<>();
+                car_service_map.put(type, bkServiceStack);
+                bkServiceReadyPoolMap.put(node, car_service_map);
+            }
+        }
+
         nodeIpMap = new HashMap<>();
 
         nodeIpMap.put(CORE_NODE, "172.17.8.101");

@@ -40,7 +40,11 @@ public class RegistrationController {
         // for core cloud node
         String coreNode = ControllerCoreApplication.CORE_NODE;
         String coreServiceName = name + "-" + coreNode;
-        BackupService coreBackupService = ControllerCoreApplication.bkServicePoolMap.get(coreNode).get(type).pop();
+        if(ControllerCoreApplication.bkServiceReadyPoolMap.get(coreNode).get(type).isEmpty()){
+            logger.debug("No available DG on core cloud, just wait!");
+            return "No available DG on core cloud, wait!";
+        }
+        BackupService coreBackupService = ControllerCoreApplication.bkServiceReadyPoolMap.get(coreNode).get(type).pop();
         if(coreBackupService == null){
             logger.debug("No available DG on core cloud, just wait!");
             return "No available DG on core cloud, wait!";
@@ -56,8 +60,8 @@ public class RegistrationController {
 
         // for Edge cloud node
         String edgeNode = getNodeByLocation(location);
-        // Get the backupservce from pool
-        BackupService edgeBackupService = ControllerCoreApplication.bkServicePoolMap.get(edgeNode).get(type).pop();
+        // Get the backupservce from ready pool
+        BackupService edgeBackupService = ControllerCoreApplication.bkServiceReadyPoolMap.get(edgeNode).get(type).pop();
         if(edgeBackupService == null){
             return "No available DGs on edge cloud node, wait!";
         }

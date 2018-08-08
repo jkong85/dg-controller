@@ -4,6 +4,8 @@ import com.dg.com.controllercore.ControllerCoreApplication;
 import com.dg.com.controllercore.IMOs.BackupService;
 import com.dg.com.controllercore.IMOs.BackupServiceRequest;
 
+// If the backup available DG is less than the required number, create a new one
+// Put the new requst to bkServiceRequestQueue, BackupServerMaintainThread will create the new DG
 public class BackupServiceCheckThread implements Runnable{
     private Thread t;
 

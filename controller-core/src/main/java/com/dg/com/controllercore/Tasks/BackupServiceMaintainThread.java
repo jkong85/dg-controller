@@ -3,16 +3,18 @@ package com.dg.com.controllercore.Tasks;
 import com.dg.com.controllercore.ControllerCoreApplication;
 import com.dg.com.controllercore.IMOs.BackupService;
 import com.dg.com.controllercore.IMOs.BackupServiceRequest;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class BackupServiceMaintainThread implements Runnable{
+    private static final Logger logger = LogManager.getLogger(ControllerCoreApplication.class);
     private Thread t;
 
     public BackupServiceMaintainThread() {
-
     }
 
     public void run() {
-        System.out.println("Running backup service maintain thread ");
+        logger.info("Running backup service maintain thread");
         ApiServerCmd apiServerCmd = new ApiServerCmd();
         while(true) {
             // synchronize
