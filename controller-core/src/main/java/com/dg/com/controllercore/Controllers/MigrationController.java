@@ -50,7 +50,7 @@ public class MigrationController {
         Integer edge_node_port_zuul = edge_node_port_eureka + 1;
         ApiServerCmd apiServerCmd = new ApiServerCmd();
         apiServerCmd.CreateService(name, edgeBackupService.selector, edge_node_port_eureka.toString(), edge_node_port_zuul.toString());
-        String edgeIP = ControllerCoreApplication.nodeIPMap.get(dstNode);
+        String edgeIP = ControllerCoreApplication.nodeIpMap.get(dstNode);
         DG edgeDG = new DG(edgeServiceName, type, dstNode, edgeIP, edge_node_port_zuul.toString(), edgeBackupService);
         ControllerCoreApplication.IMOMap.get(name).dgList.add(edgeDG);
         return "Copy successfully!";

@@ -54,7 +54,7 @@ public class RegistrationController {
         Integer core_node_port_eureka = ControllerCoreApplication.nodePortsPool.pop();
         Integer core_node_port_zuul = core_node_port_eureka + 1;
         apiServerCmd.CreateService(name, coreBackupService.selector, core_node_port_eureka.toString(), core_node_port_zuul.toString());
-        String coreIP = ControllerCoreApplication.nodeIPMap.get(coreNode);
+        String coreIP = ControllerCoreApplication.nodeIpMap.get(coreNode);
         DG coreDG = new DG(coreServiceName, type, coreNode, coreIP, core_node_port_zuul.toString(), coreBackupService);
         curIMO.dgList.add(coreDG);
 
@@ -74,7 +74,7 @@ public class RegistrationController {
         Integer edge_node_port_eureka = ControllerCoreApplication.nodePortsPool.pop();
         Integer edge_node_port_zuul = edge_node_port_eureka + 1;
         apiServerCmd.CreateService(name, edgeBackupService.selector, edge_node_port_eureka.toString(), edge_node_port_zuul.toString());
-        String edgeIP = ControllerCoreApplication.nodeIPMap.get(edgeNode);
+        String edgeIP = ControllerCoreApplication.nodeIpMap.get(edgeNode);
         DG edgeDG = new DG(edgeServiceName, type, edgeNode, edgeIP, edge_node_port_zuul.toString(), edgeBackupService);
         ControllerCoreApplication.IMOMap.get(name).dgList.add(edgeDG);
 
@@ -99,7 +99,7 @@ public class RegistrationController {
         ApiServerCmd apiServerCmd = new ApiServerCmd();
         apiServerCmd.CreateService(dgName, backupService.selector, node_port_eureka.toString(), node_port_zuul.toString());
 
-        String coreIP = ControllerCoreApplication.nodeIPMap.get(node);
+        String coreIP = ControllerCoreApplication.nodeIpMap.get(node);
 
         DG dg = new DG(dgName, type, node, coreIP, node_port_zuul.toString(), backupService);
         return dg;
