@@ -39,7 +39,7 @@ public class ControllerCoreApplication {
     public static Map<String, Map<String, Stack<BackupService>>> bkServicePoolMap;
     public static Queue<BackupServiceRequest> bkServiceRequestQueue;
 
-    // Global infor of car's DGS
+    // Global info of car's DGS
     public static Map<String, IMO> IMOMap = new HashMap<>();
 
     public static void main(String[] args) {

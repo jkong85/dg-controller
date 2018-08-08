@@ -72,5 +72,8 @@ kubectl create -f test.yaml
 sleep 3
 kubectl create -f zuul.yaml
 
+echo " clean the tmp file"
+rm eureka_server_ip
+rm *.yaml
 echo "end of staring all thing!"
 

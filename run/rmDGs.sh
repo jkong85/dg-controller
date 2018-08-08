@@ -10,6 +10,7 @@ do
         echo "Stop and delete $1"
         sudo kubectl delete deployments $k-eureka
         sudo kubectl delete deployments $k-zuul
+        sudo kubectl delete deployments $k-mongo
         sudo kubectl delete deployments $k-speed
         sudo kubectl delete deployments $k-oil
         sudo kubectl delete deployments $k-location
