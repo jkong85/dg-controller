@@ -23,10 +23,9 @@ public class ControllerCoreApplication {
 
     public static final Map<String, String>  nodeIPMap = new HashMap<>();
 
-    public static final String FORD = "ford";
     public static final String HONDA = "honda";
     public static final String TOYOTA = "toyota";
-    public static final String[] IMO_TYPE = {"ford", "honda", "toyota"};
+    public static final String[] IMO_TYPE = {"honda", "toyota"};
 
     public static final Integer BACKUP_LIMIT = 1;
     public static final Integer BACKUP_INITIAL_LIMIT = 2;
@@ -58,7 +57,7 @@ public class ControllerCoreApplication {
 
         SpringApplication.run(ControllerCoreApplication.class, args);
 
-        Integer wait = 120;
+        Integer wait = 10;
         while(wait-- > 0) {
             logger.info("Wait for " + wait.toString() + " seconds");
             try {
@@ -84,7 +83,7 @@ public class ControllerCoreApplication {
         nodeIpMap = new HashMap<>();
         IMOMap = new HashMap<>();
 
-        for(int i=1000; i>0; i--){
+        for(int i=30; i>0; i--){
             bkServiceIndexPoolStack.push(i);
         }
         for(int i=32000; i>30004; i-=2){

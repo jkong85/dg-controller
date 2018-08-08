@@ -47,7 +47,7 @@ public class ApiServerCmd {
         return createBackupServiceDeployments(service_label, request.node, request.type);
     }
     public BackupService createBackupServiceDeployments(String service_label, String node_selector, String type){
-        logger.debug("Create an IMO DG: " + service_label);
+        logger.info("Create an backupService and its deployments: " + service_label);
         BackupService backupService = new BackupService(service_label, type, service_label, node_selector);
 
         Deployment eurekaDeployment = new Deployment(service_label, node_selector);
@@ -55,7 +55,7 @@ public class ApiServerCmd {
             eurekaDeployment = CreateEurekaDeployment(service_label, "localhost", node_selector);
         }catch (HttpClientErrorException he){
             logger.warn("Cannot create eureka deployment successfully!");
-            logger.info("Cannot create eureka deployment successfully!");
+            logger.warn(he.toString());
             return null;
         }
         backupService.deploymentsList.add(eurekaDeployment);
@@ -226,8 +226,8 @@ public class ApiServerCmd {
                                     String eureka_ip,
                                     String node_selector
     ) throws HttpClientErrorException {
-        logger.debug("Start to create deployment : " + deploy_name);
-        String urlDeployment = URL_K8S_CREATE_SERVICE;
+        logger.info("Create deployment by calling k8s API server: " + deploy_name);
+        String urlDeployment = URL_K8S_CREATE_DEPLOYMENT;
 
         String body = "{\"apiVersion\":\"apps/v1\",\"kind\":\"Deployment\",\"metadata\":{\"name\":\"" +
                 deploy_name +
@@ -251,7 +251,7 @@ public class ApiServerCmd {
                 node_selector +
                 "\"}}}}}";
 
-        logger.info("Create deployment HTTP body: " + body);
+        logger.info("Deployment creation HTTP body: " + body);
         String str = Http.httpPost(urlDeployment, body);
         return str;
     }
