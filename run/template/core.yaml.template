@@ -21,4 +21,4 @@ spec:
         ports:
         - containerPort: 9004
       nodeSelector:
-        kubernetes.io/hostname: NODE
+        cloud.name: NODE

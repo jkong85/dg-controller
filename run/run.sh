@@ -27,7 +27,7 @@ echo ">>>> clean previous running..."
 rm *.ymal
 rm eureka_server_ip
 
-NODE="node1"
+NODE="core"
 
 echo ">>>> Start the eureka server"
 cp template/eureka.yaml.template eureka.yaml
