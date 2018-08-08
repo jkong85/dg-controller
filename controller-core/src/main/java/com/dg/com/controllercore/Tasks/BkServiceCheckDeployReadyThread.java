@@ -21,7 +21,7 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
         while(true) {
             for(String node : ControllerCoreApplication.NODE_LIST){
                 for(String type : ControllerCoreApplication.IMO_TYPE){
-                    try { Thread.sleep(500);
+                    try { Thread.sleep(5000);
                     } catch (InterruptedException ie) { }
 
                     logger.debug("check current bkservice for node : " + node + ", type : " + type);
@@ -63,13 +63,11 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
         for(int i=0; i<urlList.length; i++){
             urlList[i] = ipPrefix + backupService.deploymentsList.get(i).name + ipPostfix;
         }
-        int cnt = 2;
-        while(cnt-->0){
-            if(isAllDeploymentReady(urlList)){
-                logger.trace("delete the k8sService used by ready checking: " + k8sServiceName);
-                apiServerCmd.deleteService(k8sServiceName, node_port_eureka);
-                return true;
-            }
+
+        if(isAllDeploymentReady(urlList)){
+            logger.trace("delete the k8sService used by ready checking: " + k8sServiceName);
+            apiServerCmd.deleteService(k8sServiceName, node_port_eureka);
+            return true;
         }
         return false;
     }

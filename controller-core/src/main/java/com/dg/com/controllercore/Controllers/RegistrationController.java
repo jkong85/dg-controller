@@ -29,7 +29,7 @@ public class RegistrationController {
 
         // register on core cloud node
         if(ControllerCoreApplication.IMOMap.containsKey(name)){
-            // return the IP address directly!
+            //TODO: return IP address directly
             logger.debug(name + " is already registered!");
             return "It is already registered!";
         }
@@ -65,7 +65,7 @@ public class RegistrationController {
         String edgeNodeType = edgeNode + "+" + type;
         // Get the backupservce from ready pool
         if(ControllerCoreApplication.bkServiceReadyPoolMap.get(edgeNodeType).isEmpty()){
-            logger.debug("No available DG on edge cloud: " + edgeNode +  ", just wait!");
+            logger.warn("No available DG on edge cloud: " + edgeNode +  ", just wait!");
             return "No available DG on core cloud, wait!";
         }
         BackupService edgeBackupService = ControllerCoreApplication.bkServiceReadyPoolMap.get(edgeNodeType).get(0);
@@ -79,6 +79,30 @@ public class RegistrationController {
         ControllerCoreApplication.IMOMap.get(name).dgList.add(edgeDG);
 
         return "Register successfully!";
+    }
+    private DG createDG(String dgName, String type, String node){
+        String nodeType = node + "+" + type;
+        if(ControllerCoreApplication.bkServiceReadyPoolMap.get(nodeType).isEmpty()){
+            logger.debug("No available DG on core cloud, just wait!");
+            return null;
+        }
+        if(ControllerCoreApplication.bkServiceReadyPoolMap.get(nodeType).isEmpty()){
+            logger.debug("No available DG on core cloud, just wait!");
+            return null;
+        }
+        BackupService backupService = ControllerCoreApplication.bkServiceReadyPoolMap.get(nodeType).get(0);
+        backupService.status = ControllerCoreApplication.BK_SERVICE_STATUS_USED;
+
+        Integer node_port_eureka = ControllerCoreApplication.nodePortsPool.pop();
+        Integer node_port_zuul = node_port_eureka + 1;
+
+        ApiServerCmd apiServerCmd = new ApiServerCmd();
+        apiServerCmd.CreateService(dgName, backupService.selector, node_port_eureka.toString(), node_port_zuul.toString());
+
+        String coreIP = ControllerCoreApplication.nodeIPMap.get(node);
+
+        DG dg = new DG(dgName, type, node, coreIP, node_port_zuul.toString(), backupService);
+        return dg;
     }
 
     private String getNodeByLocation(String location){

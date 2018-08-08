@@ -25,10 +25,15 @@ public class ControllerCoreApplication {
 
     public static final String HONDA = "honda";
     public static final String TOYOTA = "toyota";
-    public static final String[] IMO_TYPE = {"honda", "toyota"};
+    //public static final String[] IMO_TYPE = {"honda", "toyota"};
+    public static final String[] IMO_TYPE = {"honda"};
 
-    public static final Integer BACKUP_LIMIT = 1;
-    public static final Integer BACKUP_INITIAL_LIMIT = 2;
+    // Normally, we just use one BACKUP_LIMIT
+    // I define those two with 1 difference, just for the Demo performance.
+    // If we run one car for each type, there is no need to create a new BackupService, even the car moves from one edge node to another edge node frequently
+    // Make those two parameter the same for normal case
+    public static final Integer BACKUP_INITIAL_LIMIT = 1;
+    public static final Integer BACKUP_LIMIT = BACKUP_INITIAL_LIMIT - 1;
 
     //Status of the backup service
     public static final Integer BK_SERVICE_STATUS_NOT_READY = 0;

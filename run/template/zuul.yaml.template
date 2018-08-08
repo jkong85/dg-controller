@@ -21,4 +21,4 @@ spec:
         ports:
         - containerPort: 8889
       nodeSelector:
-        cloud.name: NODE
+        cloud.node: NODE
