@@ -11,6 +11,9 @@ import org.springframework.web.client.RestClientException;
 // By send API request to each deployment's API : /ready
 public class BkServiceCheckDeployReadyThread implements Runnable{
     private static final Logger logger = LogManager.getLogger(BkServiceCheckDeployReadyThread.class);
+
+    private static final Integer PORT_EUREKA_CHECK_SERVICE = 30003;
+    private static final Integer PORT_ZUUL_CHECK_SERVICE = 30004;
     private Thread t;
 
     public BkServiceCheckDeployReadyThread() {
@@ -48,11 +51,13 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
         }
     }
     private boolean isReady(BackupService backupService){
-        // create a test K8S service
-        String k8sServiceName = backupService.selector;
+        String k8sServiceName = "it-is-a-test-service-to-check-deployment-ready-make-it-unique";
         //TODO: lock it???
-        Integer node_port_eureka = ControllerCoreApplication.nodePortsPool.pop();
-        Integer node_port_zuul = node_port_eureka + 1;
+        //Integer node_port_eureka = ControllerCoreApplication.nodePortsPool.pop();
+        //Integer node_port_zuul = node_port_eureka + 1;
+        Integer node_port_eureka = PORT_EUREKA_CHECK_SERVICE;
+        Integer node_port_zuul = PORT_ZUUL_CHECK_SERVICE;
+
         ApiServerCmd apiServerCmd = new ApiServerCmd();
         apiServerCmd.CreateService(k8sServiceName, backupService.selector, node_port_eureka.toString(), node_port_zuul.toString());
         String nodeIP = ControllerCoreApplication.nodeIPMap.get(backupService.node);
@@ -82,7 +87,7 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
                     flag = true;
                     break;
                 } catch (RestClientException re) {
-                    logger.trace("Not ready of deployments of " + url);
+                    logger.info("Not ready of deployments of " + url);
                 }
             }
             if(!flag){

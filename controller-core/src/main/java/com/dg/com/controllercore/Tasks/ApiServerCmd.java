@@ -20,7 +20,7 @@ public class ApiServerCmd {
 
     private String K8SApiServer = "http://172.17.8.101:8080/";
     private String URL_K8S_CREATE_SERVICE =  K8SApiServer + "api/v1/namespaces/default/services";
-    private String URL_K8S_DELETE_SERVICE =  K8SApiServer + "api/v1/namespaces/default/services";
+    private String URL_K8S_DELETE_SERVICE =  K8SApiServer + "api/v1/namespaces/default/services/";
     private String URL_K8S_CREATE_DEPLOYMENT = K8SApiServer + "apis/apps/v1/namespaces/default/deployments";
     private String URL_K8S_GET_PODS_API = K8SApiServer + "api/v1/namespaces/default/pods?limit=500";
     private String URL_K8S_GET_SERVICE_API = K8SApiServer + "api/v1/namespaces/default/services/";

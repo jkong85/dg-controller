@@ -95,7 +95,9 @@ public class ControllerCoreApplication {
         for(int i=30; i>0; i--){
             bkServiceIndexPoolStack.push(i);
         }
-        for(int i=32000; i>30004; i-=2){
+        // 30001, 30002 : controller
+        // 30003, 30004 : BKService test
+        for(int i=32000; i>30010; i-=2){
             nodePortsPool.push(i);
         }
 
