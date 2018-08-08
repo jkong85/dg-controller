@@ -24,13 +24,12 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
     }
     // Keep that there are at least BACK_LIMIT available BackupService for each type on each node
     public void run() {
+        try { Thread.sleep(30000); } catch (InterruptedException ie) { }
         logger.info("Running BkServiceCheckAvailNumberThread to guarantee that a certain number of BackupServices are available!");
         while(true) {
             for(String node : ControllerCoreApplication.NODE_LIST){
                 for(String type : ControllerCoreApplication.IMO_TYPE){
-                    try { Thread.sleep(5000);
-                    } catch (InterruptedException ie) { }
-
+                    try { Thread.sleep(5000); } catch (InterruptedException ie) { }
                     logger.debug("check current bkservice for node : " + node + ", type : " + type);
                     String nodetype = node + "+" + type;
                     if(ControllerCoreApplication.bkServiceNotReadyPoolMap.get(nodetype).isEmpty()) {
@@ -102,13 +101,15 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
     }
 
     private static boolean isAllDeploymentReady(String[] urlList){
+        logger.info("URLs of ready checking are: " + urlList.toString());
         for(String url : urlList){
-            logger.info("ready check URLs are: " + url );
+            logger.info("curr URL of ready checking is : " + url );
             boolean flag = false;
             int i = 5;
             while(i-- > 0){
                 try {
                     Http.httpGet(url);
+                    logger.info("Deployment is ready of URL: " + url);
                     flag = true;
                     break;
                 } catch (RestClientException re) {
