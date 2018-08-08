@@ -96,7 +96,8 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
             return true;
         }
         logger.info("The backup service is Not ready, delete the k8sService test service : " + k8sServiceName);
-        apiServerCmd.deleteService(k8sServiceName, node_port_eureka);
+        String res = apiServerCmd.deleteService(k8sServiceName, node_port_eureka);
+        logger.info(res);
         return false;
     }
 
