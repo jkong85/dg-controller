@@ -78,16 +78,16 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
         String nodeIP = ControllerCoreApplication.nodeIpMap.get(backupService.node);
         logger.info("curr node is: " + backupService.node + " it is ip is: " + nodeIP + " nodeIPmap is : " + ControllerCoreApplication.nodeIpMap.toString());
 
-        String[] urlList = new String[backupService.deploymentsList.size()];
+        String[] urlList = new String[backupService.deploymentsList.size()-2];
         String ipPrefix = "http://" + nodeIP + ":" + node_port_zuul + "/";
         String ipPostfix = "/ready";
         Set<String> basicDeploySet = new HashSet<>();
         basicDeploySet.add("eureka");
         basicDeploySet.add("zuul");
-        for(int i=0; i<urlList.length; i++){
+        for(int i=0,j=0; i<urlList.length; i++){
             String curDeploy = backupService.deploymentsList.get(i).serviceType;
             if(!basicDeploySet.contains(curDeploy)) {
-                urlList[i] = ipPrefix + curDeploy + ipPostfix;
+                urlList[j++] = ipPrefix + curDeploy + ipPostfix;
             }
         }
 
