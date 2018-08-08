@@ -179,7 +179,6 @@ public class ApiServerCmd {
         return new Deployment(deploy_name, node_selector);
     }
 
-
     public String CreateService( String name,
                                  String selector,
                                  String nodePort_eureka,
@@ -203,14 +202,15 @@ public class ApiServerCmd {
                 selector +
                 "\"},\"type\":\"" + "NodePort" + "\"}}";
 
-        logger.debug("Create Service HTTP body: " + body);
+        logger.info("Create Service HTTP body: " + body);
 
         String str = Http.httpPost(urlService, body);
         return str;
     }
 
     public String deleteService(String serviceName, Integer port){
-        logger.debug("delete k8sservice " + serviceName + " with port : " + port);
+        logger.info("delete check service " + serviceName + " with port : " + port);
+        logger.info("delete url is: " + URL_K8S_DELETE_SERVICE + serviceName);
         if(Http.httpDelete(URL_K8S_DELETE_SERVICE + serviceName)){
             ControllerCoreApplication.nodePortsPool.push(port);
         }

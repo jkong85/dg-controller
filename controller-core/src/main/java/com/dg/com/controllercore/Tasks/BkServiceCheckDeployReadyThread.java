@@ -47,7 +47,6 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
             }
         }
     }
-
     private boolean isReady(BackupService backupService){
         // create a test K8S service
         String k8sServiceName = backupService.selector;
@@ -65,10 +64,11 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
         }
 
         if(isAllDeploymentReady(urlList)){
-            logger.trace("delete the k8sService used by ready checking: " + k8sServiceName);
+            logger.info("The backup service is ready, delete the k8sService test service : " + k8sServiceName);
             apiServerCmd.deleteService(k8sServiceName, node_port_eureka);
             return true;
         }
+        apiServerCmd.deleteService(k8sServiceName, node_port_eureka);
         return false;
     }
 
