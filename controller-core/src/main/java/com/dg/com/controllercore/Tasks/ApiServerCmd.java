@@ -50,7 +50,15 @@ public class ApiServerCmd {
         logger.debug("Create an IMO DG: " + service_label);
         BackupService backupService = new BackupService(service_label, type, service_label, node_selector);
 
-        backupService.deploymentsList.add(CreateEurekaDeployment(service_label, "localhost", node_selector));
+        Deployment eurekaDeployment = new Deployment(service_label, node_selector);
+        try {
+            eurekaDeployment = CreateEurekaDeployment(service_label, "localhost", node_selector);
+        }catch (HttpClientErrorException he){
+            logger.warn("Cannot create eureka deployment successfully!");
+            logger.info("Cannot create eureka deployment successfully!");
+            return null;
+        }
+        backupService.deploymentsList.add(eurekaDeployment);
         String eureka_prefix = "eureka";
         String eureka_deploy_name =  service_label + "-" + eureka_prefix;
         // Wait for 2 min
@@ -146,7 +154,7 @@ public class ApiServerCmd {
         return new Deployment(deploy_name, node_selector);
     }
 
-    private Deployment CreateEurekaDeployment(String service_label, String eureka_ip, String node_selector){
+    private Deployment CreateEurekaDeployment(String service_label, String eureka_ip, String node_selector) throws HttpClientErrorException{
         String prefix = "eureka";
         String deploy_name =  service_label + "-" + prefix;
         String container_name = deploy_name;
@@ -243,7 +251,7 @@ public class ApiServerCmd {
                 node_selector +
                 "\"}}}}}";
 
-        logger.trace("Create deployment HTTP body: " + body);
+        logger.info("Create deployment HTTP body: " + body);
         String str = Http.httpPost(urlDeployment, body);
         return str;
     }

@@ -24,7 +24,7 @@ function checkIP()
 
 echo ">>>> clean previous running..."
 #./stop.sh
-rm *.ymal
+rm *.yaml
 rm eureka_server_ip
 
 NODE="core"
