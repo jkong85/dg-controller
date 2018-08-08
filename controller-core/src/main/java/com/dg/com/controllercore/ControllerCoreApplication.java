@@ -22,12 +22,10 @@ public class ControllerCoreApplication {
     public static final String EDGE_NODE_2 = "edge2";
     public static final String[] NODE_LIST = {"core", "edge1", "edge2"};
 
-    public static final Map<String, String>  nodeIPMap = new HashMap<>();
-
     public static final String HONDA = "honda";
     public static final String TOYOTA = "toyota";
     //public static final String[] IMO_TYPE = {"honda", "toyota"};
-    public static final String[] IMO_TYPE = {"honda"};
+    public static String[] IMO_TYPE = {"honda"};
 
     // Normally, we just use one BACKUP_LIMIT
     // I define those two with 1 difference, just for the Demo performance.
@@ -66,10 +64,7 @@ public class ControllerCoreApplication {
         Integer wait = 10;
         while(wait-- > 0) {
             logger.info("Wait for " + wait.toString() + " seconds");
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException ie) {
-            }
+            try { Thread.sleep(1000); } catch (InterruptedException ie) { }
         }
 
         BkServiceCreateThread bkServiceCreateThread = new BkServiceCreateThread();
@@ -78,6 +73,8 @@ public class ControllerCoreApplication {
         BkServiceCheckAvailNumberThread bkServiceCheckAvailNumberThread = new BkServiceCheckAvailNumberThread();
         bkServiceCheckAvailNumberThread.start();
 
+
+        try { Thread.sleep(2000); } catch (InterruptedException ie) { }
         BkServiceCheckDeployReadyThread bkServiceCheckDeployReadyThread = new BkServiceCheckDeployReadyThread();
         bkServiceCheckDeployReadyThread.start();
 

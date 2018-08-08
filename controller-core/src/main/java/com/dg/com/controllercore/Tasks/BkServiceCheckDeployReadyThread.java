@@ -66,7 +66,7 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
             logger.warn("Test service is not existed, ignore it!");
         }
         apiServerCmd.CreateService(k8sServiceName, backupService.selector, node_port_eureka.toString(), node_port_zuul.toString());
-        String nodeIP = ControllerCoreApplication.nodeIPMap.get(backupService.node);
+        String nodeIP = ControllerCoreApplication.nodeIpMap.get(backupService.node);
         String[] urlList = new String[backupService.deploymentsList.size()];
         String ipPrefix = "http://" + nodeIP + ":" + node_port_zuul + "/";
         String ipPostfix = "/ready";
