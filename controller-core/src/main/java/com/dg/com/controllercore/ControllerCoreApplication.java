@@ -58,9 +58,9 @@ public class ControllerCoreApplication {
 
         SpringApplication.run(ControllerCoreApplication.class, args);
 
-        Integer wait = 2;
+        Integer wait = 120;
         while(wait-- > 0) {
-            logger.info("Wait for" + wait.toString() + " seconds");
+            logger.info("Wait for " + wait.toString() + " seconds");
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException ie) {
