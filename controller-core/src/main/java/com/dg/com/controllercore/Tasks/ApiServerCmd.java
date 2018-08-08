@@ -20,6 +20,7 @@ public class ApiServerCmd {
 
     private String K8SApiServer = "http://172.17.8.101:8080/";
     private String URL_K8S_CREATE_SERVICE =  K8SApiServer + "api/v1/namespaces/default/services";
+    private String URL_K8S_DELETE_SERVICE =  K8SApiServer + "api/v1/namespaces/default/services";
     private String URL_K8S_CREATE_DEPLOYMENT = K8SApiServer + "apis/apps/v1/namespaces/default/deployments";
     private String URL_K8S_GET_PODS_API = K8SApiServer + "api/v1/namespaces/default/pods?limit=500";
     private String URL_K8S_GET_SERVICE_API = K8SApiServer + "api/v1/namespaces/default/services/";
@@ -39,12 +40,10 @@ public class ApiServerCmd {
     public ApiServerCmd(){
 
     }
-
     // Backupservice just create all deloyments with label selector, without encapsulated by K8s service
-    // Label name:  DG-<node>-<type>-<index> ==> DG-core-honda-1
-    // start Eureka, Zuul, and microservices of IMOs
+    // Label name:  dg-<node>-<type>-<index> ==> dg-core-honda-1
     public BackupService createBackupService(BackupServiceRequest request, Integer index, Integer port_eureka, Integer port_zuul){
-        String service_label = "DG-" + request.node + "-" + request.type + "-" + index.toString();
+        String service_label = "dg-" + request.node + "-" + request.type + "-" + index.toString();
         return createBackupServiceDeployments(service_label, request.node, request.type);
     }
     public BackupService createBackupServiceDeployments(String service_label, String node_selector, String type){
@@ -201,6 +200,15 @@ public class ApiServerCmd {
         String str = Http.httpPost(urlService, body);
         return str;
     }
+
+    public String deleteService(String serviceName, Integer port){
+        if(Http.httpDelete(URL_K8S_DELETE_SERVICE + serviceName)){
+            ControllerCoreApplication.nodePortsPool.push(port);
+        }
+        return "Delete service successfully!";
+    }
+
+
     public String CreateDeployment( String deploy_name,
                                     String service_label,
                                     String container_name,

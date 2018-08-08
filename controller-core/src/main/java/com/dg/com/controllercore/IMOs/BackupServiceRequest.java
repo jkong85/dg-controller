@@ -10,4 +10,8 @@ public class BackupServiceRequest {
         this.node = node;
         this.type = type;
     }
+
+    public String toString(){
+        return "| BackupServiceRequest: " + node + type + " | ";
+    }
 }

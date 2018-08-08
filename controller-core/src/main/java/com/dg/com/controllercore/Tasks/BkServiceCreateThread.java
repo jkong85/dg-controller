@@ -6,15 +6,15 @@ import com.dg.com.controllercore.IMOs.BackupServiceRequest;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-public class BackupServiceMaintainThread implements Runnable{
-    private static final Logger logger = LogManager.getLogger(ControllerCoreApplication.class);
+public class BkServiceCreateThread implements Runnable{
+    private static final Logger logger = LogManager.getLogger(BkServiceCreateThread.class);
     private Thread t;
 
-    public BackupServiceMaintainThread() {
+    public BkServiceCreateThread() {
     }
 
     public void run() {
-        logger.info("Running backup service maintain thread");
+        logger.info("Running BkServiceCreateThread to create all deployments for a new BackupService ");
         ApiServerCmd apiServerCmd = new ApiServerCmd();
         while(true) {
             // synchronize
@@ -24,14 +24,20 @@ public class BackupServiceMaintainThread implements Runnable{
                 String node = request.node;
                 String type = request.type;
                 Integer port_eureka = ControllerCoreApplication.nodePortsPool.pop();
+                //e.g. eureak_port is allocted to 30006, then zuul_port is 30007
                 Integer port_zuul = port_eureka + 1;
                 BackupService backupService = apiServerCmd.createBackupService(request, index, port_eureka, port_zuul);
                 if(backupService != null){
-                    ControllerCoreApplication.bkServiceNotReadyPoolMap.get(node).get(type).push(backupService);
+                    ControllerCoreApplication.bkServiceNotReadyPoolMap.get(node+"+"+type).add(backupService);
                 }else{
+                    logger.warn("New backupservice is not created successfully, rollback by releasing port number and putting it back to bkServiceRequestQueue");
+                    logger.debug("Before rollback, bkServiceIndexPoolStack is: " + ControllerCoreApplication.bkServiceIndexPoolStack.toString());
+                    logger.debug("Before rollback, bkServiceRequestQueue is: " + ControllerCoreApplication.bkServiceRequestQueue.toString());
                     // restore all things
                     ControllerCoreApplication.bkServiceIndexPoolStack.push(index);
                     ControllerCoreApplication.bkServiceRequestQueue.offer(request);
+                    logger.debug("After rollback, bkServiceIndexPoolStack is: " + ControllerCoreApplication.bkServiceIndexPoolStack.toString());
+                    logger.debug("After rollback, bkServiceRequestQueue is: " + ControllerCoreApplication.bkServiceRequestQueue.toString());
                 }
             }
             try {

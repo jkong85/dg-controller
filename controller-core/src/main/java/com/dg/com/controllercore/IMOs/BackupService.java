@@ -25,4 +25,7 @@ public class BackupService {
         this.status = ControllerCoreApplication.BK_SERVICE_STATUS_NOT_READY;
         deploymentsList = new ArrayList<>();
     }
+    public String toString(){
+        return "Backup Service with name: " + name + ", type: " + type + ", selector: " + selector + ", node: " + node + ", status: " + status;
+    }
 }

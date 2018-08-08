@@ -10,8 +10,8 @@ import org.springframework.web.client.RestTemplate;
 
 public class Http {
     public Http(){
-
     }
+
     public static String httpPost(String url, MultiValueMap<String, Object> paraMap, int cnt){
         RestTemplate template = new RestTemplate();
         boolean retry = true;
@@ -45,7 +45,6 @@ public class Http {
 
         //ResponseEntity<String> response = restTemplate.getForEntity(urlService, String.class);
         //return response.getBody();
-
     }
 
     public static boolean httpDelete(String urlService) throws HttpClientErrorException {

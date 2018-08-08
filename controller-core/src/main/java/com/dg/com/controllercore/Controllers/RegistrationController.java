@@ -40,15 +40,17 @@ public class RegistrationController {
         // for core cloud node
         String coreNode = ControllerCoreApplication.CORE_NODE;
         String coreServiceName = name + "-" + coreNode;
-        if(ControllerCoreApplication.bkServiceReadyPoolMap.get(coreNode).get(type).isEmpty()){
+        String coreNodeType = coreNode + "+" + type;
+        if(ControllerCoreApplication.bkServiceReadyPoolMap.get(coreNodeType).isEmpty()){
             logger.debug("No available DG on core cloud, just wait!");
             return "No available DG on core cloud, wait!";
         }
-        BackupService coreBackupService = ControllerCoreApplication.bkServiceReadyPoolMap.get(coreNode).get(type).pop();
-        if(coreBackupService == null){
+        if(ControllerCoreApplication.bkServiceReadyPoolMap.get(coreNodeType).isEmpty()){
             logger.debug("No available DG on core cloud, just wait!");
             return "No available DG on core cloud, wait!";
         }
+        BackupService coreBackupService = ControllerCoreApplication.bkServiceReadyPoolMap.get(coreNodeType).get(0);
+
         Integer core_node_port_eureka = ControllerCoreApplication.nodePortsPool.pop();
         Integer core_node_port_zuul = core_node_port_eureka + 1;
         apiServerCmd.CreateService(name, coreBackupService.selector, core_node_port_eureka.toString(), core_node_port_zuul.toString());
@@ -60,11 +62,13 @@ public class RegistrationController {
 
         // for Edge cloud node
         String edgeNode = getNodeByLocation(location);
+        String edgeNodeType = edgeNode + "+" + type;
         // Get the backupservce from ready pool
-        BackupService edgeBackupService = ControllerCoreApplication.bkServiceReadyPoolMap.get(edgeNode).get(type).pop();
-        if(edgeBackupService == null){
-            return "No available DGs on edge cloud node, wait!";
+        if(ControllerCoreApplication.bkServiceReadyPoolMap.get(edgeNodeType).isEmpty()){
+            logger.debug("No available DG on edge cloud: " + edgeNode +  ", just wait!");
+            return "No available DG on core cloud, wait!";
         }
+        BackupService edgeBackupService = ControllerCoreApplication.bkServiceReadyPoolMap.get(edgeNodeType).get(0);
 
         String edgeServiceName = name + "-" + edgeNode;
         Integer edge_node_port_eureka = ControllerCoreApplication.nodePortsPool.pop();
