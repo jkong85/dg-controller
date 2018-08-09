@@ -31,6 +31,7 @@ public class RegistrationController {
         if(ControllerCoreApplication.IMOMap.containsKey(name)){
             //TODO: return IP address directly
             logger.warn(name + " is already registered!");
+            //TODO: change the return with Status Code
             return "It is already registered!";
         }
 
@@ -51,19 +52,19 @@ public class RegistrationController {
             return "No available DG on core cloud, wait!";
         }
         BackupService coreBackupService = ControllerCoreApplication.bkServiceReadyPoolMap.get(coreNodeType).get(0);
-        logger.debug(" Find the BackupService on node : " + coreNode + " for request: " + name + " => " + coreBackupService.toString());
+        logger.debug("Find the BackupService on node : " + coreNode + " for request: " + name + " => " + coreBackupService.toString());
 
         Integer core_node_port_eureka = ControllerCoreApplication.nodePortsPool.pop();
         Integer core_node_port_zuul = core_node_port_eureka + 1;
 
-        apiServerCmd.CreateService(name, coreBackupService.selector, core_node_port_eureka.toString(), core_node_port_zuul.toString());
+        apiServerCmd.CreateService(coreServiceName, coreBackupService.selector, core_node_port_eureka.toString(), core_node_port_zuul.toString());
 
         String coreIP = ControllerCoreApplication.nodeIpMap.get(coreNode);
         DG coreDG = new DG(coreServiceName, type, coreNode, coreIP, core_node_port_zuul.toString(), coreBackupService);
-        logger.info("New DG is allocated for " + name + " on node: " + coreNode + " => " + coreDG.toString());
         curIMO.dgList.add(coreDG);
-
         ControllerCoreApplication.IMOMap.put(name, curIMO);
+        logger.info("New DG is allocated for " + name + " on node: " + coreNode + " => " + coreDG.toString());
+
 
         // for Edge cloud node
         String edgeNode = getNodeByLocation(location);
@@ -79,12 +80,15 @@ public class RegistrationController {
         String edgeServiceName = name + "-" + edgeNode;
         Integer edge_node_port_eureka = ControllerCoreApplication.nodePortsPool.pop();
         Integer edge_node_port_zuul = edge_node_port_eureka + 1;
-        apiServerCmd.CreateService(name, edgeBackupService.selector, edge_node_port_eureka.toString(), edge_node_port_zuul.toString());
         String edgeIP = ControllerCoreApplication.nodeIpMap.get(edgeNode);
-        DG edgeDG = new DG(edgeServiceName, type, edgeNode, edgeIP, edge_node_port_zuul.toString(), edgeBackupService);
-        logger.info("New DG is allocated for " + name + " on node: " + edgeNode + " => " + edgeDG.toString());
-        ControllerCoreApplication.IMOMap.get(name).dgList.add(edgeDG);
 
+        apiServerCmd.CreateService(edgeServiceName, edgeBackupService.selector, edge_node_port_eureka.toString(), edge_node_port_zuul.toString());
+
+        DG edgeDG = new DG(edgeServiceName, type, edgeNode, edgeIP, edge_node_port_zuul.toString(), edgeBackupService);
+        ControllerCoreApplication.IMOMap.get(name).dgList.add(edgeDG);
+        logger.info("New DG is allocated for " + name + " on node: " + edgeNode + " => " + edgeDG.toString());
+
+        //TODO: change the return with Status Code
         return "Register successfully!";
     }
     private DG createDG(String dgName, String type, String node){
