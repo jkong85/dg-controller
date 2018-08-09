@@ -120,7 +120,7 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
                     logger.info("Deployment is ready of URL: " + url);
                     flag = true;
                     break;
-                } catch (HttpClientErrorException re) {
+                } catch (RestClientException re) {
                     logger.info("Deployment is Not ready! ");
                 }
             }

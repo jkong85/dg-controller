@@ -32,7 +32,7 @@ public class Http {
         return result;
     }
 
-    public static String httpGet(String urlService) throws HttpClientErrorException{
+    public static String httpGet(String urlService) throws RestClientException{
         String accessToken = "/var/run/secrets/kubernetes.io/serviceaccount/token";
 
         HttpHeaders headers = new HttpHeaders();
