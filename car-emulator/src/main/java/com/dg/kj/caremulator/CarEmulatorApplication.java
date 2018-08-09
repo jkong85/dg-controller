@@ -12,7 +12,8 @@ import java.util.List;
 
 @SpringBootApplication
 public class CarEmulatorApplication {
-    private static String registerURL = "http://172.17.8.101:30002/test/register";
+    //private static String registerURL = "http://172.17.8.101:30002/test/register";
+    private static String registerURL = "http://172.17.8.101:30002/core/registration";
     public static String HONDA = "honda";
     public static String TOYOTA = "toyota";
 

@@ -31,7 +31,6 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
                 for(String type : ControllerCoreApplication.IMO_TYPE){
                     Integer cnt = 5;
                     while(cnt-- > 0) {
-                        logger.info(" wait for " + cnt + " seconds");
                         try { Thread.sleep(1000); } catch (InterruptedException ie) { }
                     }
                     logger.debug("check current bkservice for node : " + node + ", type : " + type);

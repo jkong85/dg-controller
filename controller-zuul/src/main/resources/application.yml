@@ -5,6 +5,9 @@ server:
   port: "8889"
 zuul:
   routes:
+    core:
+      path: /core/**
+      serviceId: controller-core
     test:
       path: /test/**
       serviceId: controller-test
