@@ -5,6 +5,8 @@ import com.dg.com.controllercore.IMOs.BackupService;
 import com.dg.com.controllercore.IMOs.DG;
 import com.dg.com.controllercore.IMOs.IMO;
 import com.dg.com.controllercore.Tasks.ApiServerCmd;
+import com.dg.com.controllercore.Tasks.DgCmds;
+import com.dg.com.controllercore.Tasks.IMOBehavior;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +26,58 @@ public class RegistrationController {
 
     @RequestMapping(value = "/registration")
     public String register(@RequestParam String name,
+                           @RequestParam String type,
+                           @RequestParam String location) {
+        logger.info("Receive the registration request=>name: " + name + ", type: " + type + ", location: " + location);
+        // register on core cloud node
+        if(ControllerCoreApplication.IMOMap.containsKey(name)){
+            //TODO: return IP address directly
+            logger.warn(name + " is already registered!");
+            //TODO: change the return with Status Code
+            return "It is already registered!";
+        }
+
+        ApiServerCmd apiServerCmd = new ApiServerCmd();
+        IMO curIMO = new IMO(name, type);
+
+        // for core cloud node
+        String coreNode = ControllerCoreApplication.CORE_NODE;
+        String coreServiceName = name + "-" + coreNode;
+        DG coreDG = DgCmds.createDGQuick(coreServiceName, curIMO, type, coreNode);
+        if(coreDG == null){
+            //TODO: check the logic here
+            logger.warn("Failed to allocate DG for IMO: " + curIMO.toString() + " on node " + coreNode + "! Try createDGSlow way!");
+            DgCmds.createDGSlow(coreServiceName, curIMO, type, coreNode);
+        }
+        curIMO.dgList.add(coreDG);
+        logger.info("New DG is allocated for " + name + " on node: " + coreNode + " => " + coreDG.toString());
+
+        // for Edge cloud node
+        String edgeNode = IMOBehavior.getNodeByLocation(location);
+        String edgeServiceName = name + "-" + edgeNode;
+        DG edgeDG =  DgCmds.createDGQuick(edgeServiceName, curIMO, type, edgeNode);
+        if(edgeDG == null){
+            //TODO: check the logic here
+            logger.warn("Failed to allocate DG for IMO: " + curIMO.toString() + " on node " + edgeNode + "! Try createDGSlow way!");
+            DgCmds.createDGSlow(edgeServiceName, curIMO, type, edgeNode);
+        }
+        ControllerCoreApplication.IMOMap.get(name).dgList.add(edgeDG);
+        logger.info("New DG is allocated for " + name + " on node: " + edgeNode + " => " + edgeDG.toString());
+
+        // Finally, register to the controller
+        if(coreDG != null && edgeDG != null) {
+            ControllerCoreApplication.IMOMap.put(name, curIMO);
+            logger.info("Successfully register DGs for IMO: " + curIMO.toString());
+        }else{
+            logger.warn("Failed to register DGs for IMO: " + curIMO.toString());
+        }
+
+        //TODO: change the return with Status Code
+        return "Register successfully!";
+    }
+    //depracated
+    @RequestMapping(value = "/registrationold")
+    public String registerold(@RequestParam String name,
                            @RequestParam String type,
                            @RequestParam String location) {
         logger.info("Receive the registration request=>name: " + name + ", type: " + type + ", location: " + location);
@@ -67,7 +121,7 @@ public class RegistrationController {
 
 
         // for Edge cloud node
-        String edgeNode = getNodeByLocation(location);
+        String edgeNode = IMOBehavior.getNodeByLocation(location);
         String edgeNodeType = edgeNode + "+" + type;
         // Get the backupservce from ready pool
         if(ControllerCoreApplication.bkServiceReadyPoolMap.get(edgeNodeType).isEmpty()){
@@ -75,7 +129,7 @@ public class RegistrationController {
             return "No available DG on core cloud, wait!";
         }
         BackupService edgeBackupService = ControllerCoreApplication.bkServiceReadyPoolMap.get(edgeNodeType).get(0);
-        logger.debug(" Find the BackupService on node : " + edgeNode + " for request: " + name + " => " + coreBackupService.toString());
+        logger.debug("Find the BackupService on node : " + edgeNode + " for request: " + name + " => " + edgeBackupService.toString());
 
         String edgeServiceName = name + "-" + edgeNode;
         Integer edge_node_port_eureka = ControllerCoreApplication.nodePortsPool.pop();
@@ -91,36 +145,4 @@ public class RegistrationController {
         //TODO: change the return with Status Code
         return "Register successfully!";
     }
-    private DG createDG(String dgName, String type, String node){
-        String nodeType = node + "+" + type;
-        if(ControllerCoreApplication.bkServiceReadyPoolMap.get(nodeType).isEmpty()){
-            logger.debug("No available DG on core cloud, just wait!");
-            return null;
-        }
-        if(ControllerCoreApplication.bkServiceReadyPoolMap.get(nodeType).isEmpty()){
-            logger.debug("No available DG on core cloud, just wait!");
-            return null;
-        }
-        BackupService backupService = ControllerCoreApplication.bkServiceReadyPoolMap.get(nodeType).get(0);
-        backupService.status = ControllerCoreApplication.BK_SERVICE_STATUS_USED;
-
-        Integer node_port_eureka = ControllerCoreApplication.nodePortsPool.pop();
-        Integer node_port_zuul = node_port_eureka + 1;
-
-        ApiServerCmd apiServerCmd = new ApiServerCmd();
-        apiServerCmd.CreateService(dgName, backupService.selector, node_port_eureka.toString(), node_port_zuul.toString());
-
-        String coreIP = ControllerCoreApplication.nodeIpMap.get(node);
-
-        DG dg = new DG(dgName, type, node, coreIP, node_port_zuul.toString(), backupService);
-        logger.info("New DG is allocated for " + dgName+ " on node: " + node+ " => " + dg.toString());
-        return dg;
-    }
-
-    private String getNodeByLocation(String location){
-         if(Integer.valueOf(location) < 60) {
-            return ControllerCoreApplication.EDGE_NODE_1;
-        }else return ControllerCoreApplication.EDGE_NODE_2;
-    }
-
 }

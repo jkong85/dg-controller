@@ -15,4 +15,8 @@ public class IMO {
         this.type = type;
         dgList = new ArrayList<>();
     }
+    //TODO: print more information
+    public String toString(){
+        return "IMO(name:" + name + ", type:" + type;
+    }
 }
