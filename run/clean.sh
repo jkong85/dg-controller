@@ -2,6 +2,8 @@
 
 #set -x
 
+clear
+
 echo " rm DGs"
 ./rmDGs.sh dg-core-honda-1 dg-edge1-honda-2 dg-edge2-honda-3
 
