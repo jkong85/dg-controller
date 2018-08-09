@@ -1,6 +1,6 @@
 #!/bin/sh
 
-set -x
+#set -x
 
 echo " rm DGs"
 ./rmDGs.sh dg-core-honda-1 dg-edge1-honda-2 dg-edge2-honda-3
@@ -8,6 +8,9 @@ echo " rm DGs"
 echo "stop controller"
 
 sudo ./stop.sh
+
+sudo kubectl delete dvc honda1-core
+sudo kubectl delete dvc honda1-edge1
 
 
 ./checkDGs.sh

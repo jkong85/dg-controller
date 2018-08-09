@@ -33,7 +33,6 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
                 for(String type : ControllerCoreApplication.IMO_TYPE){
                     Integer cnt = 0;
                     while(cnt-- > 0) { try { Thread.sleep(1000); } catch (InterruptedException ie) { } }
-
                     logger.trace("check current bkservice for node : " + node + ", type : " + type);
                     String nodetype = node + "+" + type;
                     if(ControllerCoreApplication.bkServiceNotReadyPoolMap.get(nodetype).isEmpty()) {
@@ -42,7 +41,7 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
                     //The new not ready bkservice is put at the end of list, so here we check the head of the list firstly
                     BackupService backupService = ControllerCoreApplication.bkServiceNotReadyPoolMap.get(nodetype).get(0);
                     if(isReady(backupService)){
-                        logger.debug("The new BackupService : " + backupService.toString() + " is ready now!");
+                        logger.debug("New BackupService is READY ! => " + backupService.toString());
                         logger.debug("Before moving the new bkService,  bkServiceNotReadyPoolMap of " + nodetype + " is: " + ControllerCoreApplication.bkServiceNotReadyPoolMap.get(nodetype).toString());
                         logger.debug("Before moving the new bkService,  bkServiceReadyPoolMap of " + nodetype + " is: " + ControllerCoreApplication.bkServiceReadyPoolMap.get(nodetype).toString());
                         //TODO: lock here?

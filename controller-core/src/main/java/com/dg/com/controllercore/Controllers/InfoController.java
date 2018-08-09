@@ -23,14 +23,13 @@ public class InfoController {
                            @RequestParam String type,
                            @RequestParam String location) {
         logger.debug("/information request => name:" + name + ", type:" + type + ", location:" + location );
-        StringBuilder sb = new StringBuilder();
-        for(DG dg : ControllerCoreApplication.IMOMap.get(name).dgList){
-            sb.append(dg.nodeIP);
-            sb.append(":");
-            sb.append(dg.nodePort);
+        if(ControllerCoreApplication.IMOMap == null || !ControllerCoreApplication.IMOMap.containsKey(name)){
+            logger.warn("IMO : " + name + " do NOT existed!");
+            return null;
         }
-        logger.debug("/information for (name:" + name + ", type:" + type + ", location:" + location + ") is: " + sb.toString());
-        return sb.toString();
+        String imoInfo = ControllerCoreApplication.IMOMap.get(name).getAllDGIpPort().toString();
+        logger.debug("/information for (name:" + name + ", type:" + type + ", location:" + location + ") is: " + imoInfo.toString());
+        return imoInfo;
     }
 
 }
