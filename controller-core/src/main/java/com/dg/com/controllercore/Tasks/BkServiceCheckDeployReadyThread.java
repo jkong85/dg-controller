@@ -62,7 +62,7 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
         }
     }
     private boolean isReady(BackupService backupService){
-        logger.info("Check the BackupService ready: " + backupService.toString());
+        logger.debug("Check the BackupService ready: " + backupService.toString());
         String k8sServiceName = "ready-test-service";
         //Integer node_port_eureka = ControllerCoreApplication.nodePortsPool.pop();
         //Integer node_port_zuul = node_port_eureka + 1;
@@ -70,10 +70,10 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
         Integer node_port_zuul = PORT_ZUUL_CHECK_SERVICE;
         ApiServerCmd apiServerCmd = new ApiServerCmd();
         try {
-            logger.info("try to delete the test service if existed!");
+            logger.debug("Before ready-check, delete the test service if existed!");
             apiServerCmd.deleteService(k8sServiceName, node_port_eureka);
         }catch (HttpClientErrorException e){
-            logger.warn("Test service is not existed, ignore it!");
+            logger.debug("Test service is not existed, ignore it!");
         }
         apiServerCmd.CreateService(k8sServiceName, backupService.selector, node_port_eureka.toString(), node_port_zuul.toString());
         // wait some time
@@ -97,13 +97,15 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
             }
         }
         if(isAllDeploymentReady(urlList)){
-            logger.info("The backup service is ready, delete the k8sService test service : " + k8sServiceName);
+            logger.info("BackupService: " + backupService.name + " is ready!");
+            logger.debug("Delete the k8sService test service : " + k8sServiceName);
             apiServerCmd.deleteService(k8sServiceName, node_port_eureka);
             return true;
         }
-        logger.info("The backup service is Not ready, delete the k8sService test service : " + k8sServiceName);
+        logger.info("BackupService: " + backupService.name + " is NOT ready!");
+        logger.debug("Delete the k8sService test service : " + k8sServiceName);
         String res = apiServerCmd.deleteService(k8sServiceName, node_port_eureka);
-        logger.info(res);
+        logger.debug("Response from delete: " + res);
         try { Thread.sleep(5000); } catch (InterruptedException ie) { }
         return false;
     }
@@ -112,27 +114,27 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
         for(int m=0; m<urlList.length; m++){
             String url = urlList[m];
             if(url != null && url.length() > 1) {
-                logger.info("curr URL of ready checking is : " + url);
+                logger.debug("curr URL of ready checking is : " + url);
                 boolean flag = false;
                 int i = 5;
                 while (i-- > 0) {
                     try {
                         Http.httpGet(url);
-                        logger.info("Deployment is ready of URL: " + url);
+                        logger.debug("Deployment is ready of URL: " + url);
                         flag = true;
                         break;
                     } catch (RestClientException re) {
-                        logger.info("Deployment is Not ready of URL:  " + url);
+                        logger.debug("Deployment is Not ready of URL:  " + url);
                     }
                 }
                 if (!flag) {
                     return false;
                 }
             }else{
-                logger.info("cur URL of ready checking is Null, continue");
+                logger.debug("cur URL of ready checking is Null, continue");
             }
         }
-        logger.info("All deployment is ready! ");
+        logger.info("All deployments of one Backupservice is ready! ");
         return true;
     }
 

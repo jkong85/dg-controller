@@ -64,7 +64,7 @@ public class ControllerCoreApplication {
 
         Integer wait = 10;
         while(wait-- > 0) {
-            logger.info("Wait for " + wait.toString() + " seconds");
+            logger.trace("Wait for " + wait.toString() + " seconds");
             try { Thread.sleep(1000); } catch (InterruptedException ie) { }
         }
 
@@ -81,7 +81,7 @@ public class ControllerCoreApplication {
 
     }
     private static void Initialize(){
-        logger.debug("Start initialize ...");
+        logger.info("Start initialize ...");
         bkServiceRequestQueue = new LinkedList<>();
         bkServiceIndexPoolStack = new Stack<>();
         bkServiceReadyPoolMap = new HashMap<>();

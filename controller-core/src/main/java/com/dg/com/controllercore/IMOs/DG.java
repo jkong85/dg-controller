@@ -25,4 +25,7 @@ public class DG {
         this.nodePort = nodePort;
         this.bkService = bkService;
     }
+    public String toString(){
+        return "DG=>name: " + name + ", type: " + type + ", node: " + node + ", nodeIP: " + nodeIP + ", nodePort: " + nodePort + " BackService: " + bkService.toString();
+    }
 }

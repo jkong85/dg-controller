@@ -47,7 +47,7 @@ public class ApiServerCmd {
         return createBackupServiceDeployments(service_label, request.node, request.type);
     }
     public BackupService createBackupServiceDeployments(String service_label, String node_selector, String type){
-        logger.info("Create an backupService and its deployments: " + service_label);
+        logger.debug("Create an backupService and its deployments: " + service_label);
         BackupService backupService = new BackupService(service_label, type, service_label, node_selector);
 
         Deployment eurekaDeployment = new Deployment();
@@ -204,14 +204,14 @@ public class ApiServerCmd {
                 selector +
                 "\"},\"type\":\"" + "NodePort" + "\"}}";
 
-        logger.info("Create Service HTTP body: " + body);
+        logger.debug("Create Service HTTP body: " + body);
 
         String str = Http.httpPost(urlService, body);
         return str;
     }
 
     public String deleteService(String serviceName, Integer port) throws  HttpClientErrorException {
-        logger.info("delete check service " + serviceName + " with port : " + port + ", URL: " + URL_K8S_DELETE_SERVICE + serviceName);
+        logger.debug("Delete k8s service " + serviceName + " with port : " + port + ", URL: " + URL_K8S_DELETE_SERVICE + serviceName);
         if(Http.httpDelete(URL_K8S_DELETE_SERVICE + serviceName)){
             ControllerCoreApplication.nodePortsPool.push(port);
         }
