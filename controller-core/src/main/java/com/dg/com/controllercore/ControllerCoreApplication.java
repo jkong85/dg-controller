@@ -20,8 +20,8 @@ public class ControllerCoreApplication {
     public static final String CORE_NODE = "core";
     public static final String EDGE_NODE_1 = "edge1";
     public static final String EDGE_NODE_2 = "edge2";
-    //public static final String[] NODE_LIST = {"core", "edge1", "edge2"};
-    public static final String[] NODE_LIST = {"core"};
+    //public static final String[] NODE_LIST = {"core"};
+    public static final String[] NODE_LIST = {"core", "edge1", "edge2"};
 
     public static final String HONDA = "honda";
     public static final String TOYOTA = "toyota";
