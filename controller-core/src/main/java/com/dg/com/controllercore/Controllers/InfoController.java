@@ -19,15 +19,15 @@ public class InfoController {
     private LogController logController;
 
     @RequestMapping(value = "/information")
-    public String register(@RequestParam String name,
+    public String info(@RequestParam String name,
                            @RequestParam String type,
                            @RequestParam String location) {
         logger.debug("/information request => name:" + name + ", type:" + type + ", location:" + location );
-        if(ControllerCoreApplication.IMOMap == null || !ControllerCoreApplication.IMOMap.containsKey(name)){
+        if(controllerCoreApplication.IMOMap == null || !controllerCoreApplication.IMOMap.containsKey(name)){
             logger.warn("IMO : " + name + " do NOT existed!");
             return null;
         }
-        String imoInfo = ControllerCoreApplication.IMOMap.get(name).getAllDGIpPort().toString();
+        String imoInfo = controllerCoreApplication.IMOMap.get(name).getAllDGIpPort().toString();
         logger.debug("/information for (name:" + name + ", type:" + type + ", location:" + location + ") is: " + imoInfo.toString());
         return imoInfo;
     }
