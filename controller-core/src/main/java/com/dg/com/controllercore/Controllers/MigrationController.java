@@ -58,7 +58,8 @@ public class MigrationController {
             return "Migrate failed (Reason: mongoDB migration failed !";
         }
 
-        //Step 3: Destroy the old one (release the BackupService, clean the MongoDB)
+        //Step 3: Destroy the old one (release the BackupService, put the BackupServiceclean the MongoDB)
+
         if(!DgCmds.releaseDG(imo, srcDG, true)){
             logger.error("Failed to release old DG " + srcDG.toString());
             return "Failed to release old DG" + srcDG.toString();

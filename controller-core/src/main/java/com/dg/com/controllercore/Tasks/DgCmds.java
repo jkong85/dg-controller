@@ -51,13 +51,21 @@ public class DgCmds {
         return null;
     }
 
+    // The following steps:
+    //  1. delete service.
+    //  2, put port_eureka(zuul) to PortPool.
+    //  3, Clean MongoDB data
+    //  4. Reset internal data structure value in each Microservices of the DG
+    //  5. put Backupservice to ReadyPool.
+    //  6. remove dg from IMO dglist
     public static boolean releaseDG(IMO imo, DG dg, Boolean flag){
         //public String deleteService(String serviceName, Integer port, Boolean portRealease) throws  HttpClientErrorException {
-        logger.trace("Before release DG: " + dg.name + ", IMO is " + imo.toString());
         String serviceName = dg.name;
         Integer port = Integer.valueOf(dg.nodePort);
         ApiServerCmd apiServerCmd = new ApiServerCmd();
 
+        logger.debug("Release DG:" + dg.toString());
+        logger.debug("Release DG Step 1: delete service and Step 2 put port back");
         boolean suc = false;
         for(int cnt = 0; cnt < 5; cnt++){
             try {
@@ -71,10 +79,23 @@ public class DgCmds {
             logger.error("Failed to release DG after trying 5 times !");
             return false;
         }
-        // clean the MongoDB database
 
+        //TODO: change all node + "+" + type to function call
+        logger.debug("Release DG Step 3: put backservice to Readypool");
+        String nodeType = dg.node + "+" + dg.type;
+        logger.trace("Before release DG,  bkServiceReadyPoolMap of " + nodeType + " is: " + ControllerCoreApplication.bkServiceReadyPoolMap.get(nodeType).toString());
+        ControllerCoreApplication.bkServiceReadyPoolMap.get(nodeType).add(dg.bkService);
+        dg.bkService = null;
+        logger.trace("After release DG,  bkServiceReadyPoolMap of " + nodeType + " is: " + ControllerCoreApplication.bkServiceReadyPoolMap.get(nodeType).toString());
+
+        // TODO: clean the MongoDB database
+        logger.debug("Release DG Step 4: cleanMongoDB");
+        // cleanMongoDB()
+
+        logger.debug("Release DG Step 5: remove DG from DGlist");
+        logger.trace("Before release DG: " + dg.name + ", IMO is " + imo.toString());
         imo.dgList.remove(dg);
-        logger.trace("After release DG: " + dg.name + ", IMO is " + imo.toString());
+        logger.debug("After release DG: " + dg.name + ", IMO is " + imo.toString());
         return true;
     }
 }

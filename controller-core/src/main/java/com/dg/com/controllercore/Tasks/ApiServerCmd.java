@@ -216,7 +216,7 @@ public class ApiServerCmd {
         if(Http.httpDelete(URL_K8S_DELETE_SERVICE + serviceName)){
             logger.debug("Successfully delete k8s service " + serviceName + " with port : " + port + ", URL: " + URL_K8S_DELETE_SERVICE + serviceName);
             if(portRealease) {
-                logger.debug("Port " + port + "is putback to nodePortPool: ");
+                logger.debug("Port " + port + " is putback to nodePortPool: ");
                 logger.trace("nodePortPool: " + ControllerCoreApplication.nodePortsPool.toString());
                 ControllerCoreApplication.nodePortsPool.push(port);
             }else{
