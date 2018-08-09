@@ -29,7 +29,11 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
         while(true) {
             for(String node : ControllerCoreApplication.NODE_LIST){
                 for(String type : ControllerCoreApplication.IMO_TYPE){
-                    try { Thread.sleep(5000); } catch (InterruptedException ie) { }
+                    Integer cnt = 120;
+                    while(cnt-- > 0) {
+                        logger.info(" wait for " + cnt + " seconds");
+                        try { Thread.sleep(1000); } catch (InterruptedException ie) { }
+                    }
                     logger.debug("check current bkservice for node : " + node + ", type : " + type);
                     String nodetype = node + "+" + type;
                     if(ControllerCoreApplication.bkServiceNotReadyPoolMap.get(nodetype).isEmpty()) {
@@ -54,6 +58,7 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
                         BackupService tmpBkService = ControllerCoreApplication.bkServiceNotReadyPoolMap.get(nodetype).remove(0);
                         ControllerCoreApplication.bkServiceNotReadyPoolMap.get(nodetype).add(tmpBkService);
                     }
+                    try { Thread.sleep(600000); } catch (InterruptedException ie) { }
                 }
             }
         }
@@ -75,7 +80,7 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
         apiServerCmd.CreateService(k8sServiceName, backupService.selector, node_port_eureka.toString(), node_port_zuul.toString());
 
         String nodeIP = ControllerCoreApplication.nodeIpMap.get(backupService.node);
-        logger.info("curr node is: " + backupService.node + " it is ip is: " + nodeIP + " nodeIPmap is : " + ControllerCoreApplication.nodeIpMap.toString());
+        logger.info("curr node is: " + backupService.node + " it is ip is: " + nodeIP );
 
         String[] urlList = new String[backupService.deploymentsList.size()-2];
         String ipPrefix = "http://" + nodeIP + ":" + node_port_zuul + "/";
