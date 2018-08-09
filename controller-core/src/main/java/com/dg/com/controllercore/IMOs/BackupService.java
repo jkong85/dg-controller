@@ -27,6 +27,9 @@ public class BackupService {
     }
     public String toString(){
         String result = "Backup Service with name: " + name + ", type: " + type + ", selector: " + selector + ", node: " + node + ", status: " + status;
+        if(deploymentsList.size() == 0){
+            result += ", NO deployment!!";
+        }
         for(Deployment deploy : deploymentsList){
             result += ", deploy name: "  + deploy.serviceType;
         }

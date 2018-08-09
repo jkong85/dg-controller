@@ -44,6 +44,6 @@ public class IMO {
 
     //TODO: print more information
     public String toString() {
-        return "IMO(name:" + name + ", type:" + type;
+        return "IMO(name:" + name + ", type:" + type + "... should add more)";
     }
 }

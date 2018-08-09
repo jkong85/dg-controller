@@ -26,6 +26,12 @@ public class DG {
         this.bkService = bkService;
     }
     public String toString(){
-        return "DG=>name: " + name + ", type: " + type + ", node: " + node + ", nodeIP: " + nodeIP + ", nodePort: " + nodePort + " BackService: " + bkService.toString();
+        String result = "DG=>name: " + name + ", type: " + type + ", node: " + node + ", nodeIP: " + nodeIP + ", nodePort: " + nodePort;
+        if(bkService != null){
+            result += ", BackService: (" + bkService.toString() + ")";
+        }else{
+            result += " BackService is NULL!!";
+        }
+        return result;
     }
 }

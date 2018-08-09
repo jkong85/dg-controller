@@ -28,6 +28,8 @@ public class ControllerCoreApplication {
     //public static final String[] IMO_TYPE = {"honda", "toyota"};
     public static String[] IMO_TYPE = {"honda"};
 
+    public static final Integer PORT_POOL_CAPACITY = 20;
+
     // Normally, we just use one BACKUP_LIMIT
     // I define those two with 1 difference, just for the Demo performance.
     // If we run one car for each type, there is no need to create a new BackupService, even the car moves from one edge node to another edge node frequently
@@ -95,7 +97,7 @@ public class ControllerCoreApplication {
         }
         // 30001, 30002 : controller
         // 30003, 30004 : BKService test
-        for(int i=32000; i>30010; i-=2){
+        for(int i=30010+PORT_POOL_CAPACITY; i>30009; i-=2){
             nodePortsPool.push(i);
         }
 

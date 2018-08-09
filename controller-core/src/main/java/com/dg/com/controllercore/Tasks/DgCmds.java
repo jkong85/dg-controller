@@ -26,6 +26,7 @@ public class DgCmds {
             logger.warn("No available DG on node" + node + " , just wait!");
             return null;
         }
+        logger.trace("Before allocating,bkServiceReadyPoolMap of " + nodeType + " is: " + ControllerCoreApplication.bkServiceReadyPoolMap.get(nodeType).toString());
         BackupService backupService = ControllerCoreApplication.bkServiceReadyPoolMap.get(nodeType).get(0);
         backupService.status = ControllerCoreApplication.BK_SERVICE_STATUS_USED;
         logger.debug("Find the BackupService on node : " + node + " for IMO request: " + dgName + " => " + backupService.toString());
@@ -40,8 +41,11 @@ public class DgCmds {
         String coreIP = ControllerCoreApplication.nodeIpMap.get(node);
         DG dg = new DG(dgName, type, node, coreIP, node_port_zuul.toString(), backupService);
 
+        //move it out Ready Pool
+        ControllerCoreApplication.bkServiceReadyPoolMap.get(nodeType).remove(0);
         imo.dgList.add(dg);
 
+        logger.trace("After allocating,bkServiceReadyPoolMap of " + nodeType + " is: " + ControllerCoreApplication.bkServiceReadyPoolMap.get(nodeType).toString());
         logger.info("New DG is allocated for " + dgName+ " on node: " + node+ " => " + dg.toString());
 
         return dg;
