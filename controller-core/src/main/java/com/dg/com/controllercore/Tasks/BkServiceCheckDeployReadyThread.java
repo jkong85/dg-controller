@@ -113,6 +113,7 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
         for(String url : urlList){
             if(url == null){
                 logger.info("cur URL of ready checking is Null, continue");
+                continue;
             }
             logger.info("curr URL of ready checking is : " + url );
             boolean flag = false;
