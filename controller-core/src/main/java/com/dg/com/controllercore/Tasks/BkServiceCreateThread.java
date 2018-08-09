@@ -32,13 +32,13 @@ public class BkServiceCreateThread implements Runnable{
                     ControllerCoreApplication.bkServiceNotReadyPoolMap.get(node+"+"+type).add(backupService);
                 }else{
                     logger.warn("New backupservice is not created successfully, rollback by releasing port number and putting it back to bkServiceRequestQueue");
-                    logger.info("Before rollback, bkServiceIndexPoolStack is: " + ControllerCoreApplication.bkServiceIndexPoolStack.toString());
-                    logger.info("Before rollback, bkServiceRequestQueue is: " + ControllerCoreApplication.bkServiceRequestQueue.toString());
+                    logger.trace("Before rollback, bkServiceIndexPoolStack is: " + ControllerCoreApplication.bkServiceIndexPoolStack.toString());
+                    logger.trace("Before rollback, bkServiceRequestQueue is: " + ControllerCoreApplication.bkServiceRequestQueue.toString());
                     // restore all things
                     ControllerCoreApplication.bkServiceIndexPoolStack.push(index);
                     ControllerCoreApplication.bkServiceRequestQueue.offer(request);
-                    logger.info("After rollback, bkServiceIndexPoolStack is: " + ControllerCoreApplication.bkServiceIndexPoolStack.toString());
-                    logger.info("After rollback, bkServiceRequestQueue is: " + ControllerCoreApplication.bkServiceRequestQueue.toString());
+                    logger.trace("After rollback, bkServiceIndexPoolStack is: " + ControllerCoreApplication.bkServiceIndexPoolStack.toString());
+                    logger.trace("After rollback, bkServiceRequestQueue is: " + ControllerCoreApplication.bkServiceRequestQueue.toString());
                 }
             }
             DgCommonsApplication.delay(20);
