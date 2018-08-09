@@ -22,11 +22,11 @@ public class BkServiceCheckAvailNumberThread implements Runnable{
             //public static Map<String, Map<String, Stack<BackupService>>> bkServicePoolMap;
             for(String node : ControllerCoreApplication.NODE_LIST){
                 for(String type : ControllerCoreApplication.IMO_TYPE){
-                    logger.debug("check current bkservice for node : " + node + ", type : " + type);
                     String nodetype = node + "+" + type;
                     int notReadyNumber = ControllerCoreApplication.bkServiceNotReadyPoolMap.get(nodetype).size();
                     int readyNumber = ControllerCoreApplication.bkServiceReadyPoolMap.get(nodetype).size();
                     if( notReadyNumber + readyNumber < ControllerCoreApplication.BACKUP_LIMIT){
+                        logger.debug("Check current bkservice for node : " + node + ", type : " + type);
                         logger.info("For BkService  (" + "node: " + node + "type" + type +  ") Number of Not Ready BK is :" + notReadyNumber+ ", Number of Ready BK is : " + type);
                         logger.info("Add a new requst to bkServiceRequestQueue");
                         ControllerCoreApplication.bkServiceRequestQueue.offer(new BackupServiceRequest(node, type));
