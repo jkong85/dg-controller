@@ -9,8 +9,8 @@ echo "stop controller"
 
 sudo ./stop.sh
 
-sudo kubectl delete dvc honda1-core
-sudo kubectl delete dvc honda1-edge1
+sudo kubectl delete svc honda1-core
+sudo kubectl delete svc honda1-edge1
 
 
 ./checkDGs.sh
