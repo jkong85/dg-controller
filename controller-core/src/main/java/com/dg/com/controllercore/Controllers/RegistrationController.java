@@ -28,7 +28,7 @@ public class RegistrationController {
     public String register(@RequestParam String name,
                            @RequestParam String type,
                            @RequestParam String location) {
-        logger.info("Receive the registration request=>name: " + name + ", type: " + type + ", location: " + location);
+        logger.info("Receive the registration request (name:" + name + ", type:" + type + ",location: " + location + ")");
         // register on core cloud node
         if(ControllerCoreApplication.IMOMap.containsKey(name)){
             //TODO: return IP address directly
@@ -37,7 +37,6 @@ public class RegistrationController {
             return "It is already registered!";
         }
 
-        ApiServerCmd apiServerCmd = new ApiServerCmd();
         IMO curIMO = new IMO(name, type);
 
         // for core cloud node

@@ -8,9 +8,6 @@ zuul:
     core:
       path: /core/**
       serviceId: controller-core
-    test:
-      path: /test/**
-      serviceId: controller-test
     speed:
       path: /speed/**
       serviceId: imo-speed

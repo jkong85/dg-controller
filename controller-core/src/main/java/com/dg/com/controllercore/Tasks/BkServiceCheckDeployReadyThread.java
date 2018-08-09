@@ -34,7 +34,7 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
                     Integer cnt = 0;
                     while(cnt-- > 0) { try { Thread.sleep(1000); } catch (InterruptedException ie) { } }
 
-                    logger.debug("check current bkservice for node : " + node + ", type : " + type);
+                    logger.trace("check current bkservice for node : " + node + ", type : " + type);
                     String nodetype = node + "+" + type;
                     if(ControllerCoreApplication.bkServiceNotReadyPoolMap.get(nodetype).isEmpty()) {
                         continue;
