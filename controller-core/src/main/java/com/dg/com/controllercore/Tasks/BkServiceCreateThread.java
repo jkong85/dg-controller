@@ -3,6 +3,7 @@ package com.dg.com.controllercore.Tasks;
 import com.dg.com.controllercore.ControllerCoreApplication;
 import com.dg.com.controllercore.IMOs.BackupService;
 import com.dg.com.controllercore.IMOs.BackupServiceRequest;
+import com.dg.kj.dgcommons.DgCommonsApplication;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -40,10 +41,7 @@ public class BkServiceCreateThread implements Runnable{
                     logger.info("After rollback, bkServiceRequestQueue is: " + ControllerCoreApplication.bkServiceRequestQueue.toString());
                 }
             }
-            try {
-                Thread.sleep(60000);
-            } catch (InterruptedException ie) {
-            }
+            DgCommonsApplication.delay(20);
         }
     }
 

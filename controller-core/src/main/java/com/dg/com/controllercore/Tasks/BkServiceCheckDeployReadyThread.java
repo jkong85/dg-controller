@@ -2,6 +2,7 @@ package com.dg.com.controllercore.Tasks;
 
 import com.dg.com.controllercore.ControllerCoreApplication;
 import com.dg.com.controllercore.IMOs.BackupService;
+import com.dg.kj.dgcommons.DgCommonsApplication;
 import com.dg.kj.dgcommons.Http;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,15 +25,15 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
     }
     // Keep that there are at least BACK_LIMIT available BackupService for each type on each node
     public void run() {
-        try { Thread.sleep(120000); } catch (InterruptedException ie) { }
+        //try { Thread.sleep(120000); } catch (InterruptedException ie) { }
+        DgCommonsApplication.delay(60);
         logger.info("Running BkServiceCheckAvailNumberThread to guarantee that a certain number of BackupServices are available!");
         while(true) {
             for(String node : ControllerCoreApplication.NODE_LIST){
                 for(String type : ControllerCoreApplication.IMO_TYPE){
-                    Integer cnt = 5;
-                    while(cnt-- > 0) {
-                        try { Thread.sleep(1000); } catch (InterruptedException ie) { }
-                    }
+                    Integer cnt = 0;
+                    while(cnt-- > 0) { try { Thread.sleep(1000); } catch (InterruptedException ie) { } }
+
                     logger.debug("check current bkservice for node : " + node + ", type : " + type);
                     String nodetype = node + "+" + type;
                     if(ControllerCoreApplication.bkServiceNotReadyPoolMap.get(nodetype).isEmpty()) {
@@ -78,7 +79,8 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
         }
         apiServerCmd.CreateService(k8sServiceName, backupService.selector, node_port_eureka.toString(), node_port_zuul.toString());
         // wait some time
-        try { Thread.sleep(15000); } catch (InterruptedException ie) { }
+        //try { Thread.sleep(10000); } catch (InterruptedException ie) { }
+        DgCommonsApplication.delay(10);
 
         String nodeIP = ControllerCoreApplication.nodeIpMap.get(backupService.node);
         logger.info("curr node is: " + backupService.node + " it is ip is: " + nodeIP );
@@ -107,7 +109,8 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
         logger.debug("Delete the k8sService test service : " + k8sServiceName);
         String res = apiServerCmd.deleteService(k8sServiceName, node_port_eureka, false);
         logger.debug("Response from delete: " + res);
-        try { Thread.sleep(5000); } catch (InterruptedException ie) { }
+        //try { Thread.sleep(5000); } catch (InterruptedException ie) { }
+        DgCommonsApplication.delay(5);
         return false;
     }
 
