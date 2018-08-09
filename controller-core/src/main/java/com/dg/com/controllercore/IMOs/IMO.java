@@ -19,10 +19,19 @@ public class IMO {
         this.type = type;
         dgList = new ArrayList<>();
     }
-   //TODO: print more information
-   public String toString() {
-       return "IMO(name:" + name + ", type:" + type;
-   }
+
+    public DG findDGonNode(String node){
+        if(node == null || dgList == null || dgList.size()==0){
+            return null;
+        }
+        for(DG item : dgList){
+            if(item.node.equals(node)){
+                return item;
+            }
+        }
+        return null;
+    }
+
     public String getAllDGIpPort(){
         StringBuilder sb = new StringBuilder();
         for(DG dg : dgList){
@@ -31,5 +40,10 @@ public class IMO {
             sb.append(dg.nodePort);
         }
         return sb.toString();
+    }
+
+    //TODO: print more information
+    public String toString() {
+        return "IMO(name:" + name + ", type:" + type;
     }
 }

@@ -220,7 +220,7 @@ public class ApiServerCmd {
                 logger.trace("nodePortPool: " + ControllerCoreApplication.nodePortsPool.toString());
                 ControllerCoreApplication.nodePortsPool.push(port);
             }else{
-                logger.debug("Port " + port + "is NOT putback to nodePortPool");
+                logger.debug("Port " + port + " will NOT putback to nodePortPool (Correct)");
                 logger.trace("nodePortPool: " + ControllerCoreApplication.nodePortsPool.toString());
             }
         }

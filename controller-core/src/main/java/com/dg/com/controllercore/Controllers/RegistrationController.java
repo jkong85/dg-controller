@@ -60,7 +60,7 @@ public class RegistrationController {
             logger.warn("Failed to allocate DG for IMO: " + curIMO.toString() + " on node " + edgeNode + "! Try createDGSlow way!");
             DgCmds.createDGSlow(edgeServiceName, curIMO, type, edgeNode);
         }
-        ControllerCoreApplication.IMOMap.get(name).dgList.add(edgeDG);
+        curIMO.dgList.add(edgeDG);
         logger.info("New DG is allocated for " + name + " on node: " + edgeNode + " => " + edgeDG.toString());
 
         // Finally, register to the controller
