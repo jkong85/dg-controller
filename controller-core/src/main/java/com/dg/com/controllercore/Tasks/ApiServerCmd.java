@@ -87,21 +87,23 @@ public class ApiServerCmd {
 
         // Different type of Car will run different services
         if(type.equals(ControllerCoreApplication.HONDA)){
-            backupService.deploymentsList.add(CreateSpeedDeployment(service_label, eureka_ip, node_selector));
-            backupService.deploymentsList.add(CreateLocationDeployment(service_label, eureka_ip, node_selector));
+            Deployment speedDeploy = CreateSpeedDeployment(service_label, eureka_ip, node_selector);
+            backupService.deploymentsList.add(speedDeploy);
+            Deployment locationDeploy = CreateLocationDeployment(service_label, eureka_ip, node_selector);
+            backupService.deploymentsList.add(locationDeploy);
         }else if (type.equals(ControllerCoreApplication.TOYOTA)){
-            backupService.deploymentsList.add(CreateLocationDeployment(service_label, eureka_ip, node_selector));
-            backupService.deploymentsList.add(CreateOilDeployment(service_label, eureka_ip, node_selector));
+            Deployment locationDeploy = CreateLocationDeployment(service_label, eureka_ip, node_selector);
+            backupService.deploymentsList.add(locationDeploy);
+            Deployment oilDeploy = CreateOilDeployment(service_label, eureka_ip, node_selector);
+            backupService.deploymentsList.add(oilDeploy);
         }else{
             logger.debug("Car type : " + type + " is not supported ! ");
         }
 
-        try{
-            Thread.sleep(1000);
-        }catch (InterruptedException ex){
-            logger.debug(ex.toString());
-        }
-        backupService.deploymentsList.add(CreateZuulDeployment(service_label, eureka_ip, node_selector));
+        try{ Thread.sleep(1000); }catch (InterruptedException ex){ logger.debug(ex.toString()); }
+
+        Deployment zuulDeploy = CreateZuulDeployment(service_label, eureka_ip, node_selector);
+        backupService.deploymentsList.add(zuulDeploy);
 
         return backupService;
     }

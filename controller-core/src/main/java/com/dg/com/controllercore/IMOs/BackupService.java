@@ -26,6 +26,10 @@ public class BackupService {
         deploymentsList = new ArrayList<>();
     }
     public String toString(){
-        return "Backup Service with name: " + name + ", type: " + type + ", selector: " + selector + ", node: " + node + ", status: " + status;
+        String result = "Backup Service with name: " + name + ", type: " + type + ", selector: " + selector + ", node: " + node + ", status: " + status;
+        for(Deployment deploy : deploymentsList){
+            result += ", deploy name: "  + deploy.serviceType;
+        }
+        return result;
     }
 }

@@ -83,23 +83,20 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
         String nodeIP = ControllerCoreApplication.nodeIpMap.get(backupService.node);
         logger.info("curr node is: " + backupService.node + " it is ip is: " + nodeIP );
 
-        String[] urlList = new String[backupService.deploymentsList.size()-2];
+        String[] urlList = new String[backupService.deploymentsList.size()];
         String ipPrefix = "http://" + nodeIP + ":" + node_port_zuul + "/";
         String ipPostfix = "/ready";
         Set<String> basicDeploySet = new HashSet<>();
         basicDeploySet.add("eureka");
         basicDeploySet.add("zuul");
-        String deployChecked = "";
-        for(int i=0,j=0; i<urlList.length; i++){
+        for(int i=0; i<urlList.length; i++){
             String curDeploy = backupService.deploymentsList.get(i).serviceType;
             if(!basicDeploySet.contains(curDeploy)) {
-                urlList[j] = ipPrefix + curDeploy + ipPostfix;
-                deployChecked += urlList[j];
-                j++;
+                urlList[i] = ipPrefix + curDeploy + ipPostfix;
+            }else{
+                urlList[i] = null;
             }
         }
-        logger.info("All URLs of ready checking are: " + deployChecked);
-
         if(isAllDeploymentReady(urlList)){
             logger.info("The backup service is ready, delete the k8sService test service : " + k8sServiceName);
             apiServerCmd.deleteService(k8sServiceName, node_port_eureka);
@@ -114,6 +111,9 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
 
     private static boolean isAllDeploymentReady(String[] urlList){
         for(String url : urlList){
+            if(url == null){
+                logger.info("cur URL of ready checking is Null, continue");
+            }
             logger.info("curr URL of ready checking is : " + url );
             boolean flag = false;
             int i = 5;
@@ -124,7 +124,7 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
                     flag = true;
                     break;
                 } catch (RestClientException re) {
-                    logger.info("Deployment is Not ready! ");
+                    logger.info("Deployment is Not ready of URL:  " + url);
                 }
             }
             if(!flag){
