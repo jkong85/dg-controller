@@ -24,12 +24,12 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
     }
     // Keep that there are at least BACK_LIMIT available BackupService for each type on each node
     public void run() {
-        try { Thread.sleep(30000); } catch (InterruptedException ie) { }
+        try { Thread.sleep(120000); } catch (InterruptedException ie) { }
         logger.info("Running BkServiceCheckAvailNumberThread to guarantee that a certain number of BackupServices are available!");
         while(true) {
             for(String node : ControllerCoreApplication.NODE_LIST){
                 for(String type : ControllerCoreApplication.IMO_TYPE){
-                    Integer cnt = 120;
+                    Integer cnt = 5;
                     while(cnt-- > 0) {
                         logger.info(" wait for " + cnt + " seconds");
                         try { Thread.sleep(1000); } catch (InterruptedException ie) { }
@@ -58,14 +58,13 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
                         BackupService tmpBkService = ControllerCoreApplication.bkServiceNotReadyPoolMap.get(nodetype).remove(0);
                         ControllerCoreApplication.bkServiceNotReadyPoolMap.get(nodetype).add(tmpBkService);
                     }
-                    try { Thread.sleep(600000); } catch (InterruptedException ie) { }
                 }
             }
         }
     }
     private boolean isReady(BackupService backupService){
         logger.info("Check the BackupService ready: " + backupService.toString());
-        String k8sServiceName = "it-is-a-test-service-to-check-deployment-ready-make-it-unique";
+        String k8sServiceName = "ready-test-service";
         //Integer node_port_eureka = ControllerCoreApplication.nodePortsPool.pop();
         //Integer node_port_zuul = node_port_eureka + 1;
         Integer node_port_eureka = PORT_EUREKA_CHECK_SERVICE;
@@ -78,6 +77,8 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
             logger.warn("Test service is not existed, ignore it!");
         }
         apiServerCmd.CreateService(k8sServiceName, backupService.selector, node_port_eureka.toString(), node_port_zuul.toString());
+        // wait some time
+        try { Thread.sleep(15000); } catch (InterruptedException ie) { }
 
         String nodeIP = ControllerCoreApplication.nodeIpMap.get(backupService.node);
         logger.info("curr node is: " + backupService.node + " it is ip is: " + nodeIP );
@@ -103,6 +104,7 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
         logger.info("The backup service is Not ready, delete the k8sService test service : " + k8sServiceName);
         String res = apiServerCmd.deleteService(k8sServiceName, node_port_eureka);
         logger.info(res);
+        try { Thread.sleep(5000); } catch (InterruptedException ie) { }
         return false;
     }
 
@@ -118,7 +120,7 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
                     logger.info("Deployment is ready of URL: " + url);
                     flag = true;
                     break;
-                } catch (RestClientException re) {
+                } catch (HttpClientErrorException re) {
                     logger.info("Deployment is Not ready! ");
                 }
             }
