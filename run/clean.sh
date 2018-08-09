@@ -10,4 +10,7 @@ echo "stop controller"
 sudo ./stop.sh
 
 
+./checkDGs.sh
+
+
 
