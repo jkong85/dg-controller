@@ -110,26 +110,27 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
     }
 
     private static boolean isAllDeploymentReady(String[] urlList){
-        for(String url : urlList){
-            if(url == null){
-                logger.info("cur URL of ready checking is Null, continue");
-                continue;
-            }
-            logger.info("curr URL of ready checking is : " + url );
-            boolean flag = false;
-            int i = 5;
-            while(i-- > 0){
-                try {
-                    Http.httpGet(url);
-                    logger.info("Deployment is ready of URL: " + url);
-                    flag = true;
-                    break;
-                } catch (RestClientException re) {
-                    logger.info("Deployment is Not ready of URL:  " + url);
+        for(int m=0; m<urlList.length; m++){
+            String url = urlList[m];
+            if(url != null && url.length() > 1) {
+                logger.info("curr URL of ready checking is : " + url);
+                boolean flag = false;
+                int i = 5;
+                while (i-- > 0) {
+                    try {
+                        Http.httpGet(url);
+                        logger.info("Deployment is ready of URL: " + url);
+                        flag = true;
+                        break;
+                    } catch (RestClientException re) {
+                        logger.info("Deployment is Not ready of URL:  " + url);
+                    }
                 }
-            }
-            if(!flag){
-                return false;
+                if (!flag) {
+                    return false;
+                }
+            }else{
+                logger.info("cur URL of ready checking is Null, continue");
             }
         }
         logger.info("All deployment is ready! ");
