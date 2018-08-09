@@ -210,10 +210,17 @@ public class ApiServerCmd {
         return str;
     }
 
-    public String deleteService(String serviceName, Integer port) throws  HttpClientErrorException {
+    //portRelease: if it is ReadyTestCheck service(30003, 30004), there is no need to put the port back to the pool
+    public String deleteService(String serviceName, Integer port, Boolean portRealease) throws  HttpClientErrorException {
         logger.debug("Delete k8s service " + serviceName + " with port : " + port + ", URL: " + URL_K8S_DELETE_SERVICE + serviceName);
         if(Http.httpDelete(URL_K8S_DELETE_SERVICE + serviceName)){
-            ControllerCoreApplication.nodePortsPool.push(port);
+            logger.debug("Successfully delete k8s service " + serviceName + " with port : " + port + ", URL: " + URL_K8S_DELETE_SERVICE + serviceName);
+            if(portRealease) {
+                logger.debug("Port " + port + "is putback to nodePortPool: " + ControllerCoreApplication.nodePortsPool.toString());
+                ControllerCoreApplication.nodePortsPool.push(port);
+            }else{
+                logger.debug("Port " + port + "is NOT putback to nodePortPool: " + ControllerCoreApplication.nodePortsPool.toString());
+            }
         }
         return "Delete service successfully!";
     }

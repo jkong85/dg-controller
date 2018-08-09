@@ -71,7 +71,8 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
         ApiServerCmd apiServerCmd = new ApiServerCmd();
         try {
             logger.debug("Before ready-check, delete the test service if existed!");
-            apiServerCmd.deleteService(k8sServiceName, node_port_eureka);
+            // No need to put the port back
+            apiServerCmd.deleteService(k8sServiceName, node_port_eureka, false);
         }catch (HttpClientErrorException e){
             logger.debug("Test service is not existed, ignore it!");
         }
@@ -99,12 +100,12 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
         if(isAllDeploymentReady(urlList)){
             logger.info("BackupService: " + backupService.name + " is ready!");
             logger.debug("Delete the k8sService test service : " + k8sServiceName);
-            apiServerCmd.deleteService(k8sServiceName, node_port_eureka);
+            apiServerCmd.deleteService(k8sServiceName, node_port_eureka, false);
             return true;
         }
         logger.info("BackupService: " + backupService.name + " is NOT ready!");
         logger.debug("Delete the k8sService test service : " + k8sServiceName);
-        String res = apiServerCmd.deleteService(k8sServiceName, node_port_eureka);
+        String res = apiServerCmd.deleteService(k8sServiceName, node_port_eureka, false);
         logger.debug("Response from delete: " + res);
         try { Thread.sleep(5000); } catch (InterruptedException ie) { }
         return false;
