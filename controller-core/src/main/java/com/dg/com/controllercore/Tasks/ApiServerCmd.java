@@ -204,7 +204,7 @@ public class ApiServerCmd {
                 selector +
                 "\"},\"type\":\"" + "NodePort" + "\"}}";
 
-        logger.debug("Create Service HTTP body: " + body);
+        logger.debug("CreateService HTTP body for " + name + " => " + body);
 
         String str = Http.httpPost(urlService, body);
         return str;
