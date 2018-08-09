@@ -89,12 +89,16 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
         Set<String> basicDeploySet = new HashSet<>();
         basicDeploySet.add("eureka");
         basicDeploySet.add("zuul");
+        String deployChecked = "";
         for(int i=0,j=0; i<urlList.length; i++){
             String curDeploy = backupService.deploymentsList.get(i).serviceType;
             if(!basicDeploySet.contains(curDeploy)) {
-                urlList[j++] = ipPrefix + curDeploy + ipPostfix;
+                urlList[j] = ipPrefix + curDeploy + ipPostfix;
+                deployChecked += urlList[j];
+                j++;
             }
         }
+        logger.info("All URLs of ready checking are: " + deployChecked);
 
         if(isAllDeploymentReady(urlList)){
             logger.info("The backup service is ready, delete the k8sService test service : " + k8sServiceName);
@@ -109,7 +113,6 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
     }
 
     private static boolean isAllDeploymentReady(String[] urlList){
-        logger.info("URLs of ready checking are: " + urlList.toString());
         for(String url : urlList){
             logger.info("curr URL of ready checking is : " + url );
             boolean flag = false;
