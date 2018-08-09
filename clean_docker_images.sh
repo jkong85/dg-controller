@@ -8,8 +8,10 @@ fi
 
 sudo docker images | grep $1 | awk '{print $3}' | xargs sudo docker rmi -f
 
-exit 
+sudo docker images
+exit
 
+##########NOT USE BELOW################################
 echo "please first save the images info to file "all""
 cat $1 | awk '{print $3}' >> id
 

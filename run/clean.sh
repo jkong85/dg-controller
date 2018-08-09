@@ -12,5 +12,6 @@ sudo ./stop.sh
 
 ./checkDGs.sh
 
+sudo docker images
 
 
