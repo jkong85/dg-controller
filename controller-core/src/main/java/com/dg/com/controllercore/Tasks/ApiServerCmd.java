@@ -8,6 +8,7 @@ import com.dg.kj.dgcommons.Http;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestClientException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -211,22 +212,33 @@ public class ApiServerCmd {
     }
 
     //portRelease: if it is ReadyTestCheck service(30003, 30004), there is no need to put the port back to the pool
-    public String deleteService(String serviceName, Integer port, Boolean portRealease) throws  HttpClientErrorException {
-        logger.debug("Delete k8s service " + serviceName + " with port : " + port + ", URL: " + URL_K8S_DELETE_SERVICE + serviceName);
-        if(Http.httpDelete(URL_K8S_DELETE_SERVICE + serviceName)){
-            logger.debug("Successfully delete k8s service " + serviceName + " with port : " + port + ", URL: " + URL_K8S_DELETE_SERVICE + serviceName);
-            if(portRealease) {
-                logger.debug("Port " + port + " is putback to nodePortPool: ");
-                logger.trace("nodePortPool: " + ControllerCoreApplication.nodePortsPool.toString());
-                ControllerCoreApplication.nodePortsPool.push(port);
-            }else{
-                logger.debug("Port " + port + " will NOT putback to nodePortPool (Correct)");
-                logger.trace("nodePortPool: " + ControllerCoreApplication.nodePortsPool.toString());
+    public boolean deleteService(String serviceName, Integer port, Boolean portRealease) throws RestClientException{
+        logger.debug("Delete service " + serviceName + " with port : " + port + ", URL: " + URL_K8S_DELETE_SERVICE + serviceName);
+        boolean ok = false;
+        for(Integer cnt = 0; cnt < 5; cnt++) {
+            try {
+                Http.httpDelete(URL_K8S_DELETE_SERVICE + serviceName);
+                if (portRealease) {
+                    logger.debug("Port " + port + " is put back to nodePortPool: ");
+                    logger.trace("current nodePortPool: " + ControllerCoreApplication.nodePortsPool.toString());
+                    ControllerCoreApplication.nodePortsPool.push(port);
+                } else {
+                    logger.debug("Port " + port + " will NOT put back to nodePortPool (Correct)");
+                    logger.trace("current nodePortPool: " + ControllerCoreApplication.nodePortsPool.toString());
+                }
+                ok = true;
+                break;
+            } catch (RestClientException e) {
+                logger.error("DeleteService " + cnt.toString() + " time, Can NOT delete service successfully => " + e.toString());
             }
         }
-        return "Delete service successfully!";
+        if(!ok){
+            logger.error("DeleteService finally FAILED to delete service successfully");
+            return false;
+        }
+        logger.debug("Successfully delete k8s service " + serviceName + " with port : " + port + ", URL: " + URL_K8S_DELETE_SERVICE + serviceName);
+        return true;
     }
-
 
     public String CreateDeployment( String deploy_name,
                                     String service_label,

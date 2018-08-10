@@ -44,6 +44,12 @@ public class IMO {
 
     //TODO: print more information
     public String toString() {
-        return "IMO(name:" + name + ", type:" + type + "... should add more)";
+        StringBuilder sb = new StringBuilder();
+        sb.append(" IMO inforation:     ");
+        sb.append("name:" + name + ", type:" + type + " ");
+        for(DG cur : dgList){
+            sb.append(" " + cur.toString());
+        }
+        return sb.toString();
     }
 }

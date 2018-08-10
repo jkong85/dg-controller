@@ -52,7 +52,7 @@ public class MigrationController {
         }
 
         //Step 2: Data migration
-        if(!migrateMongoDB(srcDG, dstDG)){
+        if(! migrateMongoDB(srcDG, dstDG)){
             logger.error(" Migrate MongoDB from " + srcNode + " to " + dstNode + " FAILRED! Details=> " + " srcDG: " + srcDG.toString() + " ||| dstDG: "  + dstDG.toString());
             // restore the new DG allocated
             return "Migrate failed (Reason: mongoDB migration failed !";
@@ -60,7 +60,7 @@ public class MigrationController {
 
         //Step 3: Destroy the old one (release the BackupService, put the BackupServiceclean the MongoDB)
 
-        if(!DgCmds.releaseDG(imo, srcDG, true)){
+        if(! DgCmds.releaseDG(imo, srcDG, true)){
             logger.error("Failed to release old DG " + srcDG.toString());
             return "Failed to release old DG" + srcDG.toString();
         }

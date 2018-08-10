@@ -47,7 +47,7 @@ public class Http {
         //return response.getBody();
     }
 
-    public static boolean httpDelete(String urlService) throws HttpClientErrorException {
+    public static void httpDelete(String urlService) throws RestClientException{
         String accessToken = "/var/run/secrets/kubernetes.io/serviceaccount/token";
 
         HttpHeaders headers = new HttpHeaders();
@@ -57,7 +57,6 @@ public class Http {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.delete(urlService);
         System.out.println("Successful delete : " + urlService);
-        return true;
     }
     public static String httpPost(String urlService, String body) throws HttpClientErrorException{
         String accessToken = "/var/run/secrets/kubernetes.io/serviceaccount/token";

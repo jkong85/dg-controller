@@ -7,6 +7,7 @@ import com.dg.com.controllercore.IMOs.IMO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestClientException;
 
 /**
  * Created by jkong on 8/9/18.
@@ -70,20 +71,10 @@ public class DgCmds {
 
         logger.debug("Release DG:" + dg.toString());
         logger.debug("Release DG Step 1: delete service and Step 2 put port back");
-        boolean suc = false;
-        for(int cnt = 0; cnt < 5; cnt++){
-            try {
-                apiServerCmd.deleteService(serviceName, port, flag);
-                suc = true;
-                break;
-            }catch (HttpClientErrorException e){
-            }
-        }
-        if(! suc){
-            logger.error("Failed to release DG after trying 5 times !");
+        if(! apiServerCmd.deleteService(serviceName, port, flag)){
+            logger.error("Failed to release DG: " + dg.toString());
             return false;
         }
-
         //TODO: change all node + "+" + type to function call
         logger.debug("Release DG Step 3: put backservice to Readypool");
         String nodeType = dg.node + "+" + dg.type;

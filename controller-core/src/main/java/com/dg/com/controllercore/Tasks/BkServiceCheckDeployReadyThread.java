@@ -106,8 +106,7 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
         }
         logger.info("BackupService: " + backupService.name + " is NOT ready!");
         logger.debug("Delete the k8sService test service : " + k8sServiceName);
-        String res = apiServerCmd.deleteService(k8sServiceName, node_port_eureka, false);
-        logger.debug("Response from delete: " + res);
+        apiServerCmd.deleteService(k8sServiceName, node_port_eureka, false);
         //try { Thread.sleep(5000); } catch (InterruptedException ie) { }
         DgCommonsApplication.delay(5);
         return false;

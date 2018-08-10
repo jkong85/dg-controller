@@ -28,9 +28,9 @@ public class DG {
     public String toString(){
         String result = "DG=>name: " + name + ", type: " + type + ", node: " + node + ", nodeIP: " + nodeIP + ", nodePort: " + nodePort;
         if(bkService != null){
-            result += ", BackService: (" + bkService.toString() + ")";
+            result += ", [BackService: (" + bkService.toString() + ")]";
         }else{
-            result += " BackService is NULL!!";
+            result += ", [BackService: (NULL)]";
         }
         return result;
     }
