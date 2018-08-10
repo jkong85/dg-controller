@@ -1,7 +1,6 @@
 package com.dg.com.controllercore.Controllers;
 
 import com.dg.com.controllercore.ControllerCoreApplication;
-import com.dg.com.controllercore.IMOs.DG;
 import com.dg.com.controllercore.IMOs.IMO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

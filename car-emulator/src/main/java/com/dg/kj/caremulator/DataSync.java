@@ -12,12 +12,21 @@ public class DataSync implements Runnable{
     }
 
     public void run() {
-        try {
-            while(index < CarEmulatorApplication.toyota_location.length) {
-                Thread.sleep(2000);
+        int cnt = 10;
+        // the valid range (min, max) : (0, 120)
+        int min = 0;
+        int max = 100;
+        for(int i=0; i<cnt; i++){
+            System.out.println("The car moves from left to right !");
+            while(index < max){
+                try { Thread.sleep(2000); } catch (InterruptedException ie) { }
                 index++;
             }
-        } catch (InterruptedException ie) {
+            System.out.println("The car moves from right to left !");
+            while(index > min ){
+                try { Thread.sleep(2000); } catch (InterruptedException ie) { }
+                index--;
+            }
         }
         System.out.println("Datasync Thread of " +  threadName + " is done.");
     }

@@ -49,7 +49,6 @@ public class LocationUpload implements Runnable{
             isSent[i] = new HashSet<>();
             isPrinted[i] = false;
         }
-//        System.out.println("Running Location upload of " +  threadName );
         try {
             RestTemplate template = new RestTemplate();
             while(DataSync.index < CarEmulatorApplication.toyota_location.length) {
