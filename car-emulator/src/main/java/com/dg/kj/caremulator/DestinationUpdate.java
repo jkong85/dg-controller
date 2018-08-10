@@ -11,7 +11,7 @@ public class DestinationUpdate implements Runnable{
     private Thread t;
     private String name;
     private String type;
-    private static String infoURL = "http://172.17.8.101:30002/test/info?value=";
+    private static String infoURL = "http://172.17.8.101:30002/core/information?value=";
 
     DestinationUpdate(String name, String type) {
         this.name = name;
@@ -21,7 +21,8 @@ public class DestinationUpdate implements Runnable{
     public void run() {
         //System.out.println("Running dst update of " +  name );
         while(true) {
-            String urlService = infoURL + name;
+            //String urlService = infoURL + name;
+            String urlService = infoURL + name + "&type=" + type + "&location=10";
             RestTemplate restTemplate = new RestTemplate();
             int cnt = 5;
             while(cnt > 0 ) {
