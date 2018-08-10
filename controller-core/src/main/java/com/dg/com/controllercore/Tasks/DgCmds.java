@@ -52,6 +52,7 @@ public class DgCmds {
         return dg;
     }
 
+    // The first solution: NO backupservice is available, create all things, and wait
     public static DG createDGSlow(String dgName, IMO imo, String type, String node){
         return null;
     }
@@ -67,7 +68,7 @@ public class DgCmds {
         //public String deleteService(String serviceName, Integer port, Boolean portRealease) throws  HttpClientErrorException {
         String serviceName = dg.name;
         //eureka: port, Zuul: port+1
-        //TODO: it is misunderstanding here! 
+        //TODO: it is misunderstanding here!
         Integer port = Integer.valueOf(dg.nodePort) - 1;
         ApiServerCmd apiServerCmd = new ApiServerCmd();
 
