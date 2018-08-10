@@ -4,6 +4,7 @@ import com.dg.com.controllercore.ControllerCoreApplication;
 import com.dg.com.controllercore.IMOs.BackupService;
 import com.dg.com.controllercore.IMOs.BackupServiceRequest;
 import com.dg.com.controllercore.IMOs.Deployment;
+import com.dg.kj.dgcommons.DgCommonsApplication;
 import com.dg.kj.dgcommons.Http;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -101,7 +102,7 @@ public class ApiServerCmd {
             logger.debug("Car type : " + type + " is not supported ! ");
         }
 
-        try{ Thread.sleep(1000); }catch (InterruptedException ex){ logger.debug(ex.toString()); }
+        DgCommonsApplication.delay(1);
 
         Deployment zuulDeploy = CreateZuulDeployment(service_label, eureka_ip, node_selector);
         backupService.deploymentsList.add(zuulDeploy);

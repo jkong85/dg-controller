@@ -37,16 +37,50 @@ public class InfoController {
 
     @RequestMapping(value = "/globalinfo")
     public String globalinfo() {
-        logger.debug("/global information requst");
         StringBuilder sb = new StringBuilder();
-        //public static Map<String, IMO> IMOMap = new HashMap<>();
+        sb.append("<<<<<<<<<<<<<<<<Runtime Information Requst>>>>>>>>>>>>>>>> ");
+        sb.append(System.getProperty("line.separator"));
+        sb.append(printIMOinfo());
+        sb.append(System.getProperty("line.separator"));
+        sb.append(printCurBkPool());
+        return sb.toString();
+    }
+
+    private String printIMOinfo(){
+        StringBuilder sb = new StringBuilder();
         sb.append("All IMO information: ");
+        sb.append(System.getProperty("line.separator"));
         for(Map.Entry<String, IMO> cur : controllerCoreApplication.IMOMap.entrySet() ){
             sb.append("     " + cur.toString());
-            sb.append("\n");
+            sb.append(System.getProperty("line.separator"));
         }
         return sb.toString();
     }
+    private String printCurBkPool(){
+        StringBuilder sbReady = new StringBuilder();
+        StringBuilder sbNotReady = new StringBuilder();
+        for(String node : ControllerCoreApplication.NODE_LIST){
+            for(String type : ControllerCoreApplication.IMO_TYPE) {
+                String nodetype = node + "+" + type;
+                sbReady.append(System.getProperty("line.separator"));
+                sbReady.append(ControllerCoreApplication.bkServiceReadyPoolMap.get(nodetype).toString());
+                sbNotReady.append(System.getProperty("line.separator"));
+                sbNotReady.append(ControllerCoreApplication.bkServiceNotReadyPoolMap.get(nodetype).toString());
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append("===========" + System.getProperty("line.separator"));
+        sb.append("Current BackupServier Pools are: ");
+        sb.append(" ==> Current BackupRServier READY Pools are: ");
+        sb.append(System.getProperty("line.separator"));
+        sb.append(sbReady.toString());
+        sb.append(System.getProperty("line.separator"));
+        sb.append(" ==> Current BackupRServier NOT READY Pools are: ");
+        sb.append(sbNotReady.toString());
+        logger.debug(sb.toString());
+        return sb.toString();
+    }
+
 
 
 }

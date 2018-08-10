@@ -6,6 +6,7 @@ import com.dg.com.controllercore.IMOs.IMO;
 import com.dg.com.controllercore.Tasks.BkServiceCheckAvailNumberThread;
 import com.dg.com.controllercore.Tasks.BkServiceCheckDeployReadyThread;
 import com.dg.com.controllercore.Tasks.BkServiceCreateThread;
+import com.dg.kj.dgcommons.DgCommonsApplication;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.boot.SpringApplication;
@@ -64,11 +65,7 @@ public class ControllerCoreApplication {
 
         SpringApplication.run(ControllerCoreApplication.class, args);
 
-        Integer wait = 10;
-        while(wait-- > 0) {
-            logger.trace("Wait for " + wait.toString() + " seconds");
-            try { Thread.sleep(1000); } catch (InterruptedException ie) { }
-        }
+        DgCommonsApplication.delay(10);
 
         BkServiceCreateThread bkServiceCreateThread = new BkServiceCreateThread();
         bkServiceCreateThread.start();
@@ -77,7 +74,8 @@ public class ControllerCoreApplication {
         bkServiceCheckAvailNumberThread.start();
 
 
-        try { Thread.sleep(2000); } catch (InterruptedException ie) { }
+        DgCommonsApplication.delay(2);
+
         BkServiceCheckDeployReadyThread bkServiceCheckDeployReadyThread = new BkServiceCheckDeployReadyThread();
         bkServiceCheckDeployReadyThread.start();
 

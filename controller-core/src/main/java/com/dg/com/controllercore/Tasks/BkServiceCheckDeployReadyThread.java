@@ -25,15 +25,13 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
     }
     // Keep that there are at least BACK_LIMIT available BackupService for each type on each node
     public void run() {
-        //try { Thread.sleep(120000); } catch (InterruptedException ie) { }
         DgCommonsApplication.delay(60);
         logger.info("Running BkServiceCheckAvailNumberThread to guarantee that a certain number of BackupServices are available!");
         while(true) {
-            printCurBkPool();
+//            printCurBkPool();
             for(String node : ControllerCoreApplication.NODE_LIST){
                 for(String type : ControllerCoreApplication.IMO_TYPE){
-                    Integer cnt = 0;
-                    while(cnt-- > 0) { try { Thread.sleep(1000); } catch (InterruptedException ie) { } }
+                    DgCommonsApplication.delay(0);
                     String nodetype = node + "+" + type;
                     if(ControllerCoreApplication.bkServiceNotReadyPoolMap.get(nodetype).isEmpty()) {
                         continue;
@@ -141,26 +139,6 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
         return true;
     }
 
-    private void printCurBkPool(){
-        StringBuilder sbReady = new StringBuilder();
-        StringBuilder sbNotReady = new StringBuilder();
-        for(String node : ControllerCoreApplication.NODE_LIST){
-            for(String type : ControllerCoreApplication.IMO_TYPE) {
-                String nodetype = node + "+" + type;
-                sbReady.append(System.getProperty("line.separator"));
-                sbReady.append(ControllerCoreApplication.bkServiceReadyPoolMap.get(nodetype).toString());
-                sbNotReady.append(System.getProperty("line.separator"));
-                sbNotReady.append(ControllerCoreApplication.bkServiceNotReadyPoolMap.get(nodetype).toString());
-            }
-        }
-        StringBuilder sb = new StringBuilder();
-        sb.append(" Current BackupServier Pools are: ");
-        sb.append(System.getProperty("line.separator"));
-        sb.append(sbReady.toString());
-        sb.append(System.getProperty("line.separator"));
-        sb.append(sbNotReady.toString());
-        logger.trace(sb.toString());
-    }
 
     public void start () {
         if (t == null) {
