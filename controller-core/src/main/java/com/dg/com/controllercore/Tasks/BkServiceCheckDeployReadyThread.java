@@ -78,7 +78,7 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
         apiServerCmd.CreateService(k8sServiceName, backupService.selector, node_port_eureka.toString(), node_port_zuul.toString());
         // wait some time
         //try { Thread.sleep(10000); } catch (InterruptedException ie) { }
-        DgCommonsApplication.delay(10);
+        DgCommonsApplication.delay(5);
 
         String nodeIP = ControllerCoreApplication.nodeIpMap.get(backupService.node);
         logger.info("curr node is: " + backupService.node + " it is ip is: " + nodeIP );

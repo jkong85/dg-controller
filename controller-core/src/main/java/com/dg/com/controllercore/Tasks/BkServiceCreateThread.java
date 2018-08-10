@@ -41,7 +41,7 @@ public class BkServiceCreateThread implements Runnable{
                     logger.trace("After rollback, bkServiceRequestQueue is: " + ControllerCoreApplication.bkServiceRequestQueue.toString());
                 }
             }
-            DgCommonsApplication.delay(20);
+            DgCommonsApplication.delay(10);
         }
     }
 
