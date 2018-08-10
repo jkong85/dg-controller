@@ -92,6 +92,7 @@ public class DgCmds {
 
         logger.debug("Release DG Step 5: remove DG from DGlist");
         logger.trace("Before release DG: " + dg.name + ", IMO is " + imo.toString());
+        //TODO: should I remove DG from dgList in DgCmds.releaseDG()???
         imo.dgList.remove(dg);
         logger.debug("After release DG: " + dg.name + ", IMO is " + imo.toString());
         return true;

@@ -77,6 +77,7 @@ public class MigrationController {
     public String deletedg(@RequestParam String name,
                           @RequestParam String type,
                           @RequestParam String node) {
+        logger.info("Delete DG Request from " + name + " on node " + node);
         if(controllerCoreApplication.IMOMap == null || !controllerCoreApplication.IMOMap.containsKey(name)){
             return "IMO is NOT existed for " + name;
         }
@@ -95,6 +96,7 @@ public class MigrationController {
 
     @RequestMapping(value = "/deleteimo")
     public String deleteimo(@RequestParam String name) {
+        logger.info("Delete IMO Request from " + name);
         if(controllerCoreApplication.IMOMap == null || !controllerCoreApplication.IMOMap.containsKey(name)){
             logger.warn(" IMO of " + name + "does NOT existed! Do nothing!");
             return "IMO of " + name + " NOT existed";
@@ -102,11 +104,11 @@ public class MigrationController {
         IMO imo = controllerCoreApplication.IMOMap.get(name);
         logger.debug("IMO of " + name + " => " + imo.toString());
         for(int i=0; i<imo.dgList.size(); i++) {
-            DG dg = imo.dgList.get(i);
+            //TODO: should I remove DG from dgList in DgCmds.releaseDG()???
+            DG dg = imo.dgList.get(0);  // dgList will be changed in relasesDG(), so we delete the first all the time
             if (dg == null) {
                 logger.warn("current DG is NOT existed! continue!");
-            }
-            if (!DgCmds.releaseDG(imo, dg, true)) {
+            }else if (! DgCmds.releaseDG(imo, dg, true)) {  // try to release DG
                 logger.error("Failed to destroy one DG of " +imo + " ==> " + dg.toString());
                 return null;
             }
