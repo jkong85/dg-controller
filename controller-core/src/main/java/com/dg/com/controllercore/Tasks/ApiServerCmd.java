@@ -220,11 +220,12 @@ public class ApiServerCmd {
                 Http.httpDelete(URL_K8S_DELETE_SERVICE + serviceName);
                 if (portRealease) {
                     logger.debug("Port " + port + " is put back to nodePortPool: ");
-                    logger.trace("current nodePortPool: " + ControllerCoreApplication.nodePortsPool.toString());
+                    logger.trace("Before putting back, nodePortPool: " + ControllerCoreApplication.nodePortsPool.toString());
                     ControllerCoreApplication.nodePortsPool.push(port);
+                    logger.trace("After putting back, nodePortPool: " + ControllerCoreApplication.nodePortsPool.toString());
                 } else {
                     logger.debug("Port " + port + " will NOT put back to nodePortPool (Correct)");
-                    logger.trace("current nodePortPool: " + ControllerCoreApplication.nodePortsPool.toString());
+                    logger.trace("Crurrent nodePortPool: " + ControllerCoreApplication.nodePortsPool.toString());
                 }
                 ok = true;
                 break;
