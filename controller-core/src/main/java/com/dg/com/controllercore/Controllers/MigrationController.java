@@ -102,17 +102,18 @@ public class MigrationController {
             logger.warn(" IMO of " + name + "does NOT existed! Do nothing!");
         }
         IMO imo = controllerCoreApplication.IMOMap.get(name);
+        logger.debug("IMO of " + name + " : " + imo.toString());
         for(int i=0; i<imo.dgList.size(); i++) {
             DG dg = imo.dgList.get(i);
             if (dg == null) {
                 logger.warn("current DG is NOT existed! continue!");
             }
             if (!DgCmds.releaseDG(imo, dg, true)) {
-                logger.error("Failed to destroy DG of " +imo + " ==> " + dg.toString());
-                continue;
+                logger.error("Failed to destroy one DG of " +imo + " ==> " + dg.toString());
+                return null;
             }
         }
-        controllerCoreApplication.IMOMap.remove(imo);
+        controllerCoreApplication.IMOMap.remove(name);
         return "Destroy IMO " + name + " on all cloud nodes successfully!";
     }
 

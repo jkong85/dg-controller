@@ -151,8 +151,11 @@ public class MigrationCopy implements Runnable {
         int cnt = 5;
         while(retry && cnt>0){
             try {
-                template.postForObject(CONTROLLER_DEL_IMO_URL, destroyParamMap, String.class);
-                retry = false;
+                String response = template.postForObject(CONTROLLER_DEL_IMO_URL, destroyParamMap, String.class);
+                if(!(response == null)) {
+                    System.out.println(response);
+                    retry = false;
+                }
             }catch(RestClientException re) {
                 retry = true;
                 System.out.println(re);
