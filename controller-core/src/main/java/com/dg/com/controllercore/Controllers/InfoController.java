@@ -35,10 +35,12 @@ public class InfoController {
         return imoInfo;
     }
 
+    //It is for debug: we can get the runtime information by API call
+    //TODO: add more based on your demand
     @RequestMapping(value = "/runtimeinfo")
     public String runtimeinfo() {
         StringBuilder sb = new StringBuilder();
-        sb.append("<<<<<<<<<<<<<<<<Runtime Information Requst>>>>>>>>>>>>>>>> ");
+        sb.append("===Runtime Information Requst===");
         sb.append(System.getProperty("line.separator"));
         sb.append(printIMOinfo());
         sb.append(System.getProperty("line.separator"));

@@ -98,7 +98,6 @@ public class MigrationCopy implements Runnable {
         boolean retry = true;
         int cnt = 5;
         while(retry && cnt>0){
-//            System.out.println("Try " + Integer.toString(6-cnt) + " time to migrate the DGs of " + name);
             try {
                 String result = template.postForObject(CONTROLLER_COPY_URL, copyParamMap, String.class);
                 System.out.println("Try to migrate DG form " + src + " to " + dst);
@@ -114,12 +113,24 @@ public class MigrationCopy implements Runnable {
             cnt--;
         }
         if(retry == true){
-            System.out.println("Cannot migrate successfully!");
+            Log log = new Log("location", name, 3);
+            log.logUpload("Migrate DG of " + name + " from " + src + " to " + dst);
+            System.out.println("Failed to migrate successfully!");
+            return;
         }
+        // Clean the runtime data, ready for others to use
+        cleanRuntime();
 
-        Log log = new Log("location", name, 3 );
-        log.logUpload("Migrate DG form " + src + " to " + dst);
+        Log log = new Log("location", name, 3);
+        log.logUpload("Migrate DG of " + name + " from " + src + " to " + dst);
     }
+    //Clean the runtime information for other DGs
+    //TODO: Send to other micro-service components to clean the runtime
+    private void cleanRuntime(){
+        ImoLocationApplication.locationHistoryData.clear();
+        ImoLocationApplication.logQueue.clear();
+    }
+
     //destroy the DGs on node
     private void destroy(String name, String type, String node){
         RestTemplate template = new RestTemplate();
