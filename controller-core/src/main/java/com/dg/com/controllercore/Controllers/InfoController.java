@@ -33,7 +33,7 @@ public class InfoController {
     }
 
     //deprecated
-    @RequestMapping(value = "/informationold")
+    @RequestMapping(value = "/infor")
     public String info(@RequestParam String name,
                            @RequestParam String type,
                            @RequestParam String location) {

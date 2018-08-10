@@ -74,10 +74,8 @@ public class CarEmulatorApplication {
             url_ready[1] = "/oil/ready";
         }
         while(!isReady(url_ready)){
-            try{
-                Thread.sleep(10000);
-                System.out.println("DGs of " + name +  " are creating ...");
-            }catch(InterruptedException ie){ }
+            try{ Thread.sleep(2000);}catch(InterruptedException ie){ }
+            System.out.println("DGs of " + name +  " are creating ...");
         }
         System.out.println("DGs are ready to receive data");
         System.out.println("DGs IP address: ");
@@ -117,16 +115,11 @@ public class CarEmulatorApplication {
         while(regResend) {
             regResend = false;
             try {
-                System.out.println("Registering " + name + " to controller");
+                System.out.println("Registering " + name + " to DG-Arbiter");
                 result = template.postForObject(registerURL, registerParamMap, String.class);
             } catch (RestClientException re) {
-//                System.out.println("Resend register cmd : " + re.toString());
                 regResend = true;
-                try {
-                    Thread.sleep(5000);
-                }catch(InterruptedException ie){
-
-                }
+                try { Thread.sleep(1000); }catch(InterruptedException ie){ }
             }
         }
         return result;

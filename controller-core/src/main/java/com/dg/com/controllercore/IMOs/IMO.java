@@ -34,7 +34,16 @@ public class IMO {
 
     public String getAllDGIpPort(){
         StringBuilder sb = new StringBuilder();
-        for(DG dg : dgList){
+        if(dgList.isEmpty() || dgList.size() == 0){
+            return null;
+        }
+        DG first = dgList.get(0);
+        sb.append(first.nodeIP);
+        sb.append(":");
+        sb.append(first.nodePort);
+        for(int i=1; i<dgList.size(); i++){
+            DG dg = dgList.get(i);
+            sb.append(",");
             sb.append(dg.nodeIP);
             sb.append(":");
             sb.append(dg.nodePort);

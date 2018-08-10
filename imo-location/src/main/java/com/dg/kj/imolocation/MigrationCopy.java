@@ -15,14 +15,9 @@ public class MigrationCopy implements Runnable {
     private static final String EDGE_NODE1 = "edge1";
     private static final String EDGE_NODE2 = "edge2";
 
-    private static final String CONTROLLER_COPY_URL = "http://172.17.8.101:30002/core/migration";
-    private static final String CONTROLLER_DESTROY_URL = "http://172.17.8.101:30002/core/destroy";
-
-    private static boolean isLeftRightMigrated = false;
-    private static boolean isRightLeftMigrated = false;
-    private static boolean isDestoyed = false;
-
-
+    private static final String CONTROLLER_MIGRATE_URL = "http://172.17.8.101:30002/core/migration";
+    private static final String CONTROLLER_DEL_DG_URL = "http://172.17.8.101:30002/core/deletedg";
+    private static final String CONTROLLER_DEL_IMO_URL = "http://172.17.8.101:30002/core/deleteimo";
 
     MigrationCopy(String name){
         threadName = name;
@@ -68,51 +63,11 @@ public class MigrationCopy implements Runnable {
         }
         if(location >=110){
             System.out.println(" Leaving the cloud, destory all DGs of " + curServiceName);
-            destroy(curServiceName, curNode, type);
+//            deleteDG(curServiceName, curNode, type);
+            deleteIMO(curServiceName);
         }
     }
 
-    private void oldMigrateLogic(String curServiceName, String curNode, String type){
-        if(ImoLocationApplication.locationHistoryData.size()>6) {
-            Integer preLocation = Integer.valueOf(ImoLocationApplication.locationHistoryData.get(3));
-            Integer location = Integer.valueOf(ImoLocationApplication.locationHistoryData.get(0));
-
-            if(preLocation < location){ // from left to right
-                if (location >= 40 && (!isLeftRightMigrated) && curNode.equals(EDGE_NODE1)) {
-                    System.out.println(" Migrate to Edge Node 2");
-                    migrate(curServiceName, type, EDGE_NODE1, EDGE_NODE2);
-                    String migrateInfo = "Copy DG from " + EDGE_NODE1 + " to " + EDGE_NODE2;
-                    isLeftRightMigrated = true;
-                }
-                if ((!isDestoyed) && ((location > 60 && curNode.equals(EDGE_NODE1))
-                        || (location >= 100 && curNode.equals(EDGE_NODE2)))) {
-                    // destroy it's self
-                    System.out.println(" Destroy DGs on " + curNode);
-                    destroy(curServiceName, type, curNode);
-                    isDestoyed = true;
-                }
-
-            } else if(preLocation > location){ // from right to left
-                if (location <= 60 && (!isRightLeftMigrated) && curNode.equals(EDGE_NODE2)) {
-                    System.out.println(" Migrate to Edge Node 1");
-                    migrate(curServiceName, type, EDGE_NODE2, EDGE_NODE1);
-                    String migrateInfo = "Copy DG from " + EDGE_NODE2 + " to " + EDGE_NODE1;
-                    isRightLeftMigrated = true;
-                }
-                if ((!isDestoyed) && ((location < 40 && curNode.equals(EDGE_NODE2))
-                        || (location < 1 && curNode.equals(EDGE_NODE1)))) {
-                    // destroy it's self
-                    System.out.println(" Destroy DGs on " + curNode);
-                    destroy(curServiceName, type, curNode);
-                    isDestoyed = true;
-                }
-            }
-        }
-        try{
-            Thread.sleep(1000);
-        }catch (InterruptedException ie){
-        }
-    }
     public void start () {
         System.out.println("Starting MigrationCopy of " +  threadName );
         if (t == null) {
@@ -132,7 +87,7 @@ public class MigrationCopy implements Runnable {
         int cnt = 5;
         while(retry && cnt>0){
             try {
-                template.postForObject(CONTROLLER_COPY_URL, copyParamMap, String.class);
+                template.postForObject(CONTROLLER_MIGRATE_URL, copyParamMap, String.class);
                 System.out.println("Try to migrate DG form " + src + " to " + dst);
                 retry = false;
             }catch(RestClientException re) {
@@ -161,8 +116,8 @@ public class MigrationCopy implements Runnable {
         ImoLocationApplication.logQueue.clear();
     }
 
-    //destroy the DGs on node
-    private void destroy(String name, String type, String node){
+    //delete the DGs on node
+    private void deleteDG(String name, String type, String node){
         RestTemplate template = new RestTemplate();
         MultiValueMap<String, Object> destroyParamMap = new LinkedMultiValueMap<String, Object>();
         destroyParamMap.add("name", name);
@@ -173,7 +128,7 @@ public class MigrationCopy implements Runnable {
         int cnt = 5;
         while(retry && cnt>0){
             try {
-                template.postForObject(CONTROLLER_DESTROY_URL, destroyParamMap, String.class);
+                template.postForObject(CONTROLLER_DEL_DG_URL, destroyParamMap, String.class);
                 retry = false;
             }catch(RestClientException re) {
                 retry = true;
@@ -182,9 +137,31 @@ public class MigrationCopy implements Runnable {
             try{ Thread.sleep(200); }catch (InterruptedException ie){ }
             cnt--;
         }
-
         Log log = new Log("location", name, 3);
         log.logUpload("Delete myself DG on " + node);
+    }
+
+    //delete the DGs on node
+    private void deleteIMO(String name){
+        RestTemplate template = new RestTemplate();
+        MultiValueMap<String, Object> destroyParamMap = new LinkedMultiValueMap<String, Object>();
+        destroyParamMap.add("name", name);
+
+        boolean retry = true;
+        int cnt = 5;
+        while(retry && cnt>0){
+            try {
+                template.postForObject(CONTROLLER_DEL_IMO_URL, destroyParamMap, String.class);
+                retry = false;
+            }catch(RestClientException re) {
+                retry = true;
+                System.out.println(re);
+            }
+            try{ Thread.sleep(200); }catch (InterruptedException ie){ }
+            cnt--;
+        }
+        Log log = new Log("location", name, 3);
+        log.logUpload("Delete IMO of " + name);
     }
 
 }

@@ -73,8 +73,8 @@ public class MigrationController {
         return "Migrate successfully!";
     }
 
-    @RequestMapping(value = "/destroy")
-    public String destroy(@RequestParam String name,
+    @RequestMapping(value = "/deletedg")
+    public String deletedg(@RequestParam String name,
                           @RequestParam String type,
                           @RequestParam String node) {
         if(controllerCoreApplication.IMOMap == null || !controllerCoreApplication.IMOMap.containsKey(name)){
@@ -91,6 +91,29 @@ public class MigrationController {
             return null;
         }
         return "Destroy DG " + name + " on cloud " + node + " successfully!";
+    }
+
+    @RequestMapping(value = "/deleteimo")
+    public String deleteimo(@RequestParam String name) {
+        if(controllerCoreApplication.IMOMap == null || !controllerCoreApplication.IMOMap.containsKey(name)){
+            return "IMO is NOT existed for " + name;
+        }
+        if(!controllerCoreApplication.IMOMap.containsKey(name)){
+            logger.warn(" IMO of " + name + "does NOT existed! Do nothing!");
+        }
+        IMO imo = controllerCoreApplication.IMOMap.get(name);
+        for(int i=0; i<imo.dgList.size(); i++) {
+            DG dg = imo.dgList.get(i);
+            if (dg == null) {
+                logger.warn("current DG is NOT existed! continue!");
+            }
+            if (!DgCmds.releaseDG(imo, dg, true)) {
+                logger.error("Failed to destroy DG of " +imo + " ==> " + dg.toString());
+                continue;
+            }
+        }
+        controllerCoreApplication.IMOMap.remove(imo);
+        return "Destroy IMO " + name + " on all cloud nodes successfully!";
     }
 
     //TODO: Add the MONGODB migration logic

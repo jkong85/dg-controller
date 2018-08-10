@@ -19,7 +19,6 @@ public class DestinationUpdate implements Runnable{
     }
 
     public void run() {
-        //System.out.println("Running dst update of " +  name );
         while(true) {
             //String urlService = infoURL + name;
             String urlService = infoURL + name + "&type=" + type + "&location=10";
