@@ -19,16 +19,30 @@ public class IMO {
         this.type = type;
         dgList = new ArrayList<>();
     }
-
-    public DG findDGonNode(String node){
-        if(node == null || dgList == null || dgList.size()==0){
+    public DG findDGBkService(String bkService){
+        if(dgList == null || dgList.size() == 0)
             return null;
-        }
         for(DG item : dgList){
-            if(item.node.equals(node)){
+            if(item.bkService.name.equals(bkService)){
                 return item;
             }
         }
+        return null;
+    }
+
+    public DG findDGonNode(String node){
+        if(node == null || dgList == null || dgList.size()==0){
+            logger.warn(" Null info to find DG on node: " + node);
+            return null;
+        }
+        for(DG item : dgList){
+//            if(item.node.equals(node)){
+            //TODO: Take care here, we shoud use BkService's node to check
+            if(item.bkService.node.equals(node)){
+                return item;
+            }
+        }
+        logger.warn(" Failed to find DG on node: " + node + " => " + this.toString());
         return null;
     }
 

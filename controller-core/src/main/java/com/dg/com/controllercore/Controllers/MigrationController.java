@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 
 @RestController
 public class MigrationController {
@@ -25,18 +27,28 @@ public class MigrationController {
     private LogController logController;
 
     @RequestMapping(value = "/migration")
-    public String migrate(@RequestParam String name,
+    public String migrate(@RequestParam String name,    //TODO: It is Backupservice name, NOT DG's name
                            @RequestParam String type,
                            @RequestParam String srcNode,
                            @RequestParam String dstNode) {
+        logger.info("Migration request of " + name + " from: " + srcNode + " to " + dstNode);
         if(controllerCoreApplication.IMOMap == null || !controllerCoreApplication.IMOMap.containsKey(name)){
             return "IMO is NOT existed for " + name;
         }
-        IMO imo = controllerCoreApplication.IMOMap.get(name);
-        DG srcDG = imo.findDGonNode(srcNode);
+        // find the DG binded to the BkService (name)
+        IMO imo = null;
+        DG srcDG = null;
+        for(Map.Entry<String, IMO> entry : controllerCoreApplication.IMOMap.entrySet()){
+            IMO curIMO = entry.getValue();
+            srcDG = curIMO.findDGBkService(name);
+            if(srcDG != null){
+                imo = curIMO;
+                break;
+            }
+        }
         if(srcDG == null){
             logger.warn("Src DG is NOT existed! DO nothing!");
-            return "DG on source node is NOT existed! ";
+            return "DG on srcNode " + srcNode + " is NOT existed! ";
         }
 
         //Step 1: Check whether there is DG on dstNode, if not, find and bind one available BackupService

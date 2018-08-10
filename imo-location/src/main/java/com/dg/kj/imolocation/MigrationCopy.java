@@ -2,6 +2,7 @@ package com.dg.kj.imolocation;
 
 import com.dg.kj.dgcommons.DgCommonsApplication;
 import com.dg.kj.dgcommons.Log;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
@@ -19,12 +20,15 @@ public class MigrationCopy implements Runnable {
     private static final String CONTROLLER_DEL_DG_URL = "http://172.17.8.101:30002/core/deletedg";
     private static final String CONTROLLER_DEL_IMO_URL = "http://172.17.8.101:30002/core/deleteimo";
 
+    private static Boolean isLeftRight = false;
+    private static Boolean isRightLeft = false;
+
     MigrationCopy(String name){
         threadName = name;
     }
 
     public void run() {
-        String curServiceName = System.getenv("SERVICE_LABEL");
+        String curServiceName = System.getenv("SERVICE_LABEL"); //TODO: take care here, it is Bkservice name, NOT DG's name
         String curNode = System.getenv("CUR_NODE");
         String type = "honda";
         //TODO: add type ENV to determine car's type
@@ -56,16 +60,23 @@ public class MigrationCopy implements Runnable {
             return;
         }
         Integer location = Integer.valueOf(ImoLocationApplication.locationHistoryData.get(0));
-        if (location >= 50 && location < 60) {
+        if (location >= 30 && location < 40) {
             if (lefttoRight() && curNode.equals(EDGE_NODE1)) {
-                System.out.println(" Migrate " + curServiceName + " from edge1 to edge2");
-                migrate(curServiceName, type, EDGE_NODE1, EDGE_NODE2);
+                if(!isLeftRight) {
+                    migrate(curServiceName, type, EDGE_NODE1, EDGE_NODE2);
+                    isLeftRight = true;
+                }
             } else if(lefttoRight() && curNode.equals(EDGE_NODE2)){
-                System.out.println(" Migrate " + curServiceName + " from edge2 to edge1");
-                migrate(curServiceName, type, EDGE_NODE2, EDGE_NODE1);
+                if(! isRightLeft) {
+                    migrate(curServiceName, type, EDGE_NODE2, EDGE_NODE1);
+                    isRightLeft = true;
+                }
             }
+        }else{
+            isLeftRight = false;
+            isRightLeft = false;
         }
-        if(location >=110){
+        if(location >= 110){
             System.out.println(" Leaving the cloud, destory all DGs of " + curServiceName);
 //            deleteDG(curServiceName, curNode, type);
             deleteIMO(curServiceName);
@@ -80,6 +91,7 @@ public class MigrationCopy implements Runnable {
         }
     }
     private void migrate(String name, String type, String src, String dst){
+        System.out.println("Migrate " + name + " from node " + src + " to node " + dst);
         RestTemplate template = new RestTemplate();
         MultiValueMap<String, Object> copyParamMap = new LinkedMultiValueMap<String, Object>();
         copyParamMap.add("name", name);
