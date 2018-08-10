@@ -29,6 +29,7 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
         DgCommonsApplication.delay(60);
         logger.info("Running BkServiceCheckAvailNumberThread to guarantee that a certain number of BackupServices are available!");
         while(true) {
+            printCurBkPool();
             for(String node : ControllerCoreApplication.NODE_LIST){
                 for(String type : ControllerCoreApplication.IMO_TYPE){
                     Integer cnt = 0;
@@ -140,7 +141,7 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
         return true;
     }
 
-    private void printCurBkPool(String nodeType){
+    private void printCurBkPool(){
         StringBuilder sbReady = new StringBuilder();
         StringBuilder sbNotReady = new StringBuilder();
         for(String node : ControllerCoreApplication.NODE_LIST){
