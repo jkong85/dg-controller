@@ -144,19 +144,6 @@ public class ApiServerCmd {
         return new Deployment(deploy_name, node_selector, prefix);
     }
 
-
-    private Deployment CreateTestDeployment(String service_label, String eureka_ip, String node_selector){
-        String prefix = "test";
-        String deploy_name =  service_label + "-" + prefix;
-        String container_name = deploy_name;
-        String container_images = DOCKER_IMAGE_PREFIX + prefix + ":" + VERSION;
-        String container_port = TEST_CONTAINER_PORT;
-
-        CreateDeployment(deploy_name, service_label,
-                container_name, container_images, container_port, eureka_ip, node_selector);
-        return new Deployment(deploy_name, node_selector, prefix);
-    }
-
     private Deployment CreateEurekaDeployment(String service_label, String eureka_ip, String node_selector) throws HttpClientErrorException{
         String prefix = "eureka";
         String deploy_name =  service_label + "-" + prefix;
@@ -186,7 +173,7 @@ public class ApiServerCmd {
                                  String selector,
                                  String nodePort_eureka,
                                  String nodePort_zuul
-    ) throws HttpClientErrorException{
+    ) throws RestClientException{
         logger.debug("Start to create service : " + name);
         String urlService = URL_K8S_CREATE_SERVICE;
         String body = "{\"apiVersion\":\"v1\",\"kind\":\"Service\",\"metadata\":{\"labels\":{\"dg\":\"" +
@@ -230,7 +217,7 @@ public class ApiServerCmd {
                 ok = true;
                 break;
             } catch (RestClientException e) {
-                logger.error("DeleteService " + cnt.toString() + " time, Can NOT delete service successfully => " + e.toString());
+                logger.warn("DeleteService " + cnt.toString() + " time, Can NOT delete service successfully => " + e.toString());
             }
         }
         if(!ok){

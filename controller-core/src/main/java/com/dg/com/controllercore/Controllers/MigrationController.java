@@ -43,26 +43,32 @@ public class MigrationController {
         // We assume that there is ONLY ONE DG for each IMO on each node
         if(dstNode.equals(imo.findDGonNode(dstNode))){
             logger.warn(" DG for " + name + " existed on node " + dstNode + "=>" + imo.findDGonNode(dstNode).toString());
-            return "IMO is existed for " + name + "! Details: " + imo.findDGonNode(dstNode).toString();
+            return null;
         }
         String dstServiceName = name + "-" + dstNode;
         DG dstDG = DgCmds.createDGQuick(dstServiceName, imo, type, dstNode);
         if(dstDG == null){
-            logger.warn("Cannot create a new DG for " + name + " on node " + dstNode);
+            logger.warn("Failed to create a new DG for " + name + " on node " + dstNode);
+            return null;
         }
 
         //Step 2: Data migration
         if(! migrateMongoDB(srcDG, dstDG)){
-            logger.error(" Migrate MongoDB from " + srcNode + " to " + dstNode + " FAILRED! Details=> " + " srcDG: " + srcDG.toString() + " ||| dstDG: "  + dstDG.toString());
-            // restore the new DG allocated
-            return "Migrate failed (Reason: mongoDB migration failed !";
+            logger.error(" Failed to migrate MongoDB from " + srcNode + " to " + dstNode + " => " + " srcDG: " + srcDG.toString() + " || dstDG: "  + dstDG.toString());
+            // release the new DG allocated
+            if( !DgCmds.releaseDG(imo, dstDG, true)){
+                logger.error("Failed to release dstDG after migrateMongoDB failed => " + dstDG.toString());
+            }else{
+                logger.error("Release dstDG successfully after migrateMongoDB failed => " + dstDG.toString());
+            }
+            return null;
         }
 
         //Step 3: Destroy the old one (release the BackupService, put the BackupServiceclean the MongoDB)
 
         if(! DgCmds.releaseDG(imo, srcDG, true)){
-            logger.error("Failed to release old DG " + srcDG.toString());
-            return "Failed to release old DG" + srcDG.toString();
+            logger.error("Failed to release srcDG => " + srcDG.toString());
+            return null;
         }
         return "Migrate successfully!";
     }

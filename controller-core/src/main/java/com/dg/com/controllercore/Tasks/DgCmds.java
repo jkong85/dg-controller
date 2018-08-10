@@ -66,7 +66,9 @@ public class DgCmds {
     public static boolean releaseDG(IMO imo, DG dg, Boolean flag){
         //public String deleteService(String serviceName, Integer port, Boolean portRealease) throws  HttpClientErrorException {
         String serviceName = dg.name;
-        Integer port = Integer.valueOf(dg.nodePort);
+        //eureka: port, Zuul: port+1
+        //TODO: it is misunderstanding here! 
+        Integer port = Integer.valueOf(dg.nodePort) - 1;
         ApiServerCmd apiServerCmd = new ApiServerCmd();
 
         logger.debug("Release DG:" + dg.toString());

@@ -140,6 +140,27 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
         return true;
     }
 
+    private void printCurBkPool(String nodeType){
+        StringBuilder sbReady = new StringBuilder();
+        StringBuilder sbNotReady = new StringBuilder();
+        for(String node : ControllerCoreApplication.NODE_LIST){
+            for(String type : ControllerCoreApplication.IMO_TYPE) {
+                String nodetype = node + "+" + type;
+                sbReady.append(System.getProperty("line.separator"));
+                sbReady.append(ControllerCoreApplication.bkServiceReadyPoolMap.get(nodetype).toString());
+                sbNotReady.append(System.getProperty("line.separator"));
+                sbNotReady.append(ControllerCoreApplication.bkServiceNotReadyPoolMap.get(nodetype).toString());
+            }
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append(" Current BackupServier Pools are: ");
+        sb.append(System.getProperty("line.separator"));
+        sb.append(sbReady.toString());
+        sb.append(System.getProperty("line.separator"));
+        sb.append(sbNotReady.toString());
+        logger.trace(sb.toString());
+    }
+
     public void start () {
         if (t == null) {
             t = new Thread (this);
