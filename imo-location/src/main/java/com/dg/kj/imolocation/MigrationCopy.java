@@ -51,12 +51,15 @@ public class MigrationCopy implements Runnable {
     }
 
     private void migrateLogic(String curServiceName, String curNode, String type){
+        if(ImoLocationApplication.locationHistoryData.size() < 1){
+            return;
+        }
         Integer location = Integer.valueOf(ImoLocationApplication.locationHistoryData.get(0));
         if (location == 50) {
-            if (lefttoRight()) {
+            if (lefttoRight() && curNode.equals(EDGE_NODE1)) {
                 System.out.println(" Migrate " + curServiceName + " from edge1 to edge2");
                 migrate(curServiceName, type, EDGE_NODE1, EDGE_NODE2);
-            } else {
+            } else if(lefttoRight() && curNode.equals(EDGE_NODE2)){
                 System.out.println(" Migrate " + curServiceName + " from edge2 to edge1");
                 migrate(curServiceName, type, EDGE_NODE2, EDGE_NODE1);
             }

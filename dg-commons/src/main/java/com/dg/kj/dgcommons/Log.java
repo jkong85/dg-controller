@@ -12,7 +12,7 @@ public class Log {
     private String url;
     private int cnt = 3;
 
-    private static final String URL_CONTROLLER_LOG = "http://172.17.8.101:30002/test/logwrite";
+    private static final String URL_CONTROLLER_LOG = "http://172.17.8.101:30002/core/logwrite";
 
     public Log(String type, String sender, int cnt) {
         this.type = type;

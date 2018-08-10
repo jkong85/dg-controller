@@ -26,7 +26,7 @@ public class LocationUpload implements Runnable{
     LocationUpload(String name, String type) {
         threadName = name;
         this.type = type;
-        this.size = CarEmulatorApplication.toyota_location.length;
+        this.size = CarEmulatorApplication.honda_location.length;
         location = new Integer[size];
         for(int i=0; i<size; i++){
             location[i] = CarEmulatorApplication.honda_location[i];

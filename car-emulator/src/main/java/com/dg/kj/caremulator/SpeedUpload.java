@@ -23,7 +23,7 @@ public class SpeedUpload implements Runnable{
     SpeedUpload(String name, String type) {
         threadName = name;
         this.type = type;
-        this.size = CarEmulatorApplication.toyota_speed.length;
+        this.size = CarEmulatorApplication.honda_location.length;
         speed = new Integer[size];
         for(int i=0; i<size; i++){
             speed[i] = CarEmulatorApplication.honda_speed[i];
@@ -33,7 +33,6 @@ public class SpeedUpload implements Runnable{
                 speed[i] = CarEmulatorApplication.toyota_speed[i];
             }
         }
-//        System.out.println("Speed uploda initializating " +  threadName );
     }
 
     public void run() {

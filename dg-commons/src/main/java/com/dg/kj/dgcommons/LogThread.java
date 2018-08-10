@@ -13,7 +13,7 @@ public class LogThread implements Runnable{
     private String url;
     private int cnt = 3;
 
-    private static final String URL_CONTROLLER_LOG = "http://172.17.8.101:30002/test/logwrite";
+    private static final String URL_CONTROLLER_LOG = "http://172.17.8.101:30002/core/logwrite";
 
     public static Queue<String> logQueue = new LinkedList<String>(); // Just for log
 
