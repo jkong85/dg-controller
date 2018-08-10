@@ -35,8 +35,8 @@ public class InfoController {
         return imoInfo;
     }
 
-    @RequestMapping(value = "/globalinfo")
-    public String globalinfo() {
+    @RequestMapping(value = "/runtimeinfo")
+    public String runtimeinfo() {
         StringBuilder sb = new StringBuilder();
         sb.append("<<<<<<<<<<<<<<<<Runtime Information Requst>>>>>>>>>>>>>>>> ");
         sb.append(System.getProperty("line.separator"));
