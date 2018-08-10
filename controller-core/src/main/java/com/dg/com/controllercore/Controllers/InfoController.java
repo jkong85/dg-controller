@@ -53,8 +53,11 @@ public class InfoController {
     public String runtimeinfo() {
         StringBuilder sb = new StringBuilder();
         sb.append("===Runtime Information Requst===");
+        sb.append("<br/>");
         sb.append(System.getProperty("line.separator"));
+        sb.append("<br/>");
         sb.append(printIMOinfo());
+        sb.append("<br/>");
         sb.append(System.getProperty("line.separator"));
         sb.append(printCurBkPool());
         return sb.toString();
@@ -63,10 +66,12 @@ public class InfoController {
     private String printIMOinfo(){
         StringBuilder sb = new StringBuilder();
         sb.append("All IMO information: ");
+        sb.append("<br/>");
         sb.append(System.getProperty("line.separator"));
         for(Map.Entry<String, IMO> cur : controllerCoreApplication.IMOMap.entrySet() ){
             sb.append("     " + cur.toString());
             sb.append(System.getProperty("line.separator"));
+            sb.append("<br/>");
         }
         return sb.toString();
     }
@@ -84,11 +89,14 @@ public class InfoController {
         }
         StringBuilder sb = new StringBuilder();
         sb.append("===========" + System.getProperty("line.separator"));
+        sb.append("<br/>");
         sb.append("Current BackupServier Pools are: ");
+        sb.append("<br/>");
         sb.append(" ==> Current BackupRServier READY Pools are: ");
         sb.append(System.getProperty("line.separator"));
         sb.append(sbReady.toString());
         sb.append(System.getProperty("line.separator"));
+        sb.append("<br/>");
         sb.append(" ==> Current BackupRServier NOT READY Pools are: ");
         sb.append(sbNotReady.toString());
         logger.debug(sb.toString());

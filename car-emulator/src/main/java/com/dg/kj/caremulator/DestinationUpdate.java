@@ -27,6 +27,7 @@ public class DestinationUpdate implements Runnable{
             while(cnt > 0 ) {
                 try {
                     String response = restTemplate.getForObject(urlService, String.class);
+                    System.out.println("Response of destination request: " + response);
                     // shoud return: "IP1:port1, IP2:port2,..."
                     String[] ipPort = response.split(",");
                     boolean isValid = ipPort == null ? false : true;
@@ -37,7 +38,7 @@ public class DestinationUpdate implements Runnable{
                     }
                     if (isValid) {
                         CarEmulatorApplication.destination.clear();
-//                        System.out.println("Destination of the DGs are :");
+                        System.out.println("Destination of the DGs are :");
                         for (String str : ipPort) {
                             CarEmulatorApplication.destination.add(str);
                         }
@@ -45,7 +46,6 @@ public class DestinationUpdate implements Runnable{
                     cnt = 0;
                 } catch (RestClientException re) {
                     cnt--;
-//                    System.out.println("DGs are creating, wait!");
                 }
             }
             try {
