@@ -32,6 +32,7 @@ public class CarEmulatorApplication {
 
     public static String NAME = null;
     public static String TYPE = null;
+    public static Integer DATA_SIZE = 0;
 
 
     public static void main(String[] args) {
@@ -40,6 +41,11 @@ public class CarEmulatorApplication {
             System.out.println("Input error! \n java -jar CarEmulator car1 honda|toyota");
             return;
         }
+        DATA_SIZE = Math.min(honda_location.length, Math.min(honda_oil.length, honda_speed.length));
+        DATA_SIZE = Math.min(DATA_SIZE, toyota_location.length);
+        DATA_SIZE = Math.min(DATA_SIZE, toyota_oil.length);
+        DATA_SIZE = Math.min(DATA_SIZE, toyota_speed.length);
+        System.out.println("Data size is : " + DATA_SIZE.toString());
 
         String name = args[0];
         String type = args[1];

@@ -23,7 +23,8 @@ public class SpeedUpload implements Runnable{
     SpeedUpload(String name, String type) {
         threadName = name;
         this.type = type;
-        this.size = CarEmulatorApplication.honda_location.length;
+//        this.size = CarEmulatorApplication.honda_location.length;
+        this.size = CarEmulatorApplication.DATA_SIZE;
         speed = new Integer[size];
         for(int i=0; i<size; i++){
             speed[i] = CarEmulatorApplication.honda_speed[i];
@@ -39,8 +40,8 @@ public class SpeedUpload implements Runnable{
         String name = CarEmulatorApplication.NAME;
         String type = CarEmulatorApplication.TYPE;
 
-        Set<String>[] isSent = new HashSet[CarEmulatorApplication.honda_location.length +1];
-        boolean[] isPrinted = new boolean[CarEmulatorApplication.honda_location.length + 1];
+        Set<String>[] isSent = new HashSet[CarEmulatorApplication.DATA_SIZE + 1];
+        boolean[] isPrinted = new boolean[CarEmulatorApplication.DATA_SIZE + 1];
         for(int i=0; i< isSent.length; i++){
             isSent[i] = new HashSet<>();
             isPrinted[i] = false;
