@@ -53,7 +53,6 @@ public class InfoController {
     public String runtimeinfo() {
         StringBuilder sb = new StringBuilder();
         sb.append("===Runtime Information Requst===");
-        sb.append("<br/>");
         sb.append(System.getProperty("line.separator"));
         sb.append("<br/>");
         sb.append(printIMOinfo());
@@ -75,22 +74,33 @@ public class InfoController {
         }
         return sb.toString();
     }
+    private String printPortPool(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("==========Available Port Pool ======================" );
+        sb.append(System.getProperty("line.separator"));
+        sb.append("<br/>");
+        sb.append(ControllerCoreApplication.nodePortsPool.toString());
+        sb.append("<br/>");
+        return sb.toString();
+    }
     private String printCurBkPool(){
         StringBuilder sbReady = new StringBuilder();
         StringBuilder sbNotReady = new StringBuilder();
         for(String node : ControllerCoreApplication.NODE_LIST){
             for(String type : ControllerCoreApplication.IMO_TYPE) {
                 String nodetype = node + "+" + type;
+                sbReady.append("<br/>");
                 sbReady.append(System.getProperty("line.separator"));
                 sbReady.append(ControllerCoreApplication.bkServiceReadyPoolMap.get(nodetype).toString());
+                sbNotReady.append("<br/>");
                 sbNotReady.append(System.getProperty("line.separator"));
                 sbNotReady.append(ControllerCoreApplication.bkServiceNotReadyPoolMap.get(nodetype).toString());
             }
         }
         StringBuilder sb = new StringBuilder();
-        sb.append("===========" + System.getProperty("line.separator"));
+        sb.append("==========Current BackupServier Pools Info ==========" );
+        sb.append(System.getProperty("line.separator"));
         sb.append("<br/>");
-        sb.append("Current BackupServier Pools are: ");
         sb.append("<br/>");
         sb.append(" ==> Current BackupRServier READY Pools are: ");
         sb.append(System.getProperty("line.separator"));
@@ -99,6 +109,7 @@ public class InfoController {
         sb.append("<br/>");
         sb.append(" ==> Current BackupRServier NOT READY Pools are: ");
         sb.append(sbNotReady.toString());
+        sb.append("<br/>");
         logger.debug(sb.toString());
         return sb.toString();
     }

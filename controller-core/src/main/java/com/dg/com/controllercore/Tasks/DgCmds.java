@@ -27,10 +27,10 @@ public class DgCmds {
             logger.warn("No available DG on node" + node + " , just wait!");
             return null;
         }
-        logger.trace("Before allocating,bkServiceReadyPoolMap of " + nodeType + " is: " + ControllerCoreApplication.bkServiceReadyPoolMap.get(nodeType).toString());
+        logger.trace("Before allocating, bkServiceReadyPoolMap of " + nodeType + " is: " + ControllerCoreApplication.bkServiceReadyPoolMap.get(nodeType).toString());
         BackupService backupService = ControllerCoreApplication.bkServiceReadyPoolMap.get(nodeType).get(0);
         backupService.status = ControllerCoreApplication.BK_SERVICE_STATUS_USED;
-        logger.debug("Find the BackupService on node : " + node + " for IMO request: " + dgName + " => " + backupService.toString());
+        logger.debug("Find BackupService on node : " + node + " for IMO request: " + dgName + " => " + backupService.toString());
 
         Integer node_port_eureka = ControllerCoreApplication.nodePortsPool.pop();
         Integer node_port_zuul = node_port_eureka + 1;
