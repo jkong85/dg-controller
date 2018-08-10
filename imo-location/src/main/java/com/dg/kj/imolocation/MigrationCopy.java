@@ -165,7 +165,7 @@ public class MigrationCopy implements Runnable {
     private void destroy(String name, String type, String node){
         RestTemplate template = new RestTemplate();
         MultiValueMap<String, Object> destroyParamMap = new LinkedMultiValueMap<String, Object>();
-        destroyParamMap.add("serviceName", name);
+        destroyParamMap.add("name", name);
         destroyParamMap.add("type", type);
         destroyParamMap.add("node", node);
 
@@ -173,20 +173,17 @@ public class MigrationCopy implements Runnable {
         int cnt = 5;
         while(retry && cnt>0){
             try {
-                String result = template.postForObject(CONTROLLER_DESTROY_URL, destroyParamMap, String.class);
+                template.postForObject(CONTROLLER_DESTROY_URL, destroyParamMap, String.class);
                 retry = false;
             }catch(RestClientException re) {
                 retry = true;
                 System.out.println(re);
             }
-            try{
-                Thread.sleep(200);
-            }catch (InterruptedException ie){
-            }
+            try{ Thread.sleep(200); }catch (InterruptedException ie){ }
             cnt--;
         }
 
-        Log log = new Log("location", name, 3 );
+        Log log = new Log("location", name, 3);
         log.logUpload("Delete myself DG on " + node);
     }
 
