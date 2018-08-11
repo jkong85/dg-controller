@@ -47,18 +47,17 @@ public class MigrationController {
             logger.warn("Src DG is NOT existed! DO nothing!");
             return "DG on srcNode " + srcNode + " is NOT existed! ";
         }
-        String name = srcDG.name;
-        logger.debug(" DG name binded with bkservice is: " + name);
+
         //Step 1: Check whether there is DG on dstNode, if not, find and bind one available BackupService
         // We assume that there is ONLY ONE DG for each IMO on each node
         if(dstNode.equals(imo.findDGonNode(dstNode))){
-            logger.warn(" DG for " + name + " existed on node " + dstNode + "=>" + imo.findDGonNode(dstNode).toString());
+            logger.warn(" DG for " + imoName + " existed on node " + dstNode + "=>" + imo.findDGonNode(dstNode).toString());
             return null;
         }
-        String dstServiceName = name + "-" + dstNode;
+        String dstServiceName = imoName + "-" + dstNode;
         DG dstDG = DgCmds.createDGQuick(dstServiceName, imo, type, dstNode);
         if(dstDG == null){
-            logger.warn("Failed to create a new DG for " + name + " on node " + dstNode);
+            logger.warn("Failed to create a new DG for " + imoName + " on node " + dstNode);
             return null;
         }
 

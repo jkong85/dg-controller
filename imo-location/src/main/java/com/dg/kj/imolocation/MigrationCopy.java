@@ -60,7 +60,7 @@ public class MigrationCopy implements Runnable {
             return;
         }
         Integer location = Integer.valueOf(ImoLocationApplication.locationHistoryData.get(0));
-        if (location >= 30 && location < 40) {
+        if (location >= 20 && location < 30) {
             if (lefttoRight() && curNode.equals(EDGE_NODE1)) {
                 if(!isLeftRight) {
                     migrate(curServiceName, type, EDGE_NODE1, EDGE_NODE2);
