@@ -132,6 +132,7 @@ public class CarEmulatorApplication {
     }
 
     private static boolean isReady(String[] url_ready){
+        System.out.print("Check whether all services' are ready!");
         if(destination == null || destination.size()==0){
             return false;
         }

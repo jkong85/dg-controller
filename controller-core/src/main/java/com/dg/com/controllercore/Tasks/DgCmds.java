@@ -46,7 +46,7 @@ public class DgCmds {
         ControllerCoreApplication.bkServiceReadyPoolMap.get(nodeType).remove(0);
         imo.dgList.add(dg);
 
-        logger.trace("After allocating,bkServiceReadyPoolMap of " + nodeType + " is: " + ControllerCoreApplication.bkServiceReadyPoolMap.get(nodeType).toString());
+        logger.trace("After allocating, bkServiceReadyPoolMap of " + nodeType + " is: " + ControllerCoreApplication.bkServiceReadyPoolMap.get(nodeType).toString());
         logger.info("New DG is allocated for " + dgName+ " on node: " + node+ " => " + dg.toString());
 
         return dg;
