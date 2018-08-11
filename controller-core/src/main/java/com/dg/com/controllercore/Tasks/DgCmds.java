@@ -31,6 +31,7 @@ public class DgCmds {
         BackupService backupService = ControllerCoreApplication.bkServiceReadyPoolMap.get(nodeType).get(0);
         backupService.dgName = dgName;
         backupService.imoName = imo.name;
+        ControllerCoreApplication.bkServiceNameMap.put(backupService.name, backupService);
         logger.debug("Find BackupService on node : " + node + " for IMO request: " + dgName + " => " + backupService.toString());
 
         Integer node_port_eureka = ControllerCoreApplication.nodePortsPool.pop();
@@ -79,6 +80,7 @@ public class DgCmds {
             logger.error("Failed to release DG: " + dg.toString());
             return false;
         }
+        ControllerCoreApplication.bkServiceNameMap.remove(dg.bkService.name);
         dg.bkService.imoName = null;
         dg.bkService.dgName = null;
         //TODO: change all node + "+" + type to function call

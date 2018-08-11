@@ -94,7 +94,7 @@ public class MigrationCopy implements Runnable {
         System.out.println("Migrate " + name + " from node " + src + " to node " + dst);
         RestTemplate template = new RestTemplate();
         MultiValueMap<String, Object> copyParamMap = new LinkedMultiValueMap<String, Object>();
-        copyParamMap.add("name", name);
+        copyParamMap.add("bkname", name);
         copyParamMap.add("type", type);
         copyParamMap.add("srcNode", src);
         copyParamMap.add("dstNode", dst);
