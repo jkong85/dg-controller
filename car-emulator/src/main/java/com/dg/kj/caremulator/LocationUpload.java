@@ -27,9 +27,9 @@ public class LocationUpload implements Runnable{
         threadName = name;
         this.type = type;
         //this.size = CarEmulatorApplication.honda_location.length;
-        size = CarEmulatorApplication.DATA_SIZE;
-        location = new Integer[size+1];
-        for(int i=0; i<size+1; i++){
+        size = CarEmulatorApplication.DATA_SIZE+2;
+        location = new Integer[size];
+        for(int i=0; i<size; i++){
             location[i] = CarEmulatorApplication.honda_location[i];
             if(type.equals(CarEmulatorApplication.HONDA)){
                 location[i] = CarEmulatorApplication.honda_location[i];
@@ -52,7 +52,7 @@ public class LocationUpload implements Runnable{
         }
         try {
             RestTemplate template = new RestTemplate();
-            while(DataSync.index < CarEmulatorApplication.toyota_location.length) {
+            while(DataSync.index < CarEmulatorApplication.DATA_SIZE) {
                 int index = DataSync.index;
                 // simple check, not rigorouse
                 if (CarEmulatorApplication.destination.size() == 0) {
@@ -64,7 +64,7 @@ public class LocationUpload implements Runnable{
                     continue;
                 }
 
-                if(!isPrinted[index]) {
+                if(! isPrinted[index]) {
                     System.out.println("Upload " + index + " location data : " + Integer.toString(location[index]));
                     isPrinted[index] = true;
                 }

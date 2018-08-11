@@ -13,7 +13,7 @@ public class DataSync implements Runnable{
 
     public void run() {
         int cnt = 10;
-        // the valid range (min, max) : (0, 120)
+        // valid range (min, max) : (0, 120)
         int min = 0;
         int max = CarEmulatorApplication.DATA_SIZE;
         for(int i=0; i<cnt; i++){

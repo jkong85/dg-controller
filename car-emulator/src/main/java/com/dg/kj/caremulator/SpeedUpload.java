@@ -24,7 +24,7 @@ public class SpeedUpload implements Runnable{
         threadName = name;
         this.type = type;
 //        this.size = CarEmulatorApplication.honda_location.length;
-        this.size = CarEmulatorApplication.DATA_SIZE;
+        this.size = CarEmulatorApplication.DATA_SIZE+2;
         speed = new Integer[size];
         for(int i=0; i<size; i++){
             speed[i] = CarEmulatorApplication.honda_speed[i];
@@ -46,12 +46,11 @@ public class SpeedUpload implements Runnable{
             isSent[i] = new HashSet<>();
             isPrinted[i] = false;
         }
-//        System.out.println("Running Speed upload of " +  threadName );
         try {
             RestTemplate template = new RestTemplate();
-            while(DataSync.index < CarEmulatorApplication.toyota_speed.length) {
+            while(DataSync.index < CarEmulatorApplication.DATA_SIZE) {
                 int index = DataSync.index;
-                // simple check, not rigorouse
+                // simple check, not rigorous
                 if (CarEmulatorApplication.destination.size() == 0) {
                     System.out.println("NO DGs are available, waiting...");
                 }
@@ -66,7 +65,7 @@ public class SpeedUpload implements Runnable{
                 }
                for (int i = 0; i < CarEmulatorApplication.destination.size(); i++) {
                     String dstURL = "http://" + CarEmulatorApplication.destination.get(i);
-                    if(isSent[index].contains(dstURL)){// current data have been successsfully sent to DST
+                    if(isSent[index].contains(dstURL)){// current data have been successfully sent to DST
                         continue;
                     }
                     MultiValueMap<String, Object> speedParamMap = new LinkedMultiValueMap<String, Object>();
@@ -77,9 +76,7 @@ public class SpeedUpload implements Runnable{
                     try {
                         template.postForObject(dstURL + speedURL, speedParamMap, String.class);
                         isSent[index].add(dstURL);
-                    } catch (RestClientException re) {
-//                        System.out.println("Resend speed data!");
-                    }
+                    } catch (RestClientException re) { }
                 }
                 Thread.sleep(100);
             }

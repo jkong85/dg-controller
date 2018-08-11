@@ -114,9 +114,9 @@ public class MigrationController {
         IMO imo = controllerCoreApplication.IMOMap.get(imoName);
 
         logger.debug("IMO of " + imoName + " => " + imo.toString());
-        for(int i=0; i<imo.dgList.size(); i++) {
-            //TODO: should I remove DG from dgList in DgCmds.releaseDG()???
-            DG dg = imo.dgList.get(0);  // dgList will be changed in relasesDG(), so we delete the first all the time
+        for(int i=imo.dgList.size()-1; i>=0; i--) {
+            //TODO: should I remove DG from dgList in DgCmds.releaseDG()???, Take care of ArrayList remove , Iterator may be better??
+            DG dg = imo.dgList.get(i);  // dgList will be changed in relasesDG(), so we delete the first all the time
             if (dg == null) {
                 logger.warn("current DG is NOT existed! continue!");
             }else if (! DgCmds.releaseDG(imo, dg, true)) {  // try to release DG
