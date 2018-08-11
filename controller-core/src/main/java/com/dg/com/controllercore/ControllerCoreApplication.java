@@ -55,6 +55,9 @@ public class ControllerCoreApplication {
 
     public static Queue<BackupServiceRequest> bkServiceRequestQueue;
 
+    // <bkServiceName, BackupService> // for quick get BackupService by its name
+    public static Map<String, BackupService> bkServiceNameMap = new HashMap<>();
+
     // Global info of car's DGS
     public static Map<String, IMO> IMOMap = new HashMap<>();
 
@@ -86,6 +89,7 @@ public class ControllerCoreApplication {
         bkServiceIndexPoolStack = new Stack<>();
         bkServiceReadyPoolMap = new HashMap<>();
         bkServiceNotReadyPoolMap = new HashMap<>();
+        bkServiceNameMap = new HashMap<>();
         nodePortsPool = new Stack<>();
         nodeIpMap = new HashMap<>();
         IMOMap = new HashMap<>();

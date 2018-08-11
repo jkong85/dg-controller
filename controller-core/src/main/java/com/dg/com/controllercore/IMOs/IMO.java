@@ -36,9 +36,7 @@ public class IMO {
             return null;
         }
         for(DG item : dgList){
-//            if(item.node.equals(node)){
-            //TODO: Take care here, we shoud use BkService's node to check
-            if(item.bkService.node.equals(node)){
+            if(item.node.equals(node)){
                 return item;
             }
         }

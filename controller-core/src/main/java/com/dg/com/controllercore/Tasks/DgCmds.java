@@ -29,7 +29,8 @@ public class DgCmds {
         }
         logger.trace("Before allocating, bkServiceReadyPoolMap of " + nodeType + " is: " + ControllerCoreApplication.bkServiceReadyPoolMap.get(nodeType).toString());
         BackupService backupService = ControllerCoreApplication.bkServiceReadyPoolMap.get(nodeType).get(0);
-        backupService.status = ControllerCoreApplication.BK_SERVICE_STATUS_USED;
+        backupService.dgName = dgName;
+        backupService.imoName = imo.name;
         logger.debug("Find BackupService on node : " + node + " for IMO request: " + dgName + " => " + backupService.toString());
 
         Integer node_port_eureka = ControllerCoreApplication.nodePortsPool.pop();
@@ -78,6 +79,8 @@ public class DgCmds {
             logger.error("Failed to release DG: " + dg.toString());
             return false;
         }
+        dg.bkService.imoName = null;
+        dg.bkService.dgName = null;
         //TODO: change all node + "+" + type to function call
         logger.debug("Release DG Step 3: put backservice to Readypool");
         String nodeType = dg.node + "+" + dg.type;

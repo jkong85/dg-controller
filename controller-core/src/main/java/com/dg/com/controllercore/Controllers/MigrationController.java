@@ -27,30 +27,25 @@ public class MigrationController {
     private LogController logController;
 
     @RequestMapping(value = "/migration")
-    public String migrate(@RequestParam String name,    //TODO: It is Backupservice name, NOT DG's name
+    public String migrate(@RequestParam String bkname,    //TODO: It is Backupservice name, NOT DG's name
                            @RequestParam String type,
                            @RequestParam String srcNode,
                            @RequestParam String dstNode) {
-        logger.info("Migration request of " + name + " from: " + srcNode + " to " + dstNode);
-        if(controllerCoreApplication.IMOMap == null || !controllerCoreApplication.IMOMap.containsKey(name)){
-            return "IMO is NOT existed for " + name;
+        logger.info("Migration request of " + bkname + " from: " + srcNode + " to " + dstNode);
+        String imoName = controllerCoreApplication.bkServiceNameMap.get(bkname).imoName;
+        String dgName = controllerCoreApplication.bkServiceNameMap.get(bkname).dgName;
+        if(controllerCoreApplication.IMOMap == null || imoName == null || !controllerCoreApplication.IMOMap.containsKey(imoName)){
+            return "IMO is NOT existed for " + bkname;
         }
-        // find the DG binded to the BkService (name)
-        IMO imo = null;
-        DG srcDG = null;
-        for(Map.Entry<String, IMO> entry : controllerCoreApplication.IMOMap.entrySet()){
-            IMO curIMO = entry.getValue();
-            srcDG = curIMO.findDGBkService(name);
-            if(srcDG != null){
-                imo = curIMO;
-                break;
-            }
-        }
+
+        IMO imo = controllerCoreApplication.IMOMap.get(imoName);
+        DG srcDG = imo.findDGonNode(srcNode);
         if(srcDG == null){
             logger.warn("Src DG is NOT existed! DO nothing!");
             return "DG on srcNode " + srcNode + " is NOT existed! ";
         }
-
+        String name = srcDG.name;
+        logger.debug(" DG name binded with bkservice is: " + name);
         //Step 1: Check whether there is DG on dstNode, if not, find and bind one available BackupService
         // We assume that there is ONLY ONE DG for each IMO on each node
         if(dstNode.equals(imo.findDGonNode(dstNode))){
@@ -86,14 +81,15 @@ public class MigrationController {
     }
 
     @RequestMapping(value = "/deletedg")
-    public String deletedg(@RequestParam String name,
+    public String deletedg(@RequestParam String bkname,
                           @RequestParam String type,
                           @RequestParam String node) {
-        logger.info("Delete DG Request from " + name + " on node " + node);
-        if(controllerCoreApplication.IMOMap == null || !controllerCoreApplication.IMOMap.containsKey(name)){
-            return "IMO is NOT existed for " + name;
+        logger.info("Delete DG binded to BkService " + bkname );
+        String imoName = controllerCoreApplication.bkServiceNameMap.get(bkname).imoName;
+        if(controllerCoreApplication.IMOMap == null || imoName == null || !controllerCoreApplication.IMOMap.containsKey(imoName)){
+            return "IMO is NOT existed for " + bkname;
         }
-        IMO imo = controllerCoreApplication.IMOMap.get(name);
+        IMO imo = controllerCoreApplication.IMOMap.get(imoName);
         DG dg = imo.findDGonNode(node);
         if(dg == null){
             logger.warn("current DG is NOT existed! DO nothing!");
@@ -103,18 +99,19 @@ public class MigrationController {
             logger.error("Failed to destroy DG " + dg.toString());
             return null;
         }
-        return "Destroy DG " + name + " on cloud " + node + " successfully!";
+        return "Destroy DG " + dg.name + " on cloud " + node + " successfully!";
     }
 
     @RequestMapping(value = "/deleteimo")
-    public String deleteimo(@RequestParam String name) {
-        logger.info("Delete IMO Request from " + name);
-        if(controllerCoreApplication.IMOMap == null || !controllerCoreApplication.IMOMap.containsKey(name)){
-            logger.warn(" IMO of " + name + "does NOT existed! Do nothing!");
-            return "IMO of " + name + " NOT existed";
+    public String deleteimo(@RequestParam String bkname) {
+        logger.info("Delete IMO binded to BkService " + bkname);
+        String imoName = controllerCoreApplication.bkServiceNameMap.get(bkname).imoName;
+        if(controllerCoreApplication.IMOMap == null || imoName == null || !controllerCoreApplication.IMOMap.containsKey(imoName)){
+            return "IMO is NOT existed for " + bkname;
         }
-        IMO imo = controllerCoreApplication.IMOMap.get(name);
-        logger.debug("IMO of " + name + " => " + imo.toString());
+        IMO imo = controllerCoreApplication.IMOMap.get(imoName);
+
+        logger.debug("IMO of " + imoName + " => " + imo.toString());
         for(int i=0; i<imo.dgList.size(); i++) {
             //TODO: should I remove DG from dgList in DgCmds.releaseDG()???
             DG dg = imo.dgList.get(0);  // dgList will be changed in relasesDG(), so we delete the first all the time
@@ -125,8 +122,8 @@ public class MigrationController {
                 return null;
             }
         }
-        controllerCoreApplication.IMOMap.remove(name);
-        return "Destroy IMO " + name + " on all cloud nodes successfully!";
+        controllerCoreApplication.IMOMap.remove(imoName);
+        return "Destroy IMO " + imoName + " on all cloud nodes successfully!";
     }
 
     //TODO: Add the MONGODB migration logic
