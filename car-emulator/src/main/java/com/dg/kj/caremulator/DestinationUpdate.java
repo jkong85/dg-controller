@@ -20,7 +20,6 @@ public class DestinationUpdate implements Runnable{
 
     public void run() {
         while(true) {
-            //String urlService = infoURL + name;
             String urlService = infoURL + name;
             RestTemplate restTemplate = new RestTemplate();
             int cnt = 5;
@@ -38,7 +37,6 @@ public class DestinationUpdate implements Runnable{
                     }
                     if (isValid) {
                         CarEmulatorApplication.destination.clear();
-                        System.out.println("Destination of the DGs are :");
                         for (String str : ipPort) {
                             CarEmulatorApplication.destination.add(str);
                         }

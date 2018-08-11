@@ -15,7 +15,7 @@ public class DataSync implements Runnable{
         int cnt = 10;
         // the valid range (min, max) : (0, 120)
         int min = 0;
-        int max = 40;
+        int max = CarEmulatorApplication.DATA_SIZE;
         for(int i=0; i<cnt; i++){
             System.out.println("The car moves from left to right !");
             while(index < max){

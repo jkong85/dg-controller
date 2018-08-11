@@ -45,6 +45,8 @@ public class CarEmulatorApplication {
         DATA_SIZE = Math.min(DATA_SIZE, toyota_location.length);
         DATA_SIZE = Math.min(DATA_SIZE, toyota_oil.length);
         DATA_SIZE = Math.min(DATA_SIZE, toyota_speed.length);
+
+        DATA_SIZE = 40;
         System.out.println("Data size is : " + DATA_SIZE.toString());
 
         String name = args[0];
