@@ -177,9 +177,10 @@ public class CarEmulatorApplication {
             regResend = false;
             try {
                 System.out.println("Registering " + name + " to DG-Arbiter");
+                System.out.println("Registering URL: " + registerURL);
                 result = template.postForObject(registerURL, registerParamMap, String.class);
             } catch (RestClientException re) {
-                System.out.println(re.toString())
+                System.out.println(re.toString());
                 regResend = true;
                 try { Thread.sleep(1000); }catch(InterruptedException ie){ }
             }
