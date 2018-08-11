@@ -66,7 +66,7 @@ public class MigrationCopy implements Runnable {
                     migrate(curServiceName, type, EDGE_NODE1, EDGE_NODE2);
                     isLeftRight = true;
                 }
-            } else if(lefttoRight() && curNode.equals(EDGE_NODE2)){
+            } else if((!lefttoRight()) && curNode.equals(EDGE_NODE2)){
                 if(! isRightLeft) {
                     migrate(curServiceName, type, EDGE_NODE2, EDGE_NODE1);
                     isRightLeft = true;
