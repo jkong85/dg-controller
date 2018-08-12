@@ -3,12 +3,15 @@ package com.dg.kj.imolocation;
 import com.dg.kj.dgcommons.DgCommonsApplication;
 import com.dg.kj.dgcommons.Log;
 import com.sun.org.apache.xpath.internal.operations.Bool;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 public class MigrationCopy implements Runnable {
+    private static final Logger logger = LogManager.getLogger(MigrationCopy.class);
     private Thread t;
     private String threadName;
 
@@ -30,8 +33,8 @@ public class MigrationCopy implements Runnable {
     public void run() {
         String curServiceName = System.getenv("SERVICE_LABEL"); //TODO: take care here, it is Bkservice name, NOT DG's name
         String curNode = System.getenv("CUR_NODE");
-        String type = "honda";
         //TODO: add type ENV to determine car's type
+        String type = "honda";
         if(curServiceName.substring(0, 1).equals("h")){
             type = "honda";
         }else if(curServiceName.substring(0, 1).equals("t")){
@@ -42,10 +45,11 @@ public class MigrationCopy implements Runnable {
             //TODO: develop your own migration algorithm
             //oldMigrateLogic(curServiceName, curNode, type);
             migrateLogic(curServiceName, curNode, type);
-            try{ Thread.sleep(500); }catch (InterruptedException ie){ }
+            DgCommonsApplication.delay(1);
         }
 
     }
+    //check the direction of car based on location data
     private boolean lefttoRight(){
         if(ImoLocationApplication.locationHistoryData.size()>6) {
             Integer preLocation = Integer.valueOf(ImoLocationApplication.locationHistoryData.get(5));
@@ -78,7 +82,7 @@ public class MigrationCopy implements Runnable {
         }
         if(location >= 110){
             System.out.println(" Leaving the cloud, destory all DGs of " + curServiceName);
-//            deleteDG(curServiceName, curNode, type);
+            //deleteDG(curServiceName, curNode, type);
             deleteIMO(curServiceName);
         }
     }
@@ -91,7 +95,7 @@ public class MigrationCopy implements Runnable {
         }
     }
     private void migrate(String name, String type, String src, String dst){
-        System.out.println("Migrate " + name + " from node " + src + " to node " + dst);
+        logger.debug("Migrate " + name + " from node " + src + " to node " + dst);
         RestTemplate template = new RestTemplate();
         MultiValueMap<String, Object> copyParamMap = new LinkedMultiValueMap<String, Object>();
         copyParamMap.add("bkname", name);
@@ -99,12 +103,13 @@ public class MigrationCopy implements Runnable {
         copyParamMap.add("srcNode", src);
         copyParamMap.add("dstNode", dst);
 
+        logger.debug("Try to migrate DG form " + src + " to " + dst);
         boolean retry = true;
         int cnt = 5;
         while(retry && cnt>0){
             try {
                 template.postForObject(CONTROLLER_MIGRATE_URL, copyParamMap, String.class);
-                System.out.println("Try to migrate DG form " + src + " to " + dst);
+                logger.debug("Migrate DG from " + src + " to " + dst + " successfully!");
                 retry = false;
             }catch(RestClientException re) {
                 retry = true;
@@ -115,11 +120,11 @@ public class MigrationCopy implements Runnable {
         }
         if(retry == true){
             Log log = new Log("location", name, 3);
-            log.logUpload("Migrate DG of " + name + " from " + src + " to " + dst);
-            System.out.println("Failed to migrate successfully!");
+            log.logUpload("Failed to migrate DG of " + name + " from " + src + " to " + dst);
+            logger.error("Failed to migrate DG of " + name + " from " + src + " to " + dst);
             return;
         }
-        // Clean the runtime data, ready for others to use
+        // Clean the runtime data in order to be ready for others to use
         cleanRuntime();
 
         Log log = new Log("location", name, 3);
@@ -128,15 +133,19 @@ public class MigrationCopy implements Runnable {
     //Clean the runtime information for other DGs
     //TODO: Send to other micro-service components to clean the runtime
     private void cleanRuntime(){
+        logger.debug("Clean the runtime information");
+        logger.debug("Before cleaning, the runtime information is: " );
+        logger.debug("Before cleaning, the size of location history data: " + ImoLocationApplication.locationHistoryData.size());
         ImoLocationApplication.locationHistoryData.clear();
         ImoLocationApplication.logQueue.clear();
+        logger.debug("After cleaning, the size of location history data: " + ImoLocationApplication.locationHistoryData.size());
     }
 
-    //delete the DGs on node
-    private void deleteDG(String name, String type, String node){
+    //delete the DG that uses current BackupService with name : bkname
+    private void deleteDG(String bkname, String type, String node){
         RestTemplate template = new RestTemplate();
         MultiValueMap<String, Object> destroyParamMap = new LinkedMultiValueMap<String, Object>();
-        destroyParamMap.add("name", name);
+        destroyParamMap.add("name", bkname);
         destroyParamMap.add("type", type);
         destroyParamMap.add("node", node);
 
@@ -153,15 +162,15 @@ public class MigrationCopy implements Runnable {
             try{ Thread.sleep(200); }catch (InterruptedException ie){ }
             cnt--;
         }
-        Log log = new Log("location", name, 3);
+        Log log = new Log("location", bkname, 3);
         log.logUpload("Delete myself DG on " + node);
     }
 
-    //delete the DGs on node
-    private void deleteIMO(String name){
+    //delete the IMO and its DGs that uses current BackupService with name : bkname
+    private void deleteIMO(String bkname){
         RestTemplate template = new RestTemplate();
         MultiValueMap<String, Object> destroyParamMap = new LinkedMultiValueMap<String, Object>();
-        destroyParamMap.add("name", name);
+        destroyParamMap.add("name", bkname);
 
         boolean retry = true;
         int cnt = 5;
@@ -179,8 +188,8 @@ public class MigrationCopy implements Runnable {
             try{ Thread.sleep(200); }catch (InterruptedException ie){ }
             cnt--;
         }
-        Log log = new Log("location", name, 3);
-        log.logUpload("Delete IMO of " + name);
+        Log log = new Log("location", bkname, 3);
+        log.logUpload("Delete IMO of " + bkname);
     }
 
 }

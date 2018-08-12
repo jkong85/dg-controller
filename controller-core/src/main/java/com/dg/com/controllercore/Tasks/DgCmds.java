@@ -69,7 +69,6 @@ public class DgCmds {
     //  5. put Backupservice to ReadyPool.
     //  6. remove dg from IMO dglist
     public static boolean releaseDG(IMO imo, DG dg, Boolean flag){
-        //public String deleteService(String serviceName, Integer port, Boolean portRealease) throws  HttpClientErrorException {
         if(dg.bkService == null){
             logger.warn("Bkservice is NULL of " + dg.name + ", just return TRUE");
             return true;
@@ -99,7 +98,7 @@ public class DgCmds {
 
         // TODO: clean the MongoDB database
         logger.debug("Release DG Step 4: cleanMongoDB");
-        cleanMongo(dg);
+        MongoCmd.cleanMongo(dg);
 
         logger.debug("Release DG Step 5: remove DG from DGlist");
         logger.trace("Before release DG: " + dg.name + ", IMO is " + imo.toString());
@@ -108,11 +107,5 @@ public class DgCmds {
         logger.debug("After release DG: " + dg.name + ", IMO is " + imo.toString());
         return true;
     }
-    private static void cleanMongo(DG dg){
-        String dgMongoIp = dg.bkService.mongoIP;
-        String mongoPort = "8080";
-        String url = dgMongoIp + ":" + mongoPort;
-        logger.debug("Clean test db of DG: " + dg.name + " with bkService:" + dg.bkService.name + ", mongIP: " + dgMongoIp);
-        Http.httpGet(url);
-    }
+
 }

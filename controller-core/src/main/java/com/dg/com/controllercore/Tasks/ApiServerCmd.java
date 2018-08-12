@@ -118,7 +118,7 @@ public class ApiServerCmd {
 
         String mongo_ip = getDeploymentIPaddress(mongo_deploy_name);
         logger.debug("MongDB IP address is: " + mongo_ip);
-
+        backupService.mongoIP = mongo_ip;
 
         // Different type of Car will run different services
         if(type.equals(ControllerCoreApplication.HONDA)){
