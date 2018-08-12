@@ -275,6 +275,9 @@ public class ApiServerCmd {
 
         return new Deployment(deploy_name, node_selector, prefix);
     }
+    // Create mongoDB deployment, A little different from other deployment creation
+    // Copy and run mongorun.sh to Docker images: HTTP server (golang)
+    // Copy
     private String CreateMongoDBDeployment(String URLApiServer,
                                            String deploy_name,
                                            String service_label,
@@ -309,9 +312,9 @@ public class ApiServerCmd {
                 container_name +
                 "\",\"ports\":[{\"containerPort\":" +
                 container_port +
-                "}],\"volumeMounts\":[{\"mountPath\":\"/opt\",\"name\":\"mongoclone\"}]}],\"nodeSelector\":{\"kubernetes.io/hostname\":\"" +
+                "}],\"volumeMounts\":[{\"mountPath\":\"/opt\",\"name\":\"mongo\"}]}],\"nodeSelector\":{\"kubernetes.io/hostname\":\"" +
                 node_selector +
-                "\"},\"volumes\":[{\"hostPath\":{\"path\":\"/opt\"},\"name\":\"mongoclone\"}]}}}}";
+                "\"},\"volumes\":[{\"hostPath\":{\"path\":\"/opt/dgmongo\"},\"name\":\"mongo\"}]}}}}";
 
         logger.debug("Create deployment HTTP body: " + body);
         String str = Http.httpPost(urlDeployment, body);

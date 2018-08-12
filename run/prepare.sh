@@ -24,3 +24,4 @@ sudo cp mongorun.sh /opt/dgmongo
 sudo cp mongoclean.sh /opt/dgmongo
 sudo cp http /opt/dgmongo
 cd ../
+ls /opt/dgmongo

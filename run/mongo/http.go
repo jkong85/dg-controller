@@ -19,19 +19,8 @@ func exec_shell(s string) {
 	fmt.Println(err)
 }
 
-func cloneMongo(w http.ResponseWriter, r *http.Request) {
-	exec_shell("./opt/mongoclone.sh")
-	r.ParseForm()
-	for k, v := range r.Form {
-		fmt.Println("key:", k)
-		fmt.Println("val:", strings.Join(v, ""))
-		if k == "ip" {
-			ipaddress := strings.Join(v, "")
-			exec_shell("./opt/mongoclone.sh " + ipaddress)
-		}
-	}
-
-	/*
+/*
+func test(w http.ResponseWriter, r *http.Request) {
 		r.ParseForm()
 		fmt.Println(r.Form)
 		fmt.Println("path", r.URL.Path)
@@ -41,11 +30,32 @@ func cloneMongo(w http.ResponseWriter, r *http.Request) {
 			fmt.Println("key:", k)
 			fmt.Println("val:", strings.Join(v, ""))
 		}
-	*/
 	fmt.Fprintf(w, "Run mongoclone ...")
 }
+*/
+
+func cleanMongo(w http.ResponseWriter, r *http.Request) {
+	exec_shell("./opt/mongoclean.sh")
+	r.ParseForm()
+	fmt.Fprintf(w, "Clean mongoDB test database...")
+}
+
+func cloneMongo(w http.ResponseWriter, r *http.Request) {
+	//exec_shell("./opt/mongoclone.sh")
+	r.ParseForm()
+	for k, v := range r.Form {
+		fmt.Println("key:", k)
+		fmt.Println("val:", strings.Join(v, ""))
+		if k == "ip" {
+			ipaddress := strings.Join(v, "")
+			exec_shell("./opt/mongoclone.sh " + ipaddress)
+		}
+	}
+	fmt.Fprintf(w, "Cloen mongoDB ...")
+}
 func main() {
-	http.HandleFunc("/hello", cloneMongo)
+	http.HandleFunc("/clonemongo", cloneMongo)
+	http.HandleFunc("/cleanmongo", cleanMongo)
 	err := http.ListenAndServe(":8080", nil)
 	if err != nil {
 		log.Fatal("ListenAndServe: ", err)
