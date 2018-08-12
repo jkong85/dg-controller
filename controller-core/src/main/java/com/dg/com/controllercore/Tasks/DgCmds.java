@@ -57,6 +57,7 @@ public class DgCmds {
     }
 
     // The first solution: NO backupservice is available, create all things, and wait
+    //TODO: add the logic
     public static DG createDGSlow(String dgName, IMO imo, String type, String node){
         return null;
     }
@@ -85,6 +86,10 @@ public class DgCmds {
             logger.error("Failed to release DG: " + dg.toString());
             return false;
         }
+        //
+        logger.debug("Release DG Step 2: cleanMongoDB");
+        MongoCmd.cleanMongo(dg);
+
         ControllerCoreApplication.bkServiceNameMap.remove(dg.bkService.name);
         dg.bkService.imoName = null;
         dg.bkService.dgName = null;
@@ -96,11 +101,7 @@ public class DgCmds {
         dg.bkService = null;
         logger.trace("After release DG,  bkServiceReadyPoolMap of " + nodeType + " is: " + ControllerCoreApplication.bkServiceReadyPoolMap.get(nodeType).toString());
 
-        // TODO: clean the MongoDB database
-        logger.debug("Release DG Step 4: cleanMongoDB");
-        MongoCmd.cleanMongo(dg);
-
-        logger.debug("Release DG Step 5: remove DG from DGlist");
+        logger.debug("Release DG Step 4: remove DG from DGlist");
         logger.trace("Before release DG: " + dg.name + ", IMO is " + imo.toString());
         //TODO: should I remove DG from dgList in DgCmds.releaseDG()???
         imo.dgList.remove(dg);

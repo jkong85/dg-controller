@@ -109,8 +109,12 @@ public class MigrationController {
     @RequestMapping(value = "/deleteimo")
     public String deleteimo(@RequestParam String bkname) {
         logger.info("Delete IMO binded to BkService " + bkname);
+        if(!controllerCoreApplication.bkServiceNameMap.containsKey(bkname)){
+            logger.warn("IMO is NOT existed for " + bkname);
+        }
         String imoName = controllerCoreApplication.bkServiceNameMap.get(bkname).imoName;
         if(controllerCoreApplication.IMOMap == null || imoName == null || !controllerCoreApplication.IMOMap.containsKey(imoName)){
+            logger.warn("IMO is NOT existed for " + bkname);
             return "IMO is NOT existed for " + bkname;
         }
         IMO imo = controllerCoreApplication.IMOMap.get(imoName);

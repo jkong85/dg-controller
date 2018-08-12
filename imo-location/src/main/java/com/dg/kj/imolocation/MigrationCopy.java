@@ -134,7 +134,6 @@ public class MigrationCopy implements Runnable {
     //TODO: Send to other micro-service components to clean the runtime
     private void cleanRuntime(){
         logger.debug("Clean the runtime information");
-        logger.debug("Before cleaning, the runtime information is: " );
         logger.debug("Before cleaning, the size of location history data: " + ImoLocationApplication.locationHistoryData.size());
         ImoLocationApplication.locationHistoryData.clear();
         ImoLocationApplication.logQueue.clear();

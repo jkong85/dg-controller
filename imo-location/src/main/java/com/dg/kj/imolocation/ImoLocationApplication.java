@@ -28,7 +28,7 @@ public class ImoLocationApplication {
 
         SpringApplication.run(ImoLocationApplication.class, args);
 
-        logQueue.offer(" location service is starting...");
+        logQueue.offer("Location service is starting...");
 
         LogThread logThread = new LogThread("location", curServiceName, logQueue, 3);
         logThread.start();
