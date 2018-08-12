@@ -12,6 +12,7 @@ set -x
 #sudo docker pull jkong85/dg-imo-location:0.1
 
 # Copy mongo to /opt, and then mount /opt with mongo deployment
+echo "TAKE CARE!!!!!  COPY Mongo scripts and apps on EACH VM node!!!!!!!!!!!!!!"
 echo "Copy Mongo Scripts and Apps to /opt/dgmongo"
 sudo mkdir /opt/dgmongo
 

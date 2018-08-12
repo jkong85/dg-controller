@@ -294,7 +294,7 @@ public class ApiServerCmd {
 
         String body = "{\"apiVersion\":\"extensions/v1beta1\",\"kind\":\"Deployment\",\"metadata\":{\"name\":\"" +
                 deploy_name +
-                "\",\"namespace\":\"default\"},\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"app\":\"" +
+                "\",\"namespace\":\"default\"},\"spec\":{\"template\":{\"metadata\":{\"labels\":{\"dg\":\"" +
                 service_label +
                 "\"}},\"spec\":{\"containers\":[{\"command\":[\"" +
                 cmd +
