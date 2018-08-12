@@ -45,7 +45,6 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
                         logger.debug("Before moving the new bkService,  bkServiceReadyPoolMap of " + nodetype + " is: " + ControllerCoreApplication.bkServiceReadyPoolMap.get(nodetype).toString());
                         //TODO: lock here?
                         ControllerCoreApplication.bkServiceNotReadyPoolMap.get(nodetype).remove(0);
-                        backupService.status = ControllerCoreApplication.BK_SERVICE_STATUS_AVAILABLE;
                         ControllerCoreApplication.bkServiceReadyPoolMap.get(nodetype).add(backupService);
                         logger.debug("After moving the new bkService,  bkServiceNotReadyPoolMap of " + nodetype + " is: " + ControllerCoreApplication.bkServiceNotReadyPoolMap.get(nodetype).toString());
                         logger.debug("After moving the new bkService,  bkServiceReadyPoolMap of " + nodetype + " is: " + ControllerCoreApplication.bkServiceReadyPoolMap.get(nodetype).toString());

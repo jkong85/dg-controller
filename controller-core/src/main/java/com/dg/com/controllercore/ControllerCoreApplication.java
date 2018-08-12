@@ -38,11 +38,6 @@ public class ControllerCoreApplication {
     public static final Integer BACKUP_INITIAL_LIMIT = 1;
     public static final Integer BACKUP_LIMIT = BACKUP_INITIAL_LIMIT - 1;
 
-    //Status of the backup service
-    public static final Integer BK_SERVICE_STATUS_NOT_READY = 0;
-    public static final Integer BK_SERVICE_STATUS_AVAILABLE = 1;
-    public static final Integer BK_SERVICE_STATUS_USED = 2;
-
     public static Stack<Integer> bkServiceIndexPoolStack;
 
     public static Map<String, String> nodeIpMap = new HashMap<>();
