@@ -5,9 +5,12 @@ import com.dg.com.controllercore.IMOs.DG;
 import com.dg.com.controllercore.IMOs.IMO;
 import com.dg.com.controllercore.Tasks.DgCmds;
 import com.dg.kj.dgcommons.DgCommonsApplication;
+import com.dg.kj.dgcommons.Http;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -124,15 +127,24 @@ public class MigrationController {
         controllerCoreApplication.IMOMap.remove(imoName);
         return "Destroy IMO " + imoName + " on all cloud nodes successfully!";
     }
-
-    //TODO: Add the MONGODB migration logic
+    //
     public boolean migrateMongoDB(DG srcDg, DG dstDG){
         if(srcDg == null || dstDG == null || srcDg == dstDG){
             logger.warn(" Source DG or Destination DG is null or SrcDG == DstDG , Do nothing!");
             return true;
         }
+        String srcDGMongoIp = srcDg.bkService.mongoIP;
+        String dstDGMongoIP = dstDG.bkService.mongoIP;
+        String mongoPort = "8080";
+        logger.debug("Copy from src MongDB (IP:" + srcDGMongoIp + " to dst MongDB (IP:" + dstDGMongoIP + ")");
+        MultiValueMap<String, Object> mongoParamMap = new LinkedMultiValueMap<String, Object>();
+        mongoParamMap.add("ip", srcDGMongoIp);
+        String mongURL = dstDGMongoIP + ":" + mongoPort;
+        Http.httpPost(mongURL, mongoParamMap, 1);
+        //TODO: mechanism to check whether clone is done??
+        //Wait some time for clone completion
         DgCommonsApplication.delay(5);
-        logger.debug("Successfully migrate MongoDb from " + srcDg.name + " to " + dstDG.name);
+        logger.debug("Successfully migrate MongoDB from " + srcDg.name + " to " + dstDG.name);
         return true;
     }
 }

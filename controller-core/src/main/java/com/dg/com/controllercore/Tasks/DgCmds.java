@@ -4,8 +4,10 @@ import com.dg.com.controllercore.ControllerCoreApplication;
 import com.dg.com.controllercore.IMOs.BackupService;
 import com.dg.com.controllercore.IMOs.DG;
 import com.dg.com.controllercore.IMOs.IMO;
+import com.dg.kj.dgcommons.Http;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestClientException;
 
@@ -93,7 +95,7 @@ public class DgCmds {
 
         // TODO: clean the MongoDB database
         logger.debug("Release DG Step 4: cleanMongoDB");
-        // cleanMongoDB()
+        cleanMongo(dg);
 
         logger.debug("Release DG Step 5: remove DG from DGlist");
         logger.trace("Before release DG: " + dg.name + ", IMO is " + imo.toString());
@@ -101,5 +103,12 @@ public class DgCmds {
         imo.dgList.remove(dg);
         logger.debug("After release DG: " + dg.name + ", IMO is " + imo.toString());
         return true;
+    }
+    private static void cleanMongo(DG dg){
+        String dgMongoIp = dg.bkService.mongoIP;
+        String mongoPort = "8080";
+        String url = dgMongoIp + ":" + mongoPort;
+        logger.debug("Clean test db of DG: " + dg.name + " with bkService:" + dg.bkService.name + ", mongIP: " + dgMongoIp);
+        Http.httpGet(url);
     }
 }
