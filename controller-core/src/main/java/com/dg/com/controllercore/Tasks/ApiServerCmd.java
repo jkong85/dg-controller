@@ -143,6 +143,18 @@ public class ApiServerCmd {
         return backupService;
     }
 
+    //TODO:  delete backupService
+    //Usage: createBackupServive failed, or too may BackServices are created, Controller need to release som BkServce
+    public boolean deleteBackupService(BackupServiceRequest request, Integer index, Integer port_eureka, Integer port_zuul){
+        String service_label = "dg-" + request.node + "-" + request.type + "-" + index.toString();
+        return deleteBackupServiceDeployments(service_label, request.node, request.type);
+    }
+    //TODO: delete all deployments of one BackupServive
+    //Usage: createBackupServive failed, or too may BackServices are created, Controller need to release som BkServce
+    public boolean deleteBackupServiceDeployments(String service_label, String node_selector, String type){
+        return true;
+    }
+
     private Deployment CreateSpeedDeployment(String service_label, String eureka_ip, String mongo_ip, String node_selector){
         String prefix = "speed";
         String deploy_name =  service_label + "-" + prefix;
@@ -312,7 +324,7 @@ public class ApiServerCmd {
                 container_name +
                 "\",\"ports\":[{\"containerPort\":" +
                 container_port +
-                "}],\"volumeMounts\":[{\"mountPath\":\"/opt\",\"name\":\"mongo\"}]}],\"nodeSelector\":{\"kubernetes.io/hostname\":\"" +
+                "}],\"volumeMounts\":[{\"mountPath\":\"/opt\",\"name\":\"mongo\"}]}],\"nodeSelector\":{\"cloud.node\":\"" +
                 node_selector +
                 "\"},\"volumes\":[{\"hostPath\":{\"path\":\"/opt/dgmongo\"},\"name\":\"mongo\"}]}}}}";
 

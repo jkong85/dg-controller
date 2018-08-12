@@ -35,6 +35,7 @@ public class BkServiceCreateThread implements Runnable{
                     logger.trace("Before rollback, bkServiceIndexPoolStack is: " + ControllerCoreApplication.bkServiceIndexPoolStack.toString());
                     logger.trace("Before rollback, bkServiceRequestQueue is: " + ControllerCoreApplication.bkServiceRequestQueue.toString());
                     // restore all things
+
                     ControllerCoreApplication.bkServiceIndexPoolStack.push(index);
                     ControllerCoreApplication.bkServiceRequestQueue.offer(request);
                     logger.trace("After rollback, bkServiceIndexPoolStack is: " + ControllerCoreApplication.bkServiceIndexPoolStack.toString());
