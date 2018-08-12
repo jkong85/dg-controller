@@ -1,12 +1,17 @@
 # README
-## TODOLIST
-- RESTful API format
-- Performance issue: k8s starts several backups
-- JSON format for all data, redesign the data structure, use ConfigMap in k8s?
-- MongoDB
-- Data migration
-- Micro-service communications 
-- DGs communications
-- Log4g for all logs
-- JUnit test
+
+# Dowadload and Use
+
+git clone https://github.com/jkong85/dg-controller.git
+cd dg-controller/
+git checkout origin/dev
+git checkout -b dev
+git branch --set-upstream-to=origin/dev dev
+git pull
+git branch -a
+
+# TODOLIST
+- JUnit test framework
 - Private docker reporeitory
+
+# Issues
