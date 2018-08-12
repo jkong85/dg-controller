@@ -70,6 +70,10 @@ public class DgCmds {
     //  6. remove dg from IMO dglist
     public static boolean releaseDG(IMO imo, DG dg, Boolean flag){
         //public String deleteService(String serviceName, Integer port, Boolean portRealease) throws  HttpClientErrorException {
+        if(dg.bkService == null){
+            logger.warn("Bkservice is NULL of " + dg.name + ", just return TRUE");
+            return true;
+        }
         String serviceName = dg.name;
         //eureka: port, Zuul: port+1
         //TODO: it is misunderstanding here!

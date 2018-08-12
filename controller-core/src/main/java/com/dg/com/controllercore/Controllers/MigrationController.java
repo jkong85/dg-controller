@@ -34,9 +34,10 @@ public class MigrationController {
         logger.info("Migration request of DG binded to BkService " + bkname + " from: " + srcNode + " to " + dstNode);
         if(! controllerCoreApplication.bkServiceNameMap.containsKey(bkname)){
             logger.error(" Failed to find BkService with name: " + bkname);
+            return null;
         }
         String imoName = controllerCoreApplication.bkServiceNameMap.get(bkname).imoName;
-        String dgName = controllerCoreApplication.bkServiceNameMap.get(bkname).dgName;
+//        String dgName = controllerCoreApplication.bkServiceNameMap.get(bkname).dgName;
         if(controllerCoreApplication.IMOMap == null || imoName == null || !controllerCoreApplication.IMOMap.containsKey(imoName)){
             return "IMO is NOT existed for " + bkname;
         }
