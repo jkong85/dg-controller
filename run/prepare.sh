@@ -24,5 +24,7 @@ sudo cp mongoclone.sh /opt/dgmongo
 sudo cp mongorun.sh /opt/dgmongo
 sudo cp mongoclean.sh /opt/dgmongo
 sudo cp http /opt/dgmongo
+sudo chmod u+x /opt/dgmongo/http
+sudo chmod u+x /opt/dgmongo/mongo*
 cd ../
-ls /opt/dgmongo
+ls -al /opt/dgmongo
