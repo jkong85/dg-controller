@@ -63,8 +63,10 @@ public class MigrationController {
             return null;
         }
 
+        String srcDGMongoIp = srcDG.bkService.mongoIP;
+        String dstDGMongoIP = dstDG.bkService.mongoIP;
         //Step 2: Data migration
-        if(!MongoCmd.migrateMongoDB(srcDG, dstDG)){
+        if(!MongoCmd.migrateMongoDB(srcDGMongoIp, dstDGMongoIP)){
             logger.error(" Failed to migrate MongoDB from " + srcNode + " to " + dstNode + " => " + " srcDG: " + srcDG.toString() + " || dstDG: "  + dstDG.toString());
             // release the new DG allocated
             if( !DgCmds.releaseDG(imo, dstDG, true)){
@@ -76,7 +78,6 @@ public class MigrationController {
         }
 
         //Step 3: Destroy the old one (release the BackupService, put the BackupServiceclean the MongoDB)
-
         if(! DgCmds.releaseDG(imo, srcDG, true)){
             logger.error("Failed to release srcDG => " + srcDG.toString());
             return null;

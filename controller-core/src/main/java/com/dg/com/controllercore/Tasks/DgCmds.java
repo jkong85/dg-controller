@@ -87,12 +87,13 @@ public class DgCmds {
             return false;
         }
         //
-        logger.debug("Release DG Step 2: cleanMongoDB");
-        MongoCmd.cleanMongo(dg);
+        String dgMongoIp = dg.bkService.mongoIP;
 
         ControllerCoreApplication.bkServiceNameMap.remove(dg.bkService.name);
         dg.bkService.imoName = null;
         dg.bkService.dgName = null;
+
+
         //TODO: change all node + "+" + type to function call
         logger.debug("Release DG Step 3: put backservice to Readypool");
         String nodeType = dg.node + "+" + dg.type;
@@ -100,6 +101,10 @@ public class DgCmds {
         ControllerCoreApplication.bkServiceReadyPoolMap.get(nodeType).add(dg.bkService);
         dg.bkService = null;
         logger.trace("After release DG,  bkServiceReadyPoolMap of " + nodeType + " is: " + ControllerCoreApplication.bkServiceReadyPoolMap.get(nodeType).toString());
+
+        logger.debug("Release DG Step 2: cleanMongoDB");
+        MongoCmd.cleanMongo(dgMongoIp);
+
 
         logger.debug("Release DG Step 4: remove DG from DGlist");
         logger.trace("Before release DG: " + dg.name + ", IMO is " + imo.toString());

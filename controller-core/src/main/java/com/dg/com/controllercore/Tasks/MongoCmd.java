@@ -20,7 +20,7 @@ public class MongoCmd {
 
     public static final String MONGO_DB_PORT = "27017";     // It is used in application.properties in our micro-service module
 
-    //
+    /*
     public static boolean migrateMongoDB(DG srcDg, DG dstDG){
         if(srcDg == null || dstDG == null || srcDg == dstDG){
             logger.warn(" Source DG or Destination DG is null or SrcDG == DstDG , Do nothing!");
@@ -28,6 +28,16 @@ public class MongoCmd {
         }
         String srcDGMongoIp = srcDg.bkService.mongoIP;
         String dstDGMongoIP = dstDG.bkService.mongoIP;
+    */
+    public static boolean migrateMongoDB(String srcDGMongoIp, String dstDGMongoIP){
+        if(srcDGMongoIp==null || dstDGMongoIP==null ){
+           logger.error("src MongoIP or dst MongIP is null");
+            return false;
+        }
+        if(srcDGMongoIp.equals(dstDGMongoIP)) {
+            logger.warn(" Source DG or Destination DG is null or SrcDG == DstDG , Do nothing!");
+            return true;
+        }
         //String mongoPort = "8080";
         logger.debug("Copy from src MongDB (IP:" + srcDGMongoIp + " to dst MongDB (IP:" + dstDGMongoIP + ")");
 
@@ -41,16 +51,17 @@ public class MongoCmd {
         //TODO: mechanism to check whether clone is done??
         //Wait some time for clone completion
         DgCommonsApplication.delay(5);
-        logger.debug("Successfully migrate MongoDB from " + srcDg.name + " to " + dstDG.name);
+        logger.debug("Successfully migrate MongoDB from " + srcDGMongoIp + " to " + dstDGMongoIP);
         return true;
     }
 
-    public static void cleanMongo(DG dg){
-        String dgMongoIp = dg.bkService.mongoIP;
+
+    public static void cleanMongo(String dgMongoIp){
         String url = getMongoOpsURL(dgMongoIp, MONGO_OPS_API_CLEAN);
-        logger.debug("Clean test db of DG: " + dg.name + " with bkService:" + dg.bkService.name + ", mongIP: " + dgMongoIp + " with URL: " + url);
+        logger.debug("Clean db(test), mongIP: " + dgMongoIp + " with URL: " + url);
         Http.httpGet(url);
     }
+
     private static String getMongoOpsURL(String ip, String api){
         return "http://" + ip + ":" + MONGO_OPS_PORT + "/" + api;
     }
