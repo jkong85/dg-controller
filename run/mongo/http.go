@@ -61,3 +61,7 @@ func main() {
 		log.Fatal("ListenAndServe: ", err)
 	}
 }
+/*
+To cross-compile and run on Container:
+	env GOOS=linux GOARCH=amd64 go build  http.go
+*/

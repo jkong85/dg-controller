@@ -15,8 +15,8 @@ public class MongoCmd {
     private static final Logger logger = LogManager.getLogger(MongoCmd.class);
 
     public static final String MONGO_OPS_PORT = "8080";
-    public static final String MONGO_OPS_API_CLEAN = "/clean";     // API refer to http.go
-    public static final String MONGO_OPS_API_CLONE = "/clone";      // API refer to http.go
+    public static final String MONGO_OPS_API_CLEAN = "/cleanmongo";     // API refer to http.go
+    public static final String MONGO_OPS_API_CLONE = "/clonemongo";      // API refer to http.go
 
     public static final String MONGO_DB_PORT = "27017";     // It is used in application.properties in our micro-service module
 
