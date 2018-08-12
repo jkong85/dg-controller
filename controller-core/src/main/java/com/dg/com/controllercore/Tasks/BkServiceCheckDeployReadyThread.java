@@ -88,6 +88,7 @@ public class BkServiceCheckDeployReadyThread implements Runnable{
         Set<String> basicDeploySet = new HashSet<>();
         basicDeploySet.add("eureka");
         basicDeploySet.add("zuul");
+        basicDeploySet.add("mongo");
         for(int i=0; i<urlList.length; i++){
             String curDeploy = backupService.deploymentsList.get(i).serviceType;
             if(!basicDeploySet.contains(curDeploy)) {
