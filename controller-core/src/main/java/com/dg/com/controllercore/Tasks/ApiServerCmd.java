@@ -37,6 +37,7 @@ public class ApiServerCmd {
     private String EUREKA_CONTAINER_PORT = "8888";
     private String ZUUL_CONTAINER_PORT = "8889";
 
+    //It is used when starting the controller
     private String CORE_CONTAINER_PORT = "9004";
     private String TEST_CONTAINER_PORT = "9005";
 

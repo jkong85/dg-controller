@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 public class LocationController {
     private static final Logger logger = LogManager.getLogger(LocationController.class);
@@ -33,11 +35,27 @@ public class LocationController {
         return "Current location is: " + value;
     }
 
+    // get the runtime data
     @RequestMapping(value="/history")
     public String history(){
         String result = "Location history data is: <br/>" + imoLocationApplication.locationHistoryData;
         return result;
     }
+
+    // get the data in MongoDB
+    @RequestMapping(value="/dbhistory")
+    public String dbhistory(){
+        List<LocationData> res = mongoTemplate.findAll(LocationData.class, "LocationData");
+        StringBuilder sb = new StringBuilder();
+        for(int i=0; i<res.size(); i++){
+            sb.append(res.get(i).index);
+            sb.append(":");
+            sb.append(res.get(i).value);
+            sb.append(", ");
+        }
+        return sb.toString();
+    }
+
     @RequestMapping(value="/ready")
     public String ready(){
         logger.info("Service : imo-location is ready now!");
