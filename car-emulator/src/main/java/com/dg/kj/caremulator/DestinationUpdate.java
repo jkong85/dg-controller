@@ -50,7 +50,7 @@ public class DestinationUpdate implements Runnable{
                     cnt--;
                 }
             }
-            try { Thread.sleep(1000); }catch (InterruptedException e) {}
+            try { Thread.sleep(500); }catch (InterruptedException e) {}
         }
     }
 

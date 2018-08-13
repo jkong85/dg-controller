@@ -64,13 +64,15 @@ public class LocationController {
     public String dbhistory(){
         logger.trace("Request for db history: <br/>");
         List<LocationData> res = mongoTemplate.findAll(LocationData.class, "LocationData");
+        String prefix = "Data on cloud node " + ImoLocationApplication.curNode + " : ";
         StringBuilder sb = new StringBuilder();
         for(int i=res.size()-1; i>=0; i--){
 //            sb.append("index: ");
 //            sb.append(res.get(i).index);
 //            sb.append(", data :");
-            sb.append(res.get(i).value);
-            sb.append("<br/>");
+            sb.append( prefix + res.get(i).value);
+            sb.append(",  ");
+//            sb.append("<br/>");
         }
         logger.trace(sb.toString());
         return sb.toString();

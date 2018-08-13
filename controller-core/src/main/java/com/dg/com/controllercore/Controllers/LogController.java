@@ -7,10 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @RestController
 public class LogController {
@@ -58,7 +55,7 @@ public class LogController {
     @RequestMapping(value = "/log")
     public String log(@RequestParam String sender){
         logger.debug("Get log of " + sender);
-        sender = "honda1";
+        sender = LOG_CONTROLLER;
         return getLog(sender);
     }
     @RequestMapping(value = "/bklog")
@@ -129,6 +126,10 @@ public class LogController {
     }
 
     public static String writeLog(String sender, String log){
+        Calendar calendar = Calendar.getInstance();
+        Date time = calendar.getTime();
+        log += time.toString() + ":" + log;
+
         if(sender == null){
             logger.warn("Failed to write log from " + sender);
             return "Failed to write log from " + sender;
@@ -136,7 +137,7 @@ public class LogController {
         if(!DGCurLogMap.containsKey(sender)){
             List<String> logList = new ArrayList<>();
             logList.add("Start to show log <br/>");
-            DGCurLogMap.put(sender, logList);
+            DGCurLogMap.put(sender,  logList);
         }
 
         if(!DGHistoryLogMap.containsKey(sender)){

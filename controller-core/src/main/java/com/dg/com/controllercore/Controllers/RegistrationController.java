@@ -47,7 +47,7 @@ public class RegistrationController {
             DgCmds.createDGSlow(coreServiceName, curIMO, type, coreNode);
         }
         logger.info("New DG is allocated for " + name + " on node: " + coreNode + " => " + coreDG.toString());
-        LogController.writeLog(LogController.LOG_CONTROLLER, "New DG is allocated for " + name + " on node: " + coreNode);
+        LogController.writeLog(LogController.LOG_CONTROLLER, "A new DG is creating for " + name + " on node: " + coreNode);
 
         // for Edge cloud node
         String edgeNode = IMOBehavior.getNodeByLocation(location);
@@ -59,13 +59,13 @@ public class RegistrationController {
             DgCmds.createDGSlow(edgeServiceName, curIMO, type, edgeNode);
         }
         logger.info("New DG is allocated for " + name + " on node: " + edgeNode + " => " + edgeDG.toString());
-        LogController.writeLog(LogController.LOG_CONTROLLER, "New DG is allocated for " + name + " on node: " + edgeNode);
+        LogController.writeLog(LogController.LOG_CONTROLLER, "A new DG is creating for " + name + " on node: " + edgeNode);
 
         // Finally, register to the controller
         if(coreDG != null && edgeDG != null) {
             ControllerCoreApplication.IMOMap.put(name, curIMO);
             logger.info("Successfully register DGs for IMO: " + curIMO.toString());
-            LogController.writeLog(LogController.LOG_CONTROLLER, "Successfully Regiestered DGs for IMO:" + curIMO.name);
+            LogController.writeLog(LogController.LOG_CONTROLLER, "Successfully Registered DGs for IMO:" + curIMO.name);
         }else{
             logger.warn("Failed to register DGs for IMO: " + curIMO.toString());
         }

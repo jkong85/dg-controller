@@ -63,7 +63,7 @@ public class CarEmulatorApplication {
         if(!type.equals(HONDA) && !type.equals(TOYOTA)){
             System.out.println("Car type of " + type + " is not supported!");
         }
-        // register the care first
+        // register the car first
         Integer location = type.equals(HONDA) ? honda_location[0] : toyota_location[0];
 
         try { Thread.sleep(5000); }catch(InterruptedException ie){ }
@@ -74,13 +74,16 @@ public class CarEmulatorApplication {
         DestinationUpdate dstThread = new DestinationUpdate(name, type);
         dstThread.start();
 
-        String[] url_ready = new String[2];
+        String[] url_ready = new String[1];
         url_ready[0] = "/location/ready";
+        //TODO: uncomment speed/gas
+        /*
         if(type.equals(HONDA)){
             url_ready[1] = "/speed/ready";
         }else{
             url_ready[1] = "/oil/ready";
         }
+        */
         while(!isReady(url_ready)){
             try{ Thread.sleep(2000);}catch(InterruptedException ie){ }
             System.out.println("DGs of " + name +  " are creating ...");
@@ -98,6 +101,8 @@ public class CarEmulatorApplication {
         LocationUpload locationUpload = new LocationUpload(name, type);
         locationUpload.start();
 
+        //TODO: uncommment for speed/gas
+        /*
         // Speed uploda thread
         if(type.equals(HONDA)) {
             SpeedUpload speedUpload = new SpeedUpload(name, type);
@@ -109,6 +114,7 @@ public class CarEmulatorApplication {
             OilUpload oilUpload = new OilUpload(name, type);
             oilUpload.start();
         }
+        */
     }
     // e.g., s=0, e=3, round=2
     // 0, 1, 2, 1, 0, 1, 2, 1, 0   (

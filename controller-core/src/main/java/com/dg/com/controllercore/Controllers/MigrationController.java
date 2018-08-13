@@ -58,7 +58,7 @@ public class MigrationController {
             return null;
         }
         String dstServiceName = imoName + "-" + dstNode;
-        LogController.writeLog(LogController.LOG_CONTROLLER, "Create a New DG on " + dstNode);
+        LogController.writeLog(LogController.LOG_CONTROLLER, "A new DG is creating on " + dstNode);
         DG dstDG = DgCmds.createDGQuick(dstServiceName, imo, type, dstNode);
         if(dstDG == null){
             logger.warn("Failed to create a new DG for " + imoName + " on node " + dstNode);
@@ -68,10 +68,12 @@ public class MigrationController {
         String srcDGMongoIp = srcDG.bkService.mongoIP;
         String dstDGMongoIP = dstDG.bkService.mongoIP;
         //Step 2: Data migration
-        LogController.writeLog(LogController.LOG_CONTROLLER, "Migrate Mongo DB from " + srcDG.name  + " to " + dstDG.name);
+        DgCommonsApplication.delay(1);
+        LogController.writeLog(LogController.LOG_CONTROLLER, "Migrate mongoDB data from " + srcDG.name  + " to " + dstDG.name);
         if(!MongoCmd.migrateMongoDB(srcDGMongoIp, dstDGMongoIP)){
             logger.error(" Failed to migrate MongoDB from " + srcNode + " to " + dstNode + " => " + " srcDG: " + srcDG.toString() + " || dstDG: "  + dstDG.toString());
             // release the new DG allocated
+            DgCommonsApplication.delay(1);
             LogController.writeLog(LogController.LOG_CONTROLLER, "Delete the old DG on " + srcNode);
             if( !DgCmds.releaseDG(imo, dstDG, true)){
                 logger.error("Failed to release dstDG after migrateMongoDB failed => " + dstDG.toString());

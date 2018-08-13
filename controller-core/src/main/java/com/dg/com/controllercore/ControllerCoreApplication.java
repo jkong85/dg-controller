@@ -1,5 +1,6 @@
 package com.dg.com.controllercore;
 
+import com.dg.com.controllercore.Controllers.LogController;
 import com.dg.com.controllercore.IMOs.BackupService;
 import com.dg.com.controllercore.IMOs.BackupServiceRequest;
 import com.dg.com.controllercore.IMOs.IMO;
@@ -80,6 +81,7 @@ public class ControllerCoreApplication {
     }
     private static void Initialize(){
         logger.info("Start initialize ...");
+        LogController.writeLog(LogController.LOG_CONTROLLER, "DG Arbiter is starting ...");
         bkServiceRequestQueue = new LinkedList<>();
         bkServiceIndexPoolStack = new Stack<>();
         bkServiceReadyPoolMap = new HashMap<>();
