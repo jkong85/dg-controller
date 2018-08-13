@@ -18,10 +18,12 @@ public class ImoLocationApplication {
     public static Queue<String> logQueue = new LinkedList<>(); // Just for log
     public static String curServiceName;
     public static String curNode;
+    public static String mongIP;
 
     public static void main(String[] args) {
         curServiceName = System.getenv("SERVICE_LABEL");
         curNode = System.getenv("CUR_NODE");
+        mongIP = System.getenv("MONGODB_IP");
 
         locationHistoryData = new ArrayList<>();
         logQueue = new LinkedList<>();

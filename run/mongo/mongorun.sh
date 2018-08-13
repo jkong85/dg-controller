@@ -6,4 +6,4 @@ mongod --httpinterface &
 
 /opt/http &
 
-while true;do echo hello;sleep 1;done
+while true;do echo hello;sleep 10000;done

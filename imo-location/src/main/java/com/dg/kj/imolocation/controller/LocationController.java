@@ -18,7 +18,6 @@ public class LocationController {
     @Autowired
     private ImoLocationApplication imoLocationApplication;
 
-
     @Autowired
     private MongoTemplate mongoTemplate;
 
@@ -38,27 +37,42 @@ public class LocationController {
     // get the runtime data
     @RequestMapping(value="/history")
     public String history(){
+        logger.trace("Request for runtime history: <br/>");
         String result = "Location history data is: <br/>" + imoLocationApplication.locationHistoryData;
+        return result;
+    }
+    // get the env
+    @RequestMapping(value="/info")
+    public String info(){
+        logger.trace("Request for information: <br/>");
+        String result = "Information is: <br/>" ;
+        result += "BkService: " + ImoLocationApplication.curServiceName + "<br/>";
+        result += "Cur Node: " + ImoLocationApplication.curNode+ "<br/>";
+        result += "MongoDB IP: " + ImoLocationApplication.mongIP+ "<br/>";
+        logger.debug(result);
         return result;
     }
 
     // get the data in MongoDB
     @RequestMapping(value="/dbhistory")
     public String dbhistory(){
+        logger.trace("Request for db history: <br/>");
         List<LocationData> res = mongoTemplate.findAll(LocationData.class, "LocationData");
         StringBuilder sb = new StringBuilder();
-        for(int i=0; i<res.size(); i++){
+        for(int i=res.size()-1; i>=0; i--){
+            sb.append("index: ");
             sb.append(res.get(i).index);
-            sb.append(":");
+            sb.append(", data :");
             sb.append(res.get(i).value);
-            sb.append(", ");
+            sb.append("<br/>");
         }
+        logger.debug(sb.toString());
         return sb.toString();
     }
 
     @RequestMapping(value="/ready")
     public String ready(){
-        logger.info("Service : imo-location is ready now!");
+        logger.info("imo-location micro-service is ready now!");
         return imoLocationApplication.curServiceName + " is ready";
     }
     // Define the data saved to MongoDB
