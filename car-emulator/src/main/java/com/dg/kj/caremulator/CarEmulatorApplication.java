@@ -66,9 +66,7 @@ public class CarEmulatorApplication {
         // register the care first
         Integer location = type.equals(HONDA) ? honda_location[0] : toyota_location[0];
 
-        try { Thread.sleep(5000); }catch(InterruptedException ie){
-
-        }
+        try { Thread.sleep(5000); }catch(InterruptedException ie){ }
 
         register(name, type, location.toString());
 

@@ -1,8 +1,9 @@
 package com.dg.kj.imolocation;
 
+import com.dg.com.controllercore.Tasks.DgCmds;
+import com.dg.com.controllercore.Tasks.MongoCmd;
 import com.dg.kj.dgcommons.DgCommonsApplication;
 import com.dg.kj.dgcommons.Log;
-import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.util.LinkedMultiValueMap;
@@ -26,13 +27,30 @@ public class MigrationCopy implements Runnable {
     private static Boolean isLeftRight = false;
     private static Boolean isRightLeft = false;
 
+
+    String curServiceName = null;
+    String curNode = null;
+    String mongoIp = null;
+
+    MigrationCopy(){
+        curServiceName = System.getenv("SERVICE_LABEL"); //TODO: take care here, it is Bkservice name, NOT DG's name
+        curNode = System.getenv("CUR_NODE");
+        mongoIp = System.getenv("MONGODB_IP");
+    }
     MigrationCopy(String name){
         threadName = name;
+
+        curServiceName = System.getenv("SERVICE_LABEL"); //TODO: take care here, it is Bkservice name, NOT DG's name
+        curNode = System.getenv("CUR_NODE");
+        mongoIp = System.getenv("MONGODB_IP");
     }
 
     public void run() {
+        /*
         String curServiceName = System.getenv("SERVICE_LABEL"); //TODO: take care here, it is Bkservice name, NOT DG's name
         String curNode = System.getenv("CUR_NODE");
+        String mongoIp = System.getenv("MONGODB_IP");
+        */
         //TODO: add type ENV to determine car's type
         String type = "honda";
         if(curServiceName.substring(0, 1).equals("h")){
@@ -125,7 +143,12 @@ public class MigrationCopy implements Runnable {
             return;
         }
         // Clean the runtime data in order to be ready for others to use
+        // Wait for several seconds
+        DgCommonsApplication.delay(5);
         cleanRuntime();
+        //clean MongoDB
+        logger.debug("Clean the MongoDb data => MongoDB IP: " + mongoIp);
+        MongoCmd.cleanMongo(mongoIp);
 
         Log log = new Log("location", name, 3);
         log.logUpload("Migrate DG of " + name + " from " + src + " to " + dst);

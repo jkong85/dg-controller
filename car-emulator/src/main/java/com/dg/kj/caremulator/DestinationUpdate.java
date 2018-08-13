@@ -22,11 +22,15 @@ public class DestinationUpdate implements Runnable{
         while(true) {
             String urlService = infoURL + name;
             RestTemplate restTemplate = new RestTemplate();
+            int printloop = 10;
             int cnt = 5;
             while(cnt > 0 ) {
                 try {
                     String response = restTemplate.getForObject(urlService, String.class);
-                    System.out.println("Response of destination request: " + response);
+                    if(printloop-- == 0) {  // just avoid print too much log
+                        printloop = 10;
+                        System.out.println("Response of destination request: " + response);
+                    }
                     // shoud return: "IP1:port1, IP2:port2,..."
                     String[] ipPort = response.split(",");
                     boolean isValid = ipPort == null ? false : true;
@@ -46,11 +50,7 @@ public class DestinationUpdate implements Runnable{
                     cnt--;
                 }
             }
-            try {
-                Thread.sleep(5000);
-            }catch (InterruptedException e) {
-                System.out.println("Destination update of " +  name + " interrupted.");
-            }
+            try { Thread.sleep(1000); }catch (InterruptedException e) {}
         }
     }
 

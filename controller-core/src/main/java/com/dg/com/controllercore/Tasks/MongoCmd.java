@@ -1,6 +1,5 @@
 package com.dg.com.controllercore.Tasks;
 
-import com.dg.com.controllercore.IMOs.DG;
 import com.dg.kj.dgcommons.DgCommonsApplication;
 import com.dg.kj.dgcommons.Http;
 import org.apache.logging.log4j.LogManager;
@@ -20,15 +19,6 @@ public class MongoCmd {
 
     public static final String MONGO_DB_PORT = "27017";     // It is used in application.properties in our micro-service module
 
-    /*
-    public static boolean migrateMongoDB(DG srcDg, DG dstDG){
-        if(srcDg == null || dstDG == null || srcDg == dstDG){
-            logger.warn(" Source DG or Destination DG is null or SrcDG == DstDG , Do nothing!");
-            return true;
-        }
-        String srcDGMongoIp = srcDg.bkService.mongoIP;
-        String dstDGMongoIP = dstDG.bkService.mongoIP;
-    */
     public static boolean migrateMongoDB(String srcDGMongoIp, String dstDGMongoIP){
         if(srcDGMongoIp==null || dstDGMongoIP==null ){
            logger.error("src MongoIP or dst MongIP is null");
