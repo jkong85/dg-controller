@@ -97,6 +97,11 @@ public class LocationController {
     }
     //url = "http://speed/cleanrun"
     public static String cleanOtherRuntime(String url){
+        if(url == null){
+            logger.warn(" URL in cleanOtherRuntime is null ");
+            return null;
+        }
+        logger.debug(" URL in cleanOtherRuntime is " + url);
         boolean ok = false;
         String response = null;
         for(Integer cnt = 0; cnt < 5; cnt++) {

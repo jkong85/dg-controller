@@ -23,13 +23,13 @@ public class InfoController {
 
     @RequestMapping(value = "/information")
     public String information(@RequestParam String name){
-        logger.debug("/information request from IMO: " + name);
+        logger.trace("/information request from IMO: " + name);
         if(controllerCoreApplication.IMOMap == null || !controllerCoreApplication.IMOMap.containsKey(name)){
             logger.warn("IMO : " + name + " do NOT existed!");
             return null;
         }
         String imoInfo = controllerCoreApplication.IMOMap.get(name).getAllDGIpPort().toString();
-        logger.debug("Information for IMO : " + name + " is: " + imoInfo.toString());
+        logger.trace("Information for IMO : " + name + " is: " + imoInfo.toString());
         return imoInfo;
     }
 
@@ -78,6 +78,7 @@ public class InfoController {
         }
         return sb.toString();
     }
+
     private String printPortPool(){
         StringBuilder sb = new StringBuilder();
         sb.append("==========Available Port Pool ======================" );

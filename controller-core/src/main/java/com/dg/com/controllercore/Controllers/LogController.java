@@ -26,14 +26,14 @@ public class LogController {
     @RequestMapping(value = "/logwrite")
     public String logWrite(@RequestParam String sender,
                            @RequestParam String log){
-        logger.debug("Write log of " + sender);
+        logger.debug("logwrite: write log of " + sender + ": " + log);
         return writeLog(sender, log);
     }
     @RequestMapping(value = "/bklogwrite")
     public String bklogWrite(@RequestParam String bksender,
                            @RequestParam String log){
         String sender = getRealSender(bksender);
-        logger.debug("Write log of " + sender);
+        logger.debug("bklogwrite: write log of " + sender + ": " + log);
         return writeLog(sender, log);
     }
 
@@ -76,17 +76,18 @@ public class LogController {
     private static String getRealSender(String bksender){
         logger.debug("Get bksender: " + bksender + " sender name. " );
         if(ControllerCoreApplication.bkServiceNameMap==null || !ControllerCoreApplication.bkServiceNameMap.containsKey(bksender) ){
-            String sender = ControllerCoreApplication.bkServiceNameMap.get(bksender).imoName;
-            logger.debug("Get bksender: " + bksender + " sender name is:  " + sender);
-            return sender;
+            logger.warn("bksender: " + bksender + " sender name is: " + null;);
+            return null;
         }
-        return null;
+        String sender = ControllerCoreApplication.bkServiceNameMap.get(bksender).imoName;
+        logger.debug("Get bksender: " + bksender + " sender name is:  " + sender);
+        return sender;
     }
 
     public static String writeLog(String sender, String log){
         if(sender == null){
             logger.warn("Failed to write log from " + sender);
-            return "Failed to wirte log from " + sender;
+            return "Failed to write log from " + sender;
         }
         if(!DGCurLogMap.containsKey(sender)){
             List<String> logList = new ArrayList<>();

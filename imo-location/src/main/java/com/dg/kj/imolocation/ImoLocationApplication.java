@@ -24,12 +24,15 @@ public class ImoLocationApplication {
     public static String curNode;
     public static String mongIP;
 
-
+    //internal call among micro-services
+    public static RestTemplate restTemplate = new RestTemplate();
 
     public static void main(String[] args) {
         curServiceName = System.getenv("SERVICE_LABEL");
         curNode = System.getenv("CUR_NODE");
         mongIP = System.getenv("MONGODB_IP");
+
+        restTemplate = new RestTemplate();
 
         locationHistoryData = new ArrayList<>();
         logQueue = new LinkedList<>();
@@ -43,11 +46,5 @@ public class ImoLocationApplication {
 
         MigrationCopy migrationCopyThread = new MigrationCopy(" Monitoring the location ");
         migrationCopyThread.start();
-    }
-
-    @Bean
-    @LoadBalanced
-    public static RestTemplate restTemplate() {
-        return new RestTemplate();
     }
 }
