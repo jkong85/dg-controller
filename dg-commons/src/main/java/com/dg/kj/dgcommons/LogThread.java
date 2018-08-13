@@ -34,10 +34,7 @@ public class LogThread implements Runnable{
                 String log = value;
                 logUpload(log);
             }
-            try {
-                Thread.sleep(200);
-            } catch (InterruptedException ie) {
-            }
+            try { Thread.sleep(200); } catch (InterruptedException ie) { }
         }
     }
 

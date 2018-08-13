@@ -13,7 +13,7 @@ public class DataSync implements Runnable{
 
     public void run() {
         for(int i=0; i<CarEmulatorApplication.DATA_SIZE; i++){
-            try { Thread.sleep(2000); } catch (InterruptedException ie) { }
+            try { Thread.sleep(1000); } catch (InterruptedException ie) { }
             index++;
         }
         System.out.println("Datasync Thread of " +  threadName + " is done.");

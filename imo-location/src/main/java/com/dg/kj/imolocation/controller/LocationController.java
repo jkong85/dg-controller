@@ -60,9 +60,9 @@ public class LocationController {
         List<LocationData> res = mongoTemplate.findAll(LocationData.class, "LocationData");
         StringBuilder sb = new StringBuilder();
         for(int i=res.size()-1; i>=0; i--){
-            sb.append("index: ");
-            sb.append(res.get(i).index);
-            sb.append(", data :");
+//            sb.append("index: ");
+//            sb.append(res.get(i).index);
+//            sb.append(", data :");
             sb.append(res.get(i).value);
             sb.append("<br/>");
         }

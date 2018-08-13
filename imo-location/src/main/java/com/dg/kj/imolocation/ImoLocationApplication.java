@@ -1,5 +1,6 @@
 package com.dg.kj.imolocation;
 
+import com.dg.kj.dgcommons.Log;
 import com.dg.kj.dgcommons.LogThread;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
