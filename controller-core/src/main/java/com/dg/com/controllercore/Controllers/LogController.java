@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.rmi.dgc.DGC;
 import java.util.*;
 
 @RestController
@@ -87,10 +88,10 @@ public class LogController {
         }
         StringBuilder sb = new StringBuilder();
         for(Map.Entry<String, List<String>> entry: DGCurLogMap.entrySet()) {
-            sb.append(" == " + entry.getKey());
+            sb.append("======" + entry.getKey() + "======");
             sb.append("<br/>");
             for(String cur : entry.getValue()){
-                sb.append("====" + cur);
+                sb.append(cur);
                 sb.append("<br/>");
             }
         }
@@ -128,7 +129,7 @@ public class LogController {
     public static String writeLog(String sender, String log){
         Calendar calendar = Calendar.getInstance();
         Date time = calendar.getTime();
-        log += time.toString() + ":" + log;
+        log = time.toString() + ":" + log;
 
         if(sender == null){
             logger.warn("Failed to write log from " + sender);
@@ -177,7 +178,12 @@ public class LogController {
         if(DGCurLogMap.get(sender).isEmpty()) {
             return "No log";
         }
-        return DGCurLogMap.get(sender).get(0);
+        StringBuilder sb = new StringBuilder();
+        for(int i=0; i<DGCurLogMap.get(sender).size(); i++){
+            sb.append(DGCurLogMap.get(sender).get(i));
+            sb.append("<br/>");
+        }
+        return sb.toString();
     }
     public String getLogHistory(String sender) {
         if(sender == null){

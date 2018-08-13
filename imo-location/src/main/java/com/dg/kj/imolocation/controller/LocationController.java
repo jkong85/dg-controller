@@ -66,13 +66,14 @@ public class LocationController {
         List<LocationData> res = mongoTemplate.findAll(LocationData.class, "LocationData");
         String prefix = "Data on cloud node " + ImoLocationApplication.curNode + " : ";
         StringBuilder sb = new StringBuilder();
+        sb.append(prefix);
+        sb.append("<br/>");
         for(int i=res.size()-1; i>=0; i--){
 //            sb.append("index: ");
 //            sb.append(res.get(i).index);
 //            sb.append(", data :");
             sb.append( prefix + res.get(i).value);
-            sb.append(",  ");
-//            sb.append("<br/>");
+            sb.append(", ");
         }
         logger.trace(sb.toString());
         return sb.toString();
