@@ -24,7 +24,7 @@ public class LocationController {
     private MongoTemplate mongoTemplate;
 
     @Autowired
-    private RestTemplate restTemplate;
+    private static RestTemplate restTemplate;
 
     @RequestMapping(value = "/cur")
     public String current(@RequestParam String name,
@@ -97,25 +97,28 @@ public class LocationController {
         return cleanOtherRuntime(url);
     }
     //url = "http://speed/cleanrun"
-    public String cleanOtherRuntime(String url){
+    public static String cleanOtherRuntime(String url){
         if(url == null){
             logger.warn(" URL in cleanOtherRuntime is null ");
             return null;
         }
         logger.debug(" URL in cleanOtherRuntime is " + url);
         boolean ok = false;
-        String response = null;
         for(Integer cnt = 0; cnt < 5; cnt++) {
             try {
-                response = this.restTemplate.getForObject(url, String.class);
+                if(restTemplate ==null ){
+                    logger.error(" restTemplate is NULL !");
+                    return null;
+                }
+                String response = restTemplate.getForObject(url, String.class);
                 ok = true;
+                logger.debug("Successful clean runtime of service : " + url + " with response: " + response);
                 break;
             } catch (RestClientException re) {
                 logger.warn("Failed to clean runtime of service : " + url + " with response: " + re.toString());
             }
         }
         if(ok){
-            logger.debug("Successful clean runtime of service : " + url + " with response: " + response);
             return "Clean runtime of service " + url;
         }
         return null;

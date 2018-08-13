@@ -27,6 +27,7 @@ public class LogController {
     public String logWrite(@RequestParam String sender,
                            @RequestParam String log){
         logger.debug("logwrite: write log of " + sender + ": " + log);
+        sender = "honda1";
         return writeLog(sender, log);
     }
     @RequestMapping(value = "/bklogwrite")
@@ -34,6 +35,7 @@ public class LogController {
                            @RequestParam String log){
         String sender = getRealSender(bksender);
         logger.debug("bklogwrite: write log of " + sender + ": " + log);
+        sender = "honda1";
         return writeLog(sender, log);
     }
 
@@ -41,35 +43,41 @@ public class LogController {
     public String bklogClean(@RequestParam String bksender){
         String sender = getRealSender(bksender);
         logger.debug("Clean log of " + sender);
+        sender = "honda1";
         return cleanLog(sender);
     }
     @RequestMapping(value = "/logclean")
     public String logClean(@RequestParam String sender){
         logger.debug("Clean log of " + sender);
+        sender = "honda1";
         return cleanLog(sender);
     }
 
     @RequestMapping(value = "/log")
     public String log(@RequestParam String sender){
         logger.debug("Get log of " + sender);
+        sender = "honda1";
         return getLog(sender);
     }
     @RequestMapping(value = "/bklog")
     public String bklog(@RequestParam String bksender){
         String sender = getRealSender(bksender);
         logger.debug("Get log of " + sender);
+        sender = "honda1";
         return getLog(sender);
     }
 
     @RequestMapping(value = "/loghistory")
     public String logHistory(@RequestParam String sender) {
         logger.debug("Get log history of " + sender);
+        sender = "honda1";
         return getLogHistory(sender);
     }
     @RequestMapping(value = "/bkloghistory")
     public String bkLogHistory(@RequestParam String bksender) {
         String sender = getRealSender(bksender);
         logger.debug("Get log history of " + sender);
+        sender = "honda1";
         return getLogHistory(sender);
     }
     @RequestMapping(value = "/logall")

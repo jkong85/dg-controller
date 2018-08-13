@@ -142,8 +142,7 @@ public class MigrationCopy implements Runnable {
         DgCommonsApplication.delay(5);
         cleanRuntime();
         //clean other micro-service runtime
-        LocationController locationController = new LocationController();
-        locationController.cleanOtherRuntime("http://speed/cleanrun");
+        LocationController.cleanOtherRuntime("http://speed/cleanrun");
         //clean MongoDB
         logger.debug("Clean the MongoDb data => MongoDB IP: " + mongoIp);
         MongoOps.cleanMongo(mongoIp);

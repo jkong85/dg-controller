@@ -33,24 +33,6 @@ public class InfoController {
         return imoInfo;
     }
 
-    /*
-    //deprecated
-    @RequestMapping(value = "/infor")
-    public String info(@RequestParam String name,
-                           @RequestParam String type,
-                           @RequestParam String location) {
-        logger.debug("/information request => name:" + name + ", type:" + type + ", location:" + location );
-        if(controllerCoreApplication.IMOMap == null || !controllerCoreApplication.IMOMap.containsKey(name)){
-            logger.warn("IMO : " + name + " do NOT existed!");
-            return null;
-        }
-        String imoInfo = controllerCoreApplication.IMOMap.get(name).getAllDGIpPort().toString();
-        logger.debug("/information for (name:" + name + ", type:" + type + ", location:" + location + ") is: " + imoInfo.toString());
-        return imoInfo;
-    }
-    */
-
-
     //It is for debug: we can get the runtime information by API call
     //TODO: add more based on your demand
     @RequestMapping(value = "/runtimeinfo")

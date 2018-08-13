@@ -36,11 +36,12 @@ public class SpeedController {
     }
 
     @RequestMapping(value="/cleanrun")
-    private void cleanRuntime(){
+    private String cleanRuntime(){
         logger.debug("Clean the runtime information");
         logger.debug("Before cleaning, the size of location history data: " + ImoSpeedApplication.speedHistoryData.size());
         ImoSpeedApplication.logQueue.clear();
         ImoSpeedApplication.speedHistoryData.clear();
         logger.debug("After cleaning, the size of location history data: " + ImoSpeedApplication.speedHistoryData.size());
+        return "Clean Speed History Data successfully!";
     }
 }
