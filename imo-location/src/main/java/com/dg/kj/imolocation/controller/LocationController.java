@@ -24,14 +24,15 @@ public class LocationController {
     private MongoTemplate mongoTemplate;
 
     @Autowired
-    private static RestTemplate restTemplate;
+    private RestTemplate restTemplate;
 
     @RequestMapping(value = "/cur")
     public String current(@RequestParam String name,
                           @RequestParam String type,
                           @RequestParam String value){
         imoLocationApplication.locationHistoryData.add(0, value);
-        imoLocationApplication.logQueue.offer("receive location data: " + value);
+//        imoLocationApplication.logQueue.offer("receive location data: " + value);
+
         // save it to MongoDB
         //We have defined in application.properties: spring.data.mongodb.uri=mongodb://${MONGODB_IP:localhost}:27017/test
         // All data is saved to DB: test
@@ -96,7 +97,7 @@ public class LocationController {
         return cleanOtherRuntime(url);
     }
     //url = "http://speed/cleanrun"
-    public static String cleanOtherRuntime(String url){
+    public String cleanOtherRuntime(String url){
         if(url == null){
             logger.warn(" URL in cleanOtherRuntime is null ");
             return null;
@@ -106,7 +107,7 @@ public class LocationController {
         String response = null;
         for(Integer cnt = 0; cnt < 5; cnt++) {
             try {
-                response = restTemplate.getForObject(url, String.class);
+                response = this.restTemplate.getForObject(url, String.class);
                 ok = true;
                 break;
             } catch (RestClientException re) {

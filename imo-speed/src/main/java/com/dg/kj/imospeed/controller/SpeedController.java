@@ -20,7 +20,7 @@ public class SpeedController {
                         @RequestParam String value){
         imoSpeedApplication.speedHistoryData.add(0, value);
 
-        imoSpeedApplication.logQueue.offer("receive speed data: " + value);
+//        imoSpeedApplication.logQueue.offer("receive speed data: " + value);
         imoSpeedApplication.type = type;
         return "cur speed is: " + value;
     }

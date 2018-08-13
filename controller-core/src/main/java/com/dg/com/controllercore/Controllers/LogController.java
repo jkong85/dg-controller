@@ -72,6 +72,40 @@ public class LogController {
         logger.debug("Get log history of " + sender);
         return getLogHistory(sender);
     }
+    @RequestMapping(value = "/logall")
+    public String logAll() {
+        logger.debug("All current log :" );
+        if(DGCurLogMap == null){
+            return null;
+        }
+        StringBuilder sb = new StringBuilder();
+        for(Map.Entry<String, List<String>> entry: DGCurLogMap.entrySet()) {
+            sb.append(" == " + entry.getKey());
+            sb.append("<br/>");
+            for(String cur : entry.getValue()){
+                sb.append("====" + cur);
+                sb.append("<br/>");
+            }
+        }
+        return sb.toString();
+    }
+    @RequestMapping(value = "/loghistoryall")
+    public String logHistoryAll() {
+        logger.debug("All history log :" );
+        if(DGHistoryLogMap == null){
+            return null;
+        }
+        StringBuilder sb = new StringBuilder();
+        for(Map.Entry<String, List<String>> entry: DGHistoryLogMap.entrySet()) {
+            sb.append(" == " + entry.getKey());
+            sb.append("<br/>");
+            for(String cur : entry.getValue()){
+                sb.append("====" + cur);
+                sb.append("<br/>");
+            }
+        }
+        return sb.toString();
+    }
 
     private static String getRealSender(String bksender){
         logger.debug("Get bksender: " + bksender + " sender name. " );

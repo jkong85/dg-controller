@@ -66,9 +66,13 @@ public class IMO {
     //TODO: print more information
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        sb.append(" IMO inforation:     ");
+        sb.append(" === IMO name : " + this.name);
+        sb.append("<br/>");
+        sb.append(System.getProperty("line.separator"));
         sb.append("name:" + name + ", type:" + type + " ");
         for(DG cur : dgList){
+            sb.append("<br/>");
+            sb.append(System.getProperty("line.separator"));
             sb.append(" " + cur.toString());
         }
         return sb.toString();
