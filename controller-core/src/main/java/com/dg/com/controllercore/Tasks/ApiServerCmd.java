@@ -290,7 +290,6 @@ public class ApiServerCmd {
     }
     // Create mongoDB deployment, A little different from other deployment creation
     // Copy and run mongorun.sh to Docker images: HTTP server (golang)
-    // Copy
     private String CreateMongoDBDeployment(String URLApiServer,
                                            String deploy_name,
                                            String service_label,
