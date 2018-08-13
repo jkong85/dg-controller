@@ -1,9 +1,8 @@
 package com.dg.kj.imolocation;
 
-import com.dg.com.controllercore.Tasks.DgCmds;
-import com.dg.com.controllercore.Tasks.MongoCmd;
 import com.dg.kj.dgcommons.DgCommonsApplication;
 import com.dg.kj.dgcommons.Log;
+import com.dg.kj.dgcommons.MongoOps;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.util.LinkedMultiValueMap;
@@ -148,7 +147,7 @@ public class MigrationCopy implements Runnable {
         cleanRuntime();
         //clean MongoDB
         logger.debug("Clean the MongoDb data => MongoDB IP: " + mongoIp);
-        MongoCmd.cleanMongo(mongoIp);
+        MongoOps.cleanMongo(mongoIp);
 
         Log log = new Log("location", name, 3);
         log.logUpload("Migrate DG of " + name + " from " + src + " to " + dst);
