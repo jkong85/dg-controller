@@ -15,8 +15,10 @@ import java.util.Map;
 @RestController
 public class LogController {
     private static final Logger logger = LogManager.getLogger(LogController.class);
-    private static Map<String, List<String>> DGCurLogMap = new HashMap<>();
-    private static Map<String, List<String>> DGHistoryLogMap = new HashMap<>();
+    public static Map<String, List<String>> DGCurLogMap = new HashMap<>();
+    public static Map<String, List<String>> DGHistoryLogMap = new HashMap<>();
+
+    public static final String LOG_CONTROLLER = "controller";
 
     public LogController(){
         DGCurLogMap = new HashMap<>();

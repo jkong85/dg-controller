@@ -31,10 +31,10 @@ public class LocationController {
                           @RequestParam String type,
                           @RequestParam String value){
         imoLocationApplication.locationHistoryData.add(0, value);
-//        imoLocationApplication.logQueue.offer("receive location data: " + value);
+        imoLocationApplication.logQueue.offer("receive location data: " + value);
 
         // save it to MongoDB
-        //We have defined in application.properties: spring.data.mongodb.uri=mongodb://${MONGODB_IP:localhost}:27017/test
+        // We have defined in application.properties: spring.data.mongodb.uri=mongodb://${MONGODB_IP:localhost}:27017/test
         // All data is saved to DB: test
         mongoTemplate.save(new LocationData(imoLocationApplication.locationHistoryData.size(), value), "LocationData");
         return "Current location is: " + value;
