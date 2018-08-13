@@ -76,7 +76,7 @@ public class LogController {
     private static String getRealSender(String bksender){
         logger.debug("Get bksender: " + bksender + " sender name. " );
         if(ControllerCoreApplication.bkServiceNameMap==null || !ControllerCoreApplication.bkServiceNameMap.containsKey(bksender) ){
-            logger.warn("bksender: " + bksender + " sender name is: " + null;);
+            logger.warn("bksender: " + bksender + " sender name is: " + null);
             return null;
         }
         String sender = ControllerCoreApplication.bkServiceNameMap.get(bksender).imoName;
