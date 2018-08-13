@@ -3,6 +3,7 @@ package com.dg.kj.imolocation;
 import com.dg.kj.dgcommons.DgCommonsApplication;
 import com.dg.kj.dgcommons.Log;
 import com.dg.kj.dgcommons.MongoOps;
+import com.dg.kj.imolocation.controller.LocationController;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.util.LinkedMultiValueMap;
@@ -140,6 +141,8 @@ public class MigrationCopy implements Runnable {
         // Wait for several seconds
         DgCommonsApplication.delay(5);
         cleanRuntime();
+        //clean other micro-service runtime
+        LocationController.cleanOtherRuntime("http://speed/cleanrun");
         //clean MongoDB
         logger.debug("Clean the MongoDb data => MongoDB IP: " + mongoIp);
         MongoOps.cleanMongo(mongoIp);

@@ -12,7 +12,7 @@
     </appenders>
 
     <loggers>
-        <logger name="com.dg.kj.imolocation" level="debug" />
+        <logger name="com.dg.kj.imospeed" level="trace" />
         <root level="info">
             <appenderref ref="CONSOLE" />
         </root>

@@ -5,6 +5,9 @@ import com.dg.kj.dgcommons.LogThread;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.context.annotation.Bean;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -20,6 +23,8 @@ public class ImoLocationApplication {
     public static String curServiceName;
     public static String curNode;
     public static String mongIP;
+
+
 
     public static void main(String[] args) {
         curServiceName = System.getenv("SERVICE_LABEL");
@@ -38,5 +43,11 @@ public class ImoLocationApplication {
 
         MigrationCopy migrationCopyThread = new MigrationCopy(" Monitoring the location ");
         migrationCopyThread.start();
+    }
+
+    @Bean
+    @LoadBalanced
+    public static RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 }

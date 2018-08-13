@@ -8,6 +8,8 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestClientException;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -20,6 +22,9 @@ public class LocationController {
 
     @Autowired
     private MongoTemplate mongoTemplate;
+
+    @Autowired
+    private static RestTemplate restTemplate;
 
     @RequestMapping(value = "/cur")
     public String current(@RequestParam String name,
@@ -49,7 +54,7 @@ public class LocationController {
         result += "BkService: " + ImoLocationApplication.curServiceName + "<br/>";
         result += "Cur Node: " + ImoLocationApplication.curNode+ "<br/>";
         result += "MongoDB IP: " + ImoLocationApplication.mongIP+ "<br/>";
-        logger.debug(result);
+        logger.trace(result);
         return result;
     }
 
@@ -66,7 +71,7 @@ public class LocationController {
             sb.append(res.get(i).value);
             sb.append("<br/>");
         }
-        logger.debug(sb.toString());
+        logger.trace(sb.toString());
         return sb.toString();
     }
 
@@ -84,4 +89,30 @@ public class LocationController {
             this.value = value;
         }
     }
+    @RequestMapping(value="/cleanruntest")
+    public String cleanruntest(@RequestParam String service) {
+        String url = "http://" + service + "/cleanrun";
+        logger.debug(" Receive the request to clean runtime of " + service + " with URL: " + url);
+        return cleanOtherRuntime(url);
+    }
+    //url = "http://speed/cleanrun"
+    public static String cleanOtherRuntime(String url){
+        boolean ok = false;
+        String response = null;
+        for(Integer cnt = 0; cnt < 5; cnt++) {
+            try {
+                response = restTemplate.getForObject(url, String.class);
+                ok = true;
+                break;
+            } catch (RestClientException re) {
+                logger.warn("Failed to clean runtime of service : " + url + " with response: " + re.toString());
+            }
+        }
+        if(ok){
+            logger.debug("Successful clean runtime of service : " + url + " with response: " + response);
+            return "Clean runtime of service " + url;
+        }
+        return null;
+    }
+
 }
