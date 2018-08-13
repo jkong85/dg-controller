@@ -2,6 +2,8 @@ package com.dg.kj.imolocation;
 
 import com.dg.kj.dgcommons.Log;
 import com.dg.kj.dgcommons.LogThread;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,6 +21,7 @@ import java.util.Queue;
 @SpringBootApplication
 @EnableDiscoveryClient
 public class ImoLocationApplication {
+    private static final Logger logger = LogManager.getLogger(ImoLocationApplication.class);
 
     public static List<String> locationHistoryData = new ArrayList<>();
     public static Queue<String> logQueue = new LinkedList<>(); // Just for log
@@ -26,16 +29,11 @@ public class ImoLocationApplication {
     public static String curNode;
     public static String mongIP;
 
-    // 启动的时候要注意，由于我们在controller中注入了RestTemplate，所以启动的时候需要实例化该类的一个实例
-    @Autowired
-    private RestTemplateBuilder builder;
-
-    //使用RestTemplateBuilder来实例化RestTemplate对象，spring默认已经注入了RestTemplateBuilder实例
     @Bean
     public RestTemplate restTemplate() {
-        return builder.build();
+        logger.info("Create RestTemplate !");
+        return new RestTemplate();
     }
-
 
     public static void main(String[] args) {
         curServiceName = System.getenv("SERVICE_LABEL");

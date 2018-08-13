@@ -4,6 +4,7 @@ import com.dg.kj.imospeed.ImoSpeedApplication;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,7 @@ public class SpeedController {
 
     @Autowired
     private ImoSpeedApplication imoSpeedApplication;
+
     @RequestMapping(value = "/cur")
     public String current(@RequestParam String name,
                         @RequestParam String type,
@@ -35,7 +37,7 @@ public class SpeedController {
         return imoSpeedApplication.curServiceName + " is ready";
     }
 
-    @RequestMapping(value="/cleanrun")
+    @GetMapping(value="/cleanrun")
     private String cleanRuntime(){
         logger.debug("Clean the runtime information");
         logger.debug("Before cleaning, the size of location history data: " + ImoSpeedApplication.speedHistoryData.size());

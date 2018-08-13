@@ -24,7 +24,7 @@ public class LocationController {
     private MongoTemplate mongoTemplate;
 
     @Autowired
-    private static RestTemplate restTemplate;
+    private RestTemplate restTemplate;
 
     @RequestMapping(value = "/cur")
     public String current(@RequestParam String name,
@@ -97,7 +97,7 @@ public class LocationController {
         return cleanOtherRuntime(url);
     }
     //url = "http://speed/cleanrun"
-    public static String cleanOtherRuntime(String url){
+    public String cleanOtherRuntime(String url){
         if(url == null){
             logger.warn(" URL in cleanOtherRuntime is null ");
             return null;
@@ -106,11 +106,11 @@ public class LocationController {
         boolean ok = false;
         for(Integer cnt = 0; cnt < 5; cnt++) {
             try {
-                if(restTemplate ==null ){
+                if(this.restTemplate ==null ){
                     logger.error(" restTemplate is NULL !");
                     return null;
                 }
-                String response = restTemplate.getForObject(url, String.class);
+                String response = this.restTemplate.getForObject(url, String.class);
                 ok = true;
                 logger.debug("Successful clean runtime of service : " + url + " with response: " + response);
                 break;
