@@ -2,7 +2,7 @@
 echo "Migrate the Data "
 echo "Wait for the Mongo starting..."
 
-mongod &
+mongod --httpinterface &
 
 /opt/http &
 

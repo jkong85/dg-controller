@@ -45,11 +45,6 @@ public class MigrationCopy implements Runnable {
     }
 
     public void run() {
-        /*
-        String curServiceName = System.getenv("SERVICE_LABEL"); //TODO: take care here, it is Bkservice name, NOT DG's name
-        String curNode = System.getenv("CUR_NODE");
-        String mongoIp = System.getenv("MONGODB_IP");
-        */
         //TODO: add type ENV to determine car's type
         String type = "honda";
         if(curServiceName.substring(0, 1).equals("h")){

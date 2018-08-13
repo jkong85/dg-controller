@@ -5,6 +5,7 @@ import com.dg.com.controllercore.IMOs.IMO;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,6 +33,7 @@ public class InfoController {
         return imoInfo;
     }
 
+    /*
     //deprecated
     @RequestMapping(value = "/infor")
     public String info(@RequestParam String name,
@@ -46,6 +48,8 @@ public class InfoController {
         logger.debug("/information for (name:" + name + ", type:" + type + ", location:" + location + ") is: " + imoInfo.toString());
         return imoInfo;
     }
+    */
+
 
     //It is for debug: we can get the runtime information by API call
     //TODO: add more based on your demand
