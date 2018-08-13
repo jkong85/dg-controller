@@ -116,6 +116,7 @@ public class MigrationCopy implements Runnable {
         copyParamMap.add("dstNode", dst);
 
         logger.debug("Try to migrate DG form " + src + " to " + dst);
+        ImoLocationApplication.logQueue.offer("Migrate " + name + " from node " + src + " to node " + dst);
         boolean retry = true;
         int cnt = 5;
         while(retry && cnt>0){
@@ -131,8 +132,7 @@ public class MigrationCopy implements Runnable {
             cnt--;
         }
         if(retry == true){
-            Log log = new Log("location", name, 3);
-            log.logUpload("Failed to migrate DG of " + name + " from " + src + " to " + dst);
+            ImoLocationApplication.logQueue.offer("Failed to migrate DG of " + name + " from " + src + " to " + dst);
             logger.error("Failed to migrate DG of " + name + " from " + src + " to " + dst);
             return;
         }
