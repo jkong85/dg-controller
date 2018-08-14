@@ -127,9 +127,11 @@ public class MigrationController {
         IMO imo = controllerCoreApplication.IMOMap.get(imoName);
 
         logger.debug("IMO of " + imoName + " => " + imo.toString());
+        LogController.writeLog(LogController.LOG_CONTROLLER, "IMO: " + imoName + " is leaving the cloud ...");
         for(int i=imo.dgList.size()-1; i>=0; i--) {
             //TODO: should I remove DG from dgList in DgCmds.releaseDG()???, Take care of ArrayList remove , Iterator may be better??
             DG dg = imo.dgList.get(i);  // dgList will be changed in relasesDG(), so we delete the first all the time
+            LogController.writeLog(LogController.LOG_CONTROLLER, "=> Deactivate DG of " + imoName + " on " + dg.node);
             if (dg == null) {
                 logger.warn("current DG is NOT existed! continue!");
             }else if (! DgCmds.releaseDG(imo, dg, true)) {  // try to release DG

@@ -68,7 +68,7 @@ public class LocationController {
         StringBuilder sb = new StringBuilder();
         sb.append(prefix);
         sb.append("<br/>");
-        for(int i=res.size()-1; i>=0; i--){
+        for(int i=0; i<res.size(); i++){
 //            sb.append("index: ");
 //            sb.append(res.get(i).index);
 //            sb.append(", data :");
