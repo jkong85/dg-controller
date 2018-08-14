@@ -26,7 +26,7 @@ public class RegistrationController {
                            @RequestParam String type,
                            @RequestParam String location) {
         logger.info("Receive the registration request (name:" + name + ", type:" + type + ",location: " + location + ")");
-        LogController.writeLog(LogController.LOG_CONTROLLER, "Receive the registration request (name:" + name + ", type:" + type + ",location: " + location + ")");
+        LogController.writeLog(LogController.LOG_CONTROLLER, "Receive IMO registration request ( IMO name: " + name + ", IMO type:" + type);
         // register on core cloud node
         if(ControllerCoreApplication.IMOMap.containsKey(name)){
             //TODO: return IP address directly

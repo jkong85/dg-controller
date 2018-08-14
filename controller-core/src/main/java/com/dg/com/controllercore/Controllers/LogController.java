@@ -137,13 +137,13 @@ public class LogController {
         }
         if(!DGCurLogMap.containsKey(sender)){
             List<String> logList = new ArrayList<>();
-            logList.add("Start to show log <br/>");
+            logList.add("DG-Arbiter Logs: <br/>");
             DGCurLogMap.put(sender,  logList);
         }
 
         if(!DGHistoryLogMap.containsKey(sender)){
             List<String> logList = new ArrayList<>();
-            logList.add("Start to show log <br/>");
+            logList.add("DG-Arbiter Logs: <br/>");
             DGHistoryLogMap.put(sender, logList);
         }
 
