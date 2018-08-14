@@ -36,7 +36,7 @@ public class LocationUpload implements Runnable{
                 location[i] = CarEmulatorApplication.toyota_location[i];
             }
         }
-        System.out.println("Location upload initializating " +  threadName );
+        System.out.println("Start to upload location data: ");
     }
 
     public void run() {

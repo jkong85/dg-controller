@@ -159,11 +159,13 @@ public class CarEmulatorApplication {
         for(int i=0; i<size; i++){
             System.out.print(honda_location[i] + ", ");
         }
+        /*
         System.out.println();
         System.out.println("honda_speed: " );
         for(int i=0; i<size; i++){
             System.out.print(honda_speed[i] + ", ");
         }
+        */
 
         return size;
     }
@@ -201,16 +203,16 @@ public class CarEmulatorApplication {
             RestTemplate restTemplate = new RestTemplate();
             for(String url : url_ready) {
                 String dstURL = "http://" + CarEmulatorApplication.destination.get(i) + url;
-                System.out.print("Check ready URL: " + dstURL + "   ===> ");
+//                System.out.print("Check ready URL: " + dstURL + "   ===> ");
                 boolean flag = false;
                 for(int j=0; j<5; j++) {
                     try {
                         String response = restTemplate.getForObject(dstURL, String.class);
-                        System.out.println(" Ready");
+//                        System.out.println(" Ready");
                         flag = true;
                         break;
                     } catch (RestClientException re) {
-                        System.out.println(" Not ready");
+//                        System.out.println(" Not ready");
                     }
                 }
                 if(!flag){
