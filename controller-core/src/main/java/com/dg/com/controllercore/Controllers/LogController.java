@@ -129,7 +129,7 @@ public class LogController {
     public static String writeLog(String sender, String log){
         Calendar calendar = Calendar.getInstance();
         Date time = calendar.getTime();
-        log = time.toString() + ":" + log;
+        log = time.toString() + ": " + log;
 
         if(sender == null){
             logger.warn("Failed to write log from " + sender);

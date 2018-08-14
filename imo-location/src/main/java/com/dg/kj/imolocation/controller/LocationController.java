@@ -73,7 +73,7 @@ public class LocationController {
 //            sb.append(res.get(i).index);
 //            sb.append(", data :");
             sb.append( prefix + res.get(i).value);
-            sb.append(", ");
+            sb.append("<br/>");
         }
         logger.trace(sb.toString());
         return sb.toString();
