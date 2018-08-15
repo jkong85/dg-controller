@@ -13,6 +13,9 @@ public class FeignTestController {
     @Autowired
     private ServiceSpeedFeignclient serviceSpeedFeignclient;
 
+    //This is a test for micro-service internal call
+    //In this case, Location micro-service will call speed service
+    //Refer to feignclient/ServiceSpeedFeignclient.java
     @RequestMapping(value="/feigntest")
     public String getFeigntest(){
         return "Location call Speed service, and the Speed service reponse: " + serviceSpeedFeignclient.feigntest().toString();

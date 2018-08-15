@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Component
 @FeignClient(value = "imo-speed")
 public interface ServiceSpeedFeignclient {
+    //refer to: imo-speed/speedcontroller
     @RequestMapping(value = "/feigntest")
     String feigntest();
 }
