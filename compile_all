@@ -13,3 +13,12 @@ echo "Compile the modules : ${module}"
 echo "=========================================================="
 sudo docker images
 
+echo "=========================================================="
+echo "Compile the Golang HTTP server"
+cd run/
+./prepare.sh
+cd ..
+
+
+
+
