@@ -11,6 +11,9 @@ set -x
 #sudo docker pull jkong85/dg-imo-oil:0.1
 #sudo docker pull jkong85/dg-imo-location:0.1
 
+sudo docker pull mongo:3.4
+sudo docker pull adoptopenjdk/openjdk8-openj9:jdk8u162-b12_openj9-0.8.0-alpine
+
 # Copy mongo to /opt, and then mount /opt with mongo deployment
 echo "TAKE CARE!!!!!  COPY Mongo scripts and apps on EACH VM node!!!!!!!!!!!!!!"
 echo "Copy Mongo Scripts and Apps to /opt/dgmongo"
