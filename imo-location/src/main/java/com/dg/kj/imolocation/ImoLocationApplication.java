@@ -1,6 +1,5 @@
 package com.dg.kj.imolocation;
 
-import com.dg.kj.dgcommons.Log;
 import com.dg.kj.dgcommons.LogThread;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -10,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.client.RestTemplate;
 
@@ -20,6 +20,7 @@ import java.util.Queue;
 
 @SpringBootApplication
 @EnableDiscoveryClient
+@EnableFeignClients
 public class ImoLocationApplication {
     private static final Logger logger = LogManager.getLogger(ImoLocationApplication.class);
 

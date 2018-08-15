@@ -46,4 +46,9 @@ public class SpeedController {
         logger.debug("After cleaning, the size of location history data: " + ImoSpeedApplication.speedHistoryData.size());
         return "Clean Speed History Data successfully!";
     }
+    @RequestMapping(value="/feigntest")
+    public String feigntest(){
+        return "hello, I am imo-speed";
+    }
+
 }
