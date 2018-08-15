@@ -2,8 +2,8 @@
 
 # Dowadload and Use
 
-git clone https://github.com/jkong85/dg-controller.git
-cd dg-controller/
+git clone https://github.com/jkong85/dg-testbed.git
+cd dg-testbed/
 git checkout origin/dev
 git checkout -b dev
 git branch --set-upstream-to=origin/dev dev
